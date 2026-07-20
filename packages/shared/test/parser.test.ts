@@ -60,7 +60,9 @@ describe('parseRawOutput', () => {
   })
 
   test('function_calls ラッパーなしの invoke も受け付ける', () => {
-    const r = parseRawOutput('<invoke name="Bash"><parameter name="command">pwd</parameter></invoke>')
+    const r = parseRawOutput(
+      '<invoke name="Bash"><parameter name="command">pwd</parameter></invoke>',
+    )
     expect(r.toolCalls).toEqual([{ name: 'Bash', args: { command: 'pwd' } }])
   })
 
@@ -105,6 +107,6 @@ describe('parseRawOutput', () => {
     const r = parseRawOutput(
       '<invoke name="Write"><parameter name="content">line1\nline2\nline3</parameter></invoke>',
     )
-    expect(r.toolCalls[0]?.args['content']).toBe('line1\nline2\nline3')
+    expect(r.toolCalls[0]?.args.content).toBe('line1\nline2\nline3')
   })
 })

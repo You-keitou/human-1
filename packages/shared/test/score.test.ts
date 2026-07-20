@@ -16,6 +16,9 @@ describe('extractScore', () => {
   })
 
   test('文中のどこにあっても最初の1つを拾う', () => {
-    expect(extractScore('前置き [SCORE: 6.0/10] 後書き [SCORE: 9/10]')).toEqual({ value: 6, max: 10 })
+    expect(extractScore('前置き [SCORE: 6.0/10] 後書き [SCORE: 9/10]')).toEqual({
+      value: 6,
+      max: 10,
+    })
   })
 })
