@@ -4,6 +4,7 @@ import { Header } from '../components/Header'
 import { Icon } from '../components/Icon'
 import { RequestCard } from '../components/RequestCard'
 import { DesktopFrame } from '../components/ScreenFrame'
+import { flow1Fixture } from '../fixtures/screens'
 import { Frame, Spacer, Text } from '../ui/primitives'
 
 // Flow 1 Step 1 実行中(`x03Nex`)。step1 送信済み・harness ツール実行中・エディタ read-only。
@@ -49,11 +50,11 @@ function EditorCard(): ReactElement {
       >
         <Icon name="loader-circle" size={13} color="var(--accent)" />
         <Text size={11.5} weight={500} color="var(--text-secondary)" nowrap>
-          harness がツールを実行中 · step 1 送信済み
+          {flow1Fixture.status.text}
         </Text>
         <Spacer />
         <Text size={11} family="mono" weight={600} color="var(--text-muted)" nowrap>
-          0:04
+          {flow1Fixture.status.elapsed}
         </Text>
       </Frame>
 
@@ -123,8 +124,7 @@ function ThinkingBlock(): ReactElement {
         </Frame>
       </Frame>
       <Text size={13} lh={21 / 13} italic color="var(--text-secondary)" w="fill">
-        注文システムの核は在庫と決済の整合性。まず既存スキーマを確認し、在庫引当をイベント駆動の
-        Saga にするか判断する。
+        {flow1Fixture.thinking}
       </Text>
     </Frame>
   )
@@ -164,22 +164,9 @@ function FunctionCallsBlock(): ReactElement {
           </Text>
         </Frame>
       </Frame>
-      <InvokeRow
-        icon="check"
-        iconColor="var(--tool)"
-        name="exec_command"
-        param="cmd: cat schema.sql | head -50"
-        status="完了 · 0.4s"
-        statusColor="var(--tool)"
-      />
-      <InvokeRow
-        icon="loader-circle"
-        iconColor="var(--warn)"
-        name="web_search"
-        param="query: saga pattern order inventory"
-        status="実行中…"
-        statusColor="var(--warn)"
-      />
+      {flow1Fixture.invokes.map((iv) => (
+        <InvokeRow key={iv.name} {...iv} />
+      ))}
     </Frame>
   )
 }

@@ -3,10 +3,10 @@ import { DraftStatus, EditorTopBar, Toolbar } from '../components/EditorBars'
 import { Header } from '../components/Header'
 import { Icon, type IconName } from '../components/Icon'
 import { DesktopFrame } from '../components/ScreenFrame'
+import { flow2Fixture } from '../fixtures/screens'
 import { Box, Frame, Spacer, Text } from '../ui/primitives'
 
-const TRAINER_LINE =
-  '前エポックの講評: DB分割の判断は良い(+1.5)。今回は EC サイトの注文システムを設計せよ。全体アーキテクチャと ER 図を含めること。'
+const TRAINER_LINE = flow2Fixture.trainerLine
 
 // Flow 2 Step 2 開始(`pvtJF`)。tool_result ×2 受信済み・step2 を書き始める直前。
 export function Flow2Step2(): ReactElement {
@@ -127,7 +127,7 @@ function RequestCard(): ReactElement {
               ▸
             </Text>
             <Text size={11} family="mono" italic color="var(--text-muted)" grow>
-              {'<thinking> 注文システムの核は在庫と決済の整合性…'}
+              {flow2Fixture.youStep1Preview}
             </Text>
           </Frame>
           <Frame dir="row" gap={6} align="center">
@@ -136,16 +136,9 @@ function RequestCard(): ReactElement {
           </Frame>
         </Frame>
 
-        <ToolResult
-          tool="exec_command · exit 0 · 0.4s"
-          body={'schema.sql · 42 lines\nCREATE TABLE orders (id uuid PRIMARY KEY, user_id uuid, …'}
-        />
-        <ToolResult
-          tool="web_search · 5 results · 1.2s"
-          body={
-            'Saga pattern — microservices.io\n分散トランザクションを結果整合で実装するパターン…'
-          }
-        />
+        {flow2Fixture.toolResults.map((tr) => (
+          <ToolResult key={tr.tool} tool={tr.tool} body={tr.body} />
+        ))}
       </Frame>
     </Frame>
   )
@@ -271,7 +264,7 @@ function EditorCard(): ReactElement {
         <Frame dir="row" gap={3} pad={[4, 2]} align="center">
           <Box w={2} h={17} fill="var(--accent)" />
           <Text size={13.5} color="var(--text-muted)" nowrap>
-            tool の結果を踏まえて、続きの thinking / final を書く…
+            {flow2Fixture.placeholder}
           </Text>
         </Frame>
 

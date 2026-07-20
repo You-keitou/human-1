@@ -71,7 +71,7 @@
 - [x] M0: 設計合意・Pencil モック(`design/human-1.pen`)
 - [x] M1: モノレポ scaffold + shared(型・パーサ移植。並列複数 tool call 対応で `ParsedTurn.toolCalls` は配列)
 - [x] M2: server(Workers + DO、両 API、WS、認証、永続化、並列 tool call。統合テスト 36 件=人間シミュレータ方式)
-- [ ] M3: ui(エディタ移植・デザイン一新・Runs・モバイル)
+- [x] M3: ui(px 一致 6 画面+機能配線。e2e 12 本+px ゲート。**第 2 段は codex 使用量上限のため独立 QA のみで確定 — 7/25 以降に codex 遡及レビュー要**)
 - [x] M4: cli(`hllm` login / train / theater。テスト 44 件=フェイク殻+実サーバー E2E)
 - [ ] M5: deploy + 実機 E2E(codex / claude 両殻)
 

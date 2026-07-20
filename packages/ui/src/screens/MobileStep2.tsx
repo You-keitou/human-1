@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react'
 import { Icon, type IconName } from '../components/Icon'
 import { MobileFrame } from '../components/ScreenFrame'
+import { mobileStep2Fixture } from '../fixtures/screens'
 import { Box, Frame, Spacer, Text } from '../ui/primitives'
 
 // Mobile Step 2(`cUfSM`)。履歴(trainer / you step1 / tool_result ×2 / banner)+ 下部エディタ。送信 disabled。
@@ -11,20 +12,9 @@ export function MobileStep2(): ReactElement {
       <Frame dir="col" grow w="fill" gap={10} pad={[12, 16]} align="start" clip>
         <TrainerCard />
         <YouCard />
-        <ResultCard
-          icon="terminal"
-          name="exec_command"
-          meta="· exit 0 · 0.4s"
-          body={'schema.sql · 42 lines\nCREATE TABLE orders (id uuid PRIMARY KEY, …'}
-        />
-        <ResultCard
-          icon="search"
-          name="web_search"
-          meta="· 5 results · 1.2s"
-          body={
-            'Saga pattern — microservices.io\nOrchestration vs. choreography, compensating tx …'
-          }
-        />
+        {mobileStep2Fixture.results.map((r) => (
+          <ResultCard key={r.name} icon={r.icon} name={r.name} meta={r.meta} body={r.body} />
+        ))}
         <Banner />
       </Frame>
       <EditorWrap />
@@ -88,7 +78,7 @@ function TrainerCard(): ReactElement {
         <Icon name="chevron-down" size={14} color="var(--text-muted)" />
       </Frame>
       <Text size={13} lh={20 / 13} w="fill">
-        EC注文システム設計の課題 — 全体アーキテクチャと ER 図を含めること。図は Whiteboard で作成し…
+        {mobileStep2Fixture.trainer}
       </Text>
     </Frame>
   )
@@ -118,7 +108,7 @@ function YouCard(): ReactElement {
       <Frame dir="row" w="fill" gap={6} align="center">
         <Icon name="brain" size={12} color="var(--thinking)" />
         <Text size={12.5} italic color="var(--text-secondary)" nowrap>
-          在庫と決済の整合性を確認。まず既存スキーマを…
+          {mobileStep2Fixture.youThinking}
         </Text>
       </Frame>
       <Frame dir="row" gap={6} align="center">
@@ -244,7 +234,7 @@ function EditorWrap(): ReactElement {
         <Frame dir="row" w="fill" gap={7} align="center">
           <Box w={2} h={18} fill="var(--accent)" />
           <Text size={13.5} color="var(--text-muted)" nowrap>
-            結果を踏まえて続きを書く…
+            {mobileStep2Fixture.placeholder}
           </Text>
         </Frame>
         <Box w="fill" h={56} />

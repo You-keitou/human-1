@@ -11,6 +11,13 @@
   },
   "dependencies": {
     "@human-1/shared": "workspace:*",
+    "@tiptap/core": "^3.28.0",
+    "@tiptap/extension-placeholder": "^3.28.0",
+    "@tiptap/pm": "^3.28.0",
+    "@tiptap/react": "^3.28.0",
+    "@tiptap/starter-kit": "^3.28.0",
+    "@tiptap/suggestion": "^3.28.0",
+    "@xyflow/react": "^12.11.2",
     "lucide-react": "^0.469.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"

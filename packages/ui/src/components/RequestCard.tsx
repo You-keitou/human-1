@@ -1,22 +1,15 @@
 import type { ReactElement } from 'react'
+import { requestFixture, requestTools } from '../fixtures/request'
 import { Frame, Spacer, Text } from '../ui/primitives'
-import { Icon, type IconName } from './Icon'
+import { Icon } from './Icon'
 
 // 左カラムの Request カード(full 形)。Flow1 / Whiteboard で共有。
-// design-spec §2.4 / §3.1 / §3.3。
+// design-spec §2.4 / §3.1 / §3.3。コンテンツは fixtures/request.ts から注入する。
 
-const TOOLS: { name: string; icon: IconName; sig: string }[] = [
-  { name: 'exec_command', icon: 'terminal', sig: '(cmd)' },
-  { name: 'web_search', icon: 'search', sig: '(query, max_results?)' },
-  { name: 'apply_patch', icon: 'diff', sig: '(patch)' },
-  { name: 'view_image', icon: 'image', sig: '(path)' },
-]
-
-const SYS_PREVIEW =
-  '<system-reminder> あなたは訓練中の human-1。応答は thinking→tools→final の順で…'
-const TRAINER_LINE =
-  '前エポックの講評: DB分割の判断は良い(+1.5)。今回は EC サイトの注文システムを設計せよ。全体アーキテクチャと ER 図を含めること。'
-const TRAINER_XML = '<required>図は Whiteboard で作成し Mermaid で添付</required>'
+const TOOLS = requestTools
+const SYS_PREVIEW = requestFixture.sysPreview
+const TRAINER_LINE = requestFixture.trainerLine
+const TRAINER_XML = requestFixture.trainerXml
 
 export type RequestTimer = { text: string; tone: 'muted' | 'thinking' }
 
@@ -164,7 +157,7 @@ export function RequestCard({
                 [tool_result]
               </Text>
               <Text size={11} family="mono" weight={600} color="var(--tool)" nowrap>
-                exec_command · exit 0
+                {requestFixture.toolResult.tool}
               </Text>
             </Frame>
             <Text
@@ -175,7 +168,7 @@ export function RequestCard({
               w="fill"
               style={{ whiteSpace: 'pre-wrap' }}
             >
-              {'schema.sql · 42 lines\nCREATE TABLE orders (id uuid PRIMARY KEY, user_id uuid, …'}
+              {requestFixture.toolResult.body}
             </Text>
           </Frame>
         )}

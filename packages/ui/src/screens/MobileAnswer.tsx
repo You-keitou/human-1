@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react'
 import { Icon, type IconName } from '../components/Icon'
 import { MobileFrame } from '../components/ScreenFrame'
+import { mobileAnswerFixture } from '../fixtures/screens'
 import { Box, Frame, Spacer, Text } from '../ui/primitives'
 
 // Mobile Answer(`j9b5n`)。1 ターンの完全回答(trainer→thinking→function_calls→final+mermaid)。
@@ -85,7 +86,7 @@ function TrainerCard(): ReactElement {
         </Text>
       </Frame>
       <Text size={13.5} weight={500} lh={21 / 13.5} w="fill">
-        ECサイトの注文システムを設計せよ。マイクロサービス構成と ER 図を示すこと。
+        {mobileAnswerFixture.trainer}
       </Text>
       <Text size={10} family="mono" color="var(--text-muted)" nowrap>
         ▸ system prompt · 8.2k chars
@@ -116,7 +117,7 @@ function ThinkingBlock(): ReactElement {
         <Icon name="grip-vertical" size={14} color="var(--thinking)" opacity={0.45} />
       </Frame>
       <Text size={12.5} lh={20 / 12.5} italic color="var(--text-secondary)" w="fill">
-        注文・在庫・決済を分離し、在庫は Saga の結果整合で扱うのが要点だ…
+        {mobileAnswerFixture.thinking}
       </Text>
     </Frame>
   )
@@ -156,8 +157,9 @@ function FunctionCallsBlock(): ReactElement {
           </Text>
         </Frame>
       </Frame>
-      <InvokeXml value="architecture.md" />
-      <InvokeXml value="er-diagram.mmd" />
+      {mobileAnswerFixture.invokeValues.map((v) => (
+        <InvokeXml key={v} value={v} />
+      ))}
     </Frame>
   )
 }
@@ -213,11 +215,7 @@ function InvokeXml({ value }: { value: string }): ReactElement {
 }
 
 function FinalBlock(): ReactElement {
-  const merLines = [
-    'CUSTOMER ||--o{ ORDER : places',
-    'ORDER ||--|{ ORDER_ITEM : has',
-    'PRODUCT ||--o{ ORDER_ITEM : in',
-  ]
+  const merLines = mobileAnswerFixture.mermaid
   return (
     <Frame dir="col" w="fill" gap={6} pad={2} align="start">
       <Frame dir="row" gap={6} align="center">
@@ -227,7 +225,7 @@ function FinalBlock(): ReactElement {
         </Text>
       </Frame>
       <Text size={13} lh={20 / 13} w="fill">
-        API Gateway 配下に注文・在庫・決済の3サービス。在庫は Saga で結果整合とする。
+        {mobileAnswerFixture.final}
       </Text>
       <Frame
         dir="col"

@@ -6,6 +6,7 @@ import {
   type RolloutRow,
   type RubricItem,
   type RunListItem,
+  type RunsFixture,
   runsFixture,
 } from '../fixtures/runs'
 import { Box, Frame, Spacer, Text } from '../ui/primitives'
@@ -22,8 +23,10 @@ const CHIP: Record<RolloutChip['kind'], { fill: string; color: string }> = {
   final: { fill: 'var(--accent-soft)', color: 'var(--accent-strong)' },
 }
 
-export function Runs(): ReactElement {
-  const { header, list, detail } = runsFixture
+// data 注入で live(API 由来)/ preview(fixture)双方を同一レイアウトで描画する。
+// 既定は fixture のため /preview/runs のピクセルは不変。
+export function Runs({ data = runsFixture }: { data?: RunsFixture }): ReactElement {
+  const { header, list, detail } = data
   return (
     <DesktopFrame>
       <Header active="runs" epoch={header.epoch} avg={header.avg} />

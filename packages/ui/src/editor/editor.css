@@ -1,0 +1,191 @@
+/* tiptap リッチエディタのスタイル。すべて .rich-editor* / .slash-menu / .tools-chips へ
+ * スコープし、preview 静的画面(px 検証対象)へ漏らさない。トークンは Style C を使う。 */
+
+.rich-editor-root {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.tools-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.tools-chips-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.tool-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tool);
+  background: var(--tool-soft);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 9px;
+  cursor: pointer;
+}
+
+.tool-chip:hover:not(:disabled) {
+  border-color: var(--tool);
+}
+
+.tool-chip:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.rich-editor {
+  width: 100%;
+  min-height: 180px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 12px 14px;
+  overflow: auto;
+}
+
+.rich-editor.disabled {
+  opacity: 0.6;
+}
+
+.rich-editor-content {
+  outline: none;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-primary);
+}
+
+.rich-editor-content p {
+  margin: 0 0 8px;
+}
+
+/* placeholder(tiptap extension-placeholder) */
+.rich-editor-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--text-muted);
+}
+
+/* thinking ブロック */
+.rich-editor-content pre.rt-thinking {
+  position: relative;
+  margin: 8px 0;
+  padding: 22px 14px 10px;
+  border-radius: 6px;
+  border-left: 2px solid var(--thinking);
+  background: var(--thinking-soft);
+  font-family: var(--font-ui);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+}
+
+.rich-editor-content pre.rt-thinking::before {
+  content: "thinking";
+  position: absolute;
+  top: 6px;
+  left: 14px;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 10px;
+  color: var(--thinking);
+}
+
+/* tool call ブロック */
+.rich-editor-content pre.rt-toolcall {
+  position: relative;
+  margin: 8px 0;
+  padding: 22px 14px 10px;
+  border-radius: 6px;
+  border-left: 2px solid var(--tool);
+  background: var(--tool-soft);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+}
+
+.rich-editor-content pre.rt-toolcall::before {
+  content: "invoke " attr(data-tool-call);
+  position: absolute;
+  top: 6px;
+  left: 14px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 10px;
+  color: var(--tool);
+}
+
+/* スラッシュメニュー(body 直下に描画) */
+.slash-menu {
+  position: fixed;
+  z-index: 1000;
+  min-width: 220px;
+  max-height: 260px;
+  overflow: auto;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  box-shadow: 0 10px 24px -6px #3a2c1533;
+  padding: 4px;
+}
+
+.slash-item {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.slash-item.selected,
+.slash-item:hover {
+  background: var(--accent-soft);
+}
+
+.slash-title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.slash-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.parse-warnings {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.parse-warning {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--warn);
+  background: var(--warn-soft);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
