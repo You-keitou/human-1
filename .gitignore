@@ -6,3 +6,8 @@ dist/
 .DS_Store
 .trainer-out.txt
 *.raw
+
+# test artifacts
+artifacts/
+test-results/
+playwright-report/

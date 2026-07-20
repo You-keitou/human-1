@@ -1,0 +1,4 @@
+# ユニットテストは packages 配下のみ。e2e/ の Playwright spec(*.spec.ts)は
+# bun test ランナーとは非互換なので、root を絞って拾わせない(実行は bun run e2e)。
+[test]
+root = "packages"

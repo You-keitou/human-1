@@ -1,0 +1,14 @@
+{
+  "port": 5200,
+  "referenceDir": "design/reference",
+  "artifactsDir": "artifacts/pixel-diff",
+  "deviceScaleFactor": 2,
+  "threshold": 0.1,
+  "maxDiffRatio": 0.01,
+  "targets": [
+    { "screen": "task", "route": "/", "width": 1440, "height": 1024 },
+    { "screen": "respond", "route": "/respond", "width": 1440, "height": 1024 },
+    { "screen": "whiteboard", "route": "/whiteboard", "width": 1440, "height": 1024 },
+    { "screen": "runs", "route": "/runs", "width": 1440, "height": 1024 }
+  ]
+}

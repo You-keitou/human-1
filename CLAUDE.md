@@ -61,5 +61,9 @@
 
 ## 検証の作法
 
+- 基本コマンド: `bun test` / `bun run typecheck` / `bun run check`(Biome)/ `bun run e2e`(Playwright + chromium)
+- UI は Pencil モックと px 単位一致が必須: `bun run verify:pixels`(strict、基準 PNG は `design/reference/`。欠如は FAIL)。基準未生成の間だけ `verify:pixels:bootstrap`。基準の書き出しは Pencil エディタで `human-1.pen` を開いた状態で Claude に依頼(手順は `docs/testing.md`)
+- テストの実装と検証は別々の sub-agent に依頼し、コミット前に codex の第三者レビュー(APPROVE)を必須とする
+
 - サーバーの E2E は「人間シミュレータ」(WS クライアントで自動回答)を使う。PoC の `driver/human-sim*.mjs` を参照
 - 殻を伴う統合テストは `codex exec --profile <profile>` / `claude -p --model human` のヘッドレスで行い、TUI 検証は node-pty で画面バッファを capture する
