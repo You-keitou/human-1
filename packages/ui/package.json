@@ -10,9 +10,18 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@human-1/shared": "workspace:*"
+    "@human-1/shared": "workspace:*",
+    "lucide-react": "^0.469.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   },
   "devDependencies": {
+    "@fontsource-variable/fraunces": "^5.2.5",
+    "@fontsource-variable/inter": "^5.2.5",
+    "@fontsource-variable/jetbrains-mono": "^5.2.5",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^5.0.0",
     "vite": "^8.1.5"
   }
 }

@@ -6,11 +6,47 @@
   "threshold": 0.1,
   "maxDiffRatio": 0.01,
   "targets": [
-    { "screen": "flow1-step1", "route": "/preview/flow1-step1", "width": 1440, "height": 900 },
-    { "screen": "flow2-step2", "route": "/preview/flow2-step2", "width": 1440, "height": 900 },
-    { "screen": "whiteboard", "route": "/preview/whiteboard", "width": 1440, "height": 900 },
-    { "screen": "runs", "route": "/preview/runs", "width": 1440, "height": 900 },
-    { "screen": "mobile-answer", "route": "/preview/mobile-answer", "width": 390, "height": 844 },
-    { "screen": "mobile-step2", "route": "/preview/mobile-step2", "width": 390, "height": 844 }
+    {
+      "screen": "flow1-step1",
+      "route": "/preview/flow1-step1",
+      "width": 1440,
+      "height": 900,
+      "maxDiffRatio": 0.003
+    },
+    {
+      "screen": "flow2-step2",
+      "route": "/preview/flow2-step2",
+      "width": 1440,
+      "height": 900,
+      "maxDiffRatio": 0.003
+    },
+    {
+      "screen": "whiteboard",
+      "route": "/preview/whiteboard",
+      "width": 1440,
+      "height": 900,
+      "maxDiffRatio": 0.01
+    },
+    {
+      "screen": "runs",
+      "route": "/preview/runs",
+      "width": 1440,
+      "height": 900,
+      "maxDiffRatio": 0.003
+    },
+    {
+      "screen": "mobile-answer",
+      "route": "/preview/mobile-answer",
+      "width": 390,
+      "height": 844,
+      "maxDiffRatio": 0.003
+    },
+    {
+      "screen": "mobile-step2",
+      "route": "/preview/mobile-step2",
+      "width": 390,
+      "height": 844,
+      "maxDiffRatio": 0.003
+    }
   ]
 }

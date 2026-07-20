@@ -38,7 +38,7 @@
 - 人間の出力記法は **Claude 方言に統一**: `<thinking>…</thinking>`、`<function_calls><invoke name="X"><parameter name="y">…</parameter></invoke></function_calls>`、タグ外テキスト = final。パーサは寛容(崩れタグは警告して本文扱い)
 - ホワイトボードは React Flow + カスタムノード(付箋・サービス・DB・ER エンティティ・クラス)→ Mermaid `graph` / `erDiagram` / `classDiagram` に変換してエディタへ挿入
 - トレーナーの採点は `[SCORE: x.x/10]` タグ必須。学習曲線として永続化
-- UI トークン: フォント Space Grotesk / Inter / JetBrains Mono。機能色(light): thinking `#7C3AED`・tool `#0B9F66`・XML `#0369A1`・score `#0D9488`
+- UI デザインの正は Pencil の **Style C(Atelier Warm)系 6 フレーム**(ユーザー決定)。トークン実値は `docs/design-spec.md` が正: フォント Fraunces(display)/ Inter / JetBrains Mono、機能色(light): thinking `#7B4A68`・tool `#5C7050`・XML `#40676B`(旧記述の Space Grotesk・`#7C3AED` 等は Style C 採用により廃止)
 
 ## PoC からの重要な知見(ハマりどころ)
 
@@ -78,7 +78,7 @@
 ## 検証の作法
 
 - 基本コマンド: `bun test` / `bun run typecheck` / `bun run check`(Biome)/ `bun run e2e`(Playwright + chromium)
-- UI は Pencil モックと px 単位一致が必須: `bun run verify:pixels`(strict、基準 PNG は `design/reference/`。欠如は FAIL)。基準未生成の間だけ `verify:pixels:bootstrap`。基準の書き出しは Pencil エディタで `human-1.pen` を開いた状態で Claude に依頼(手順は `docs/testing.md`)
+- UI は Pencil モックと px 単位一致が必須: `bun run verify:pixels`(結合ゲート = 基準再生成→比較)。**正はコミット済みの `design/reference/html/*.html`(Pencil 忠実 export)**で、基準 PNG はコミットせず毎回 Chromium で再生成する(コミット済み PNG は環境固有で偽 FAIL を生むため廃止)。HTML の更新のみ Pencil エディタで `human-1.pen` を開いた状態で Claude に export_html を依頼(手順・来歴・macOS 固定の注意は `docs/testing.md`)
 - テストの実装と検証は別々の sub-agent に依頼し、コミット前に codex の第三者レビュー(APPROVE)を必須とする
 
 - サーバーの E2E は「人間シミュレータ」(WS クライアントで自動回答)を使う。PoC の `driver/human-sim*.mjs` を参照

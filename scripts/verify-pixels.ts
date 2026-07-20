@@ -22,6 +22,8 @@ type Target = {
   route: string
   width: number
   height: number
+  /** この target 個別の差分率上限(未指定なら config.maxDiffRatio)。 */
+  maxDiffRatio?: number
 }
 
 type Config = {
@@ -43,6 +45,44 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 
 // packages/ui/index.html に埋めたアプリ固有マーカー。別プロセスのサーバーを誤認しないための照合に使う。
 const APP_MARKERS = ['name="app"', 'human-1']
+
+// アプリ(@fontsource-variable)が登録する family。実ロードをアサートし、サイレント fallback で
+// 「基準・実測とも system フォント」の共倒れ一致(偽 PASS)を防ぐ。
+const APP_FONT_FAMILIES = ['Fraunces Variable', 'Inter Variable', 'JetBrains Mono Variable']
+
+// 指定 family が document.fonts に「loaded」な FontFace として存在することを確認する。
+// 1 つでも欠ければ明示エラーで throw(呼び出し側で fail 化)。
+async function assertFontsLoaded(
+  page: import('@playwright/test').Page,
+  families: string[],
+): Promise<void> {
+  const missing = await page.evaluate(async (fams: string[]) => {
+    await document.fonts.ready
+    const bad: string[] = []
+    for (const fam of fams) {
+      try {
+        await document.fonts.load(`16px "${fam}"`)
+      } catch {
+        // load 失敗はそのまま未ロード扱い(下の走査で bad に入る)
+      }
+      let ok = false
+      for (const ff of document.fonts) {
+        const name = ff.family.replace(/^["']|["']$/g, '')
+        if (name === fam && ff.status === 'loaded') {
+          ok = true
+          break
+        }
+      }
+      if (!ok) bad.push(fam)
+    }
+    return bad
+  }, families)
+  if (missing.length > 0) {
+    throw new Error(
+      `Web フォント未ロード: ${missing.join(', ')} — サイレント fallback による偽 PASS を防ぐため中止します`,
+    )
+  }
+}
 
 function parseArgs(): Args {
   let allowMissing = false
@@ -162,6 +202,7 @@ async function compareTarget(
 ): Promise<Outcome> {
   await page.setViewportSize({ width: target.width, height: target.height })
   await page.goto(`${baseUrl}${target.route}`, { waitUntil: 'networkidle' })
+  await assertFontsLoaded(page, APP_FONT_FAMILIES)
 
   const shotBuf = await page.screenshot()
   const actual = PNG.sync.read(Buffer.from(shotBuf))
@@ -190,11 +231,13 @@ async function compareTarget(
     PNG.sync.write(actual),
   )
 
-  if (diffRatio > config.maxDiffRatio) {
+  // per-target 上書きを優先(未指定なら config 既定)。局所的な要素欠落の見逃しを縮める。
+  const limit = target.maxDiffRatio ?? config.maxDiffRatio
+  if (diffRatio > limit) {
     return {
       screen: target.screen,
       status: 'fail',
-      reason: `差分率 ${(diffRatio * 100).toFixed(3)}% が閾値 ${(config.maxDiffRatio * 100).toFixed(3)}% を超過`,
+      reason: `差分率 ${(diffRatio * 100).toFixed(3)}% が閾値 ${(limit * 100).toFixed(3)}% を超過`,
       diffPixels,
       diffRatio,
     }

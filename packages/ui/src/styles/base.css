@@ -1,0 +1,33 @@
+/* リセット + グローバル既定。Pencil の box-border(box-sizing:border-box)に合わせる。 */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  /* px 検証の決定性: グレースケール AA を明示 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* プレビュー画面(px 検証対象)は原点にピタリ配置し、スクロールを出さない。 */
+.preview-host {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}

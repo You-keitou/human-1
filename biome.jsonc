@@ -6,7 +6,15 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!poc", "!**/*.pen", "!**/worker-configuration.d.ts"]
+    // design/reference/html/ は Pencil の export_html(基準 PNG の出所)。lint/format 対象の
+    // ソースではない(生成物・第三者フォーマット)ので除外する。fonts/ 等は .gitignore で除外済み。
+    "includes": [
+      "**",
+      "!poc",
+      "!**/*.pen",
+      "!**/worker-configuration.d.ts",
+      "!design/reference/html"
+    ]
   },
   "formatter": {
     "enabled": true,

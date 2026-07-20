@@ -7,6 +7,14 @@ dist/
 .trainer-out.txt
 *.raw
 
+# 基準 PNG は生成物。verify:pixels が毎回 HTML から再生成する(コミットしない — 環境固有で
+# stale だと偽 FAIL になるため)。正は design/reference/html/(Pencil export)のみコミット。
+design/reference/*.png
+
+# refs:generate が @fontsource-variable から再生成するローカルフォント資産(基準生成の中間物)
+design/reference/html/fonts/
+design/reference/html/.rendered/
+
 # test artifacts
 artifacts/
 test-results/

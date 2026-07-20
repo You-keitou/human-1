@@ -1,0 +1,1696 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces%3Awght%40100..900&family=Inter%3Awght%40100..900&family=JetBrains+Mono%3Awght%40100..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      *, ::before, ::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      data-pencil-name="C — Runs"
+      style="align-items: flex-start; background-color: #F4EFE6; box-sizing: border-box; display: flex; flex-direction: column; gap: 0px; height: 900px; justify-content: flex-start; overflow: hidden; width: 1440px"
+    >
+      <div
+        data-pencil-name="Header"
+        style="align-items: center; border-color: #E3DBCA; border-style: solid; border-width: 0px 0px 1px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 26px; height: 64px; justify-content: flex-start; padding: 0px 28px; width: 100%"
+      >
+        <div
+          data-pencil-name="Logo"
+          style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 9px; height: fit-content; justify-content: flex-start; width: fit-content"
+        >
+          <div
+            data-pencil-name="LogoDot"
+            style="background-color: #8A6830; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 9px; width: 9px"
+          ></div>
+          <div
+            data-pencil-name="Wordmark"
+            style="box-sizing: border-box; color: #2B2317; font-family: Fraunces, system-ui, sans-serif; font-size: 19px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+          >
+            human-1
+          </div>
+          <div
+            data-pencil-name="Badge"
+            style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+          >
+            train
+          </div>
+        </div>
+        <div
+          data-pencil-name="Nav"
+          style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 18px; height: fit-content; justify-content: flex-start; width: fit-content"
+        >
+          <div
+            data-pencil-name="NavWorkspace"
+            style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 6px 2px; width: fit-content"
+          >
+            <div
+              data-pencil-name="NavWorkspaceLabel"
+              style="box-sizing: border-box; color: #8B8170; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+            >
+              Workspace
+            </div>
+          </div>
+          <div
+            data-pencil-name="NavRuns"
+            style="align-items: flex-start; border-color: #8A6830; border-style: solid; border-width: 0px 0px 2px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 6px 2px; width: fit-content"
+          >
+            <div
+              data-pencil-name="NavRunsLabel"
+              style="box-sizing: border-box; color: #8A6830; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+            >
+              Runs
+            </div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="HeaderSpacer"
+          style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+        ></div>
+        <div
+          data-pencil-name="TrainingChip"
+          style="align-items: center; border-radius: 999px; border: 1px solid #CFC4AD; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 7px; height: fit-content; justify-content: flex-start; padding: 6px 12px; width: fit-content"
+        >
+          <div
+            data-pencil-name="TrainDot"
+            style="background-color: #8A6830; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+          ></div>
+          <div
+            data-pencil-name="TrainLabel"
+            style="box-sizing: border-box; color: #57503F; font-family: Inter, system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+          >
+            Training · epoch 7
+          </div>
+        </div>
+        <div
+          data-pencil-name="ScoreChip"
+          style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; width: fit-content"
+        >
+          <div
+            data-pencil-name="ScoreLabel"
+            style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+          >
+            avg
+          </div>
+          <div
+            data-pencil-name="ScoreVal"
+            style="box-sizing: border-box; color: #40676B; font-family: Fraunces, system-ui, sans-serif; font-size: 17px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+          >
+            8.5
+          </div>
+          <div
+            data-pencil-name="ScoreMax"
+            style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+          >
+            /10
+          </div>
+        </div>
+        <div
+          data-pencil-name="ConnChip"
+          style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 7px; height: fit-content; justify-content: flex-start; width: fit-content"
+        >
+          <div
+            data-pencil-name="ConnDot"
+            style="background-color: #5C7050; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 8px; width: 8px"
+          ></div>
+          <div
+            data-pencil-name="ConnLabel"
+            style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+          >
+            live
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="Main"
+        style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 20px; justify-content: flex-start; padding: 20px; width: 100%"
+      >
+        <div
+          data-pencil-name="RunsListCard"
+          style="align-items: flex-start; background-color: #FCFAF5; border-radius: 8px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 0px; height: 100%; justify-content: flex-start; overflow: hidden; width: 400px"
+        >
+          <div
+            data-pencil-name="ListHead"
+            style="align-items: center; border-color: #E3DBCA; border-style: solid; border-width: 0px 0px 1px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; padding: 13px 18px; width: 100%"
+          >
+            <div
+              data-pencil-name="ListTitle"
+              style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 1.2px; line-height: normal; text-align: left; white-space: nowrap'
+            >
+              TRAINING RUNS
+            </div>
+            <div
+              data-pencil-name="HeadSpacer"
+              style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+            ></div>
+            <div
+              data-pencil-name="CountPill"
+              style="align-items: flex-start; border-radius: 999px; border: 1px solid #CFC4AD; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 3px 10px; width: fit-content"
+            >
+              <div
+                data-pencil-name="CountLabel"
+                style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                7 runs
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="ListBody"
+            style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 3px; justify-content: flex-start; padding: 12px 10px; width: 100%"
+          >
+            <div
+              data-pencil-name="Run_ECサイト設計"
+              style="align-items: center; background-color: #F0E7D2; border-color: #8A6830; border-radius: 6px; border-style: solid; border-width: 0px 0px 0px 2px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 12px; height: fit-content; justify-content: flex-start; padding: 13px 14px; width: 100%"
+            >
+              <div
+                data-pencil-name="Info"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 5px; height: fit-content; justify-content: flex-start"
+              >
+                <div
+                  data-pencil-name="TitleRow"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: fit-content"
+                >
+                  <div
+                    data-pencil-name="StatusDot"
+                    style="background-color: #8A6830; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                  ></div>
+                  <div
+                    data-pencil-name="Title"
+                    style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 14px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                  >
+                    ECサイト設計
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Meta"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  7 epochs · 2h ago
+                </div>
+              </div>
+              <div
+                data-pencil-name="Spark"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 3px; height: 26px; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="sb0"
+                  style="background-color: #8A6830; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 6px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb1"
+                  style="background-color: #8A6830; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 8.4px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb2"
+                  style="background-color: #8A6830; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 10.8px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb3"
+                  style="background-color: #8A6830; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 12px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb4"
+                  style="background-color: #8A6830; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 14.4px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb5"
+                  style="background-color: #8A6830; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 18px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb6"
+                  style="background-color: #8A6830; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 20.4px; width: 6px"
+                ></div>
+              </div>
+              <div
+                data-pencil-name="AvgBox"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 1px; height: fit-content; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="AvgVal"
+                  style="box-sizing: border-box; color: #40676B; font-family: Fraunces, system-ui, sans-serif; font-size: 17px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  6.1
+                </div>
+                <div
+                  data-pencil-name="AvgCap"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 1px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  avg
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Sep1"
+              style="background-color: #E3DBCA; box-sizing: border-box; flex-shrink: 0; height: 1px; width: 100%"
+            ></div>
+            <div
+              data-pencil-name="Run_決済基盤"
+              style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 12px; height: fit-content; justify-content: flex-start; padding: 13px 14px; width: 100%"
+            >
+              <div
+                data-pencil-name="Info"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 5px; height: fit-content; justify-content: flex-start"
+              >
+                <div
+                  data-pencil-name="TitleRow"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: fit-content"
+                >
+                  <div
+                    data-pencil-name="StatusDot"
+                    style="background-color: #5C7050; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                  ></div>
+                  <div
+                    data-pencil-name="Title"
+                    style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 14px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                  >
+                    決済基盤
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Meta"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  5 epochs · 5h ago
+                </div>
+              </div>
+              <div
+                data-pencil-name="Spark"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 3px; height: 26px; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="sb0"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 12px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb1"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 14.4px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb2"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 16.8px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb3"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 18px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb4"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 19.2px; width: 6px"
+                ></div>
+              </div>
+              <div
+                data-pencil-name="AvgBox"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 1px; height: fit-content; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="AvgVal"
+                  style="box-sizing: border-box; color: #57503F; font-family: Fraunces, system-ui, sans-serif; font-size: 17px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  7.2
+                </div>
+                <div
+                  data-pencil-name="AvgCap"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 1px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  avg
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Sep2"
+              style="background-color: #E3DBCA; box-sizing: border-box; flex-shrink: 0; height: 1px; width: 100%"
+            ></div>
+            <div
+              data-pencil-name="Run_認証システム"
+              style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 12px; height: fit-content; justify-content: flex-start; padding: 13px 14px; width: 100%"
+            >
+              <div
+                data-pencil-name="Info"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 5px; height: fit-content; justify-content: flex-start"
+              >
+                <div
+                  data-pencil-name="TitleRow"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: fit-content"
+                >
+                  <div
+                    data-pencil-name="StatusDot"
+                    style="background-color: #5C7050; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                  ></div>
+                  <div
+                    data-pencil-name="Title"
+                    style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 14px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                  >
+                    認証システム
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Meta"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  6 epochs · 1d ago
+                </div>
+              </div>
+              <div
+                data-pencil-name="Spark"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 3px; height: 26px; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="sb0"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 7.2px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb1"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 9.6px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb2"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 12px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb3"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 13.2px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb4"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 14.4px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb5"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 15.6px; width: 6px"
+                ></div>
+              </div>
+              <div
+                data-pencil-name="AvgBox"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 1px; height: fit-content; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="AvgVal"
+                  style="box-sizing: border-box; color: #57503F; font-family: Fraunces, system-ui, sans-serif; font-size: 17px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  5.4
+                </div>
+                <div
+                  data-pencil-name="AvgCap"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 1px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  avg
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Sep3"
+              style="background-color: #E3DBCA; box-sizing: border-box; flex-shrink: 0; height: 1px; width: 100%"
+            ></div>
+            <div
+              data-pencil-name="Run_リアルタイム同期"
+              style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 12px; height: fit-content; justify-content: flex-start; padding: 13px 14px; width: 100%"
+            >
+              <div
+                data-pencil-name="Info"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 5px; height: fit-content; justify-content: flex-start"
+              >
+                <div
+                  data-pencil-name="TitleRow"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: fit-content"
+                >
+                  <div
+                    data-pencil-name="StatusDot"
+                    style="background-color: #5C7050; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                  ></div>
+                  <div
+                    data-pencil-name="Title"
+                    style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 14px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                  >
+                    リアルタイム同期
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Meta"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  4 epochs · 2d ago
+                </div>
+              </div>
+              <div
+                data-pencil-name="Spark"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 3px; height: 26px; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="sb0"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 7.2px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb1"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 9.6px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb2"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 12px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb3"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 14.4px; width: 6px"
+                ></div>
+              </div>
+              <div
+                data-pencil-name="AvgBox"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 1px; height: fit-content; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="AvgVal"
+                  style="box-sizing: border-box; color: #57503F; font-family: Fraunces, system-ui, sans-serif; font-size: 17px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  4.8
+                </div>
+                <div
+                  data-pencil-name="AvgCap"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 1px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  avg
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Sep4"
+              style="background-color: #E3DBCA; box-sizing: border-box; flex-shrink: 0; height: 1px; width: 100%"
+            ></div>
+            <div
+              data-pencil-name="Run_検索基盤"
+              style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 12px; height: fit-content; justify-content: flex-start; padding: 13px 14px; width: 100%"
+            >
+              <div
+                data-pencil-name="Info"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 5px; height: fit-content; justify-content: flex-start"
+              >
+                <div
+                  data-pencil-name="TitleRow"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: fit-content"
+                >
+                  <div
+                    data-pencil-name="StatusDot"
+                    style="background-color: #5C7050; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                  ></div>
+                  <div
+                    data-pencil-name="Title"
+                    style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 14px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                  >
+                    検索基盤
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Meta"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  8 epochs · 3d ago
+                </div>
+              </div>
+              <div
+                data-pencil-name="Spark"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 3px; height: 26px; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="sb0"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 4.8px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb1"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 7.2px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb2"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 9.6px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb3"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 12px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb4"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 14.4px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb5"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 15.6px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb6"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 16.8px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb7"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 19.2px; width: 6px"
+                ></div>
+              </div>
+              <div
+                data-pencil-name="AvgBox"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 1px; height: fit-content; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="AvgVal"
+                  style="box-sizing: border-box; color: #57503F; font-family: Fraunces, system-ui, sans-serif; font-size: 17px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  6.7
+                </div>
+                <div
+                  data-pencil-name="AvgCap"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 1px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  avg
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Sep5"
+              style="background-color: #E3DBCA; box-sizing: border-box; flex-shrink: 0; height: 1px; width: 100%"
+            ></div>
+            <div
+              data-pencil-name="Run_通知配信"
+              style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 12px; height: fit-content; justify-content: flex-start; padding: 13px 14px; width: 100%"
+            >
+              <div
+                data-pencil-name="Info"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 5px; height: fit-content; justify-content: flex-start"
+              >
+                <div
+                  data-pencil-name="TitleRow"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: fit-content"
+                >
+                  <div
+                    data-pencil-name="StatusDot"
+                    style="background-color: #AC5B3B; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                  ></div>
+                  <div
+                    data-pencil-name="Title"
+                    style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 14px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                  >
+                    通知配信
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Meta"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  3 epochs · 4d ago
+                </div>
+              </div>
+              <div
+                data-pencil-name="Spark"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 3px; height: 26px; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="sb0"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 4.8px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb1"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 8.4px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb2"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 10.8px; width: 6px"
+                ></div>
+              </div>
+              <div
+                data-pencil-name="AvgBox"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 1px; height: fit-content; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="AvgVal"
+                  style="box-sizing: border-box; color: #57503F; font-family: Fraunces, system-ui, sans-serif; font-size: 17px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  3.9
+                </div>
+                <div
+                  data-pencil-name="AvgCap"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 1px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  avg
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Sep6"
+              style="background-color: #E3DBCA; box-sizing: border-box; flex-shrink: 0; height: 1px; width: 100%"
+            ></div>
+            <div
+              data-pencil-name="Run_データ整合性"
+              style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 12px; height: fit-content; justify-content: flex-start; padding: 13px 14px; width: 100%"
+            >
+              <div
+                data-pencil-name="Info"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 5px; height: fit-content; justify-content: flex-start"
+              >
+                <div
+                  data-pencil-name="TitleRow"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: fit-content"
+                >
+                  <div
+                    data-pencil-name="StatusDot"
+                    style="background-color: #5C7050; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                  ></div>
+                  <div
+                    data-pencil-name="Title"
+                    style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 14px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                  >
+                    データ整合性
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="Meta"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  5 epochs · 6d ago
+                </div>
+              </div>
+              <div
+                data-pencil-name="Spark"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 3px; height: 26px; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="sb0"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 13.2px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb1"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 15.6px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb2"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 16.8px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb3"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 19.2px; width: 6px"
+                ></div>
+                <div
+                  data-pencil-name="sb4"
+                  style="background-color: #CFC4AD; border-radius: 2px; box-sizing: border-box; flex-shrink: 0; height: 20.4px; width: 6px"
+                ></div>
+              </div>
+              <div
+                data-pencil-name="AvgBox"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 1px; height: fit-content; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="AvgVal"
+                  style="box-sizing: border-box; color: #57503F; font-family: Fraunces, system-ui, sans-serif; font-size: 17px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  7.8
+                </div>
+                <div
+                  data-pencil-name="AvgCap"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 1px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  avg
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="RunDetail"
+          style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 16px; height: 100%; justify-content: flex-start"
+        >
+          <div
+            data-pencil-name="DetailHead"
+            style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 16px; height: fit-content; justify-content: flex-start; width: 100%"
+          >
+            <div
+              data-pencil-name="TitleCol"
+              style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 5px; height: fit-content; justify-content: flex-start"
+            >
+              <div
+                data-pencil-name="DetailTitleRow"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 10px; height: fit-content; justify-content: flex-start; width: fit-content"
+              >
+                <div
+                  data-pencil-name="RunTag"
+                  style="align-items: flex-start; border-radius: 6px; border: 1px solid #CFC4AD; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 3px 8px; width: fit-content"
+                >
+                  <div
+                    data-pencil-name="RunTagLabel"
+                    style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                  >
+                    run #12
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="DetailTitle"
+                  style="box-sizing: border-box; color: #2B2317; font-family: Fraunces, system-ui, sans-serif; font-size: 24px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  ECサイト設計
+                </div>
+              </div>
+              <div
+                data-pencil-name="DetailMeta"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                trainer: claude -p · codex 殻 · 2026-07-19 · 7 epochs · 41 turns
+              </div>
+            </div>
+            <div
+              data-pencil-name="GrowthBadge"
+              style="align-items: center; border-radius: 999px; border: 1px solid #5C7050; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 6px 13px; width: fit-content"
+            >
+              <div
+                data-pencil-name="GrowthLabel"
+                style='box-sizing: border-box; color: #5C7050; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                +6.0 growth ↗
+              </div>
+            </div>
+            <div
+              data-pencil-name="CurrentScore"
+              style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 1px; height: fit-content; justify-content: flex-start; width: fit-content"
+            >
+              <div
+                data-pencil-name="ScoreBig"
+                style="box-sizing: border-box; color: #40676B; font-family: Fraunces, system-ui, sans-serif; font-size: 32px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+              >
+                8.5
+              </div>
+              <div
+                data-pencil-name="ScoreCap"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 1.5px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                CURRENT SCORE
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="CurveCard"
+            style="align-items: flex-start; background-color: #FCFAF5; border-radius: 8px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 14px; height: fit-content; justify-content: flex-start; padding: 16px 20px; width: 100%"
+          >
+            <div
+              data-pencil-name="CurveHead"
+              style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+            >
+              <div
+                data-pencil-name="CurveTitle"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 1.2px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                LEARNING CURVE
+              </div>
+              <div
+                data-pencil-name="CurveSpacer"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+              ></div>
+              <div
+                data-pencil-name="CurveHint"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                score / epoch
+              </div>
+            </div>
+            <div
+              data-pencil-name="PlotRow"
+              style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 12px; height: fit-content; justify-content: flex-start; width: 100%"
+            >
+              <div
+                data-pencil-name="YAxis"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 0px; height: 150px; justify-content: space-between; width: 22px"
+              >
+                <div
+                  data-pencil-name="y10"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  10
+                </div>
+                <div
+                  data-pencil-name="y8"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  8
+                </div>
+                <div
+                  data-pencil-name="y6"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  6
+                </div>
+                <div
+                  data-pencil-name="y4"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  4
+                </div>
+                <div
+                  data-pencil-name="y2"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  2
+                </div>
+                <div
+                  data-pencil-name="y0"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  0
+                </div>
+              </div>
+              <div
+                data-pencil-name="Bars"
+                style="align-items: flex-end; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 14px; height: fit-content; justify-content: flex-start"
+              >
+                <div
+                  data-pencil-name="Wrap_ep1"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 6px; height: 150px; justify-content: flex-end"
+                >
+                  <div
+                    data-pencil-name="Val_ep1"
+                    style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                  >
+                    2.5
+                  </div>
+                  <div
+                    data-pencil-name="Bar_ep1"
+                    style="background-color: #40676B; border-radius: 3px 3px 0px 0px; box-sizing: border-box; flex-shrink: 0; height: 37.5px; width: 34px"
+                  ></div>
+                </div>
+                <div
+                  data-pencil-name="Wrap_ep2"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 6px; height: 150px; justify-content: flex-end"
+                >
+                  <div
+                    data-pencil-name="Val_ep2"
+                    style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                  >
+                    3.5
+                  </div>
+                  <div
+                    data-pencil-name="Bar_ep2"
+                    style="background-color: #40676B; border-radius: 3px 3px 0px 0px; box-sizing: border-box; flex-shrink: 0; height: 52.5px; width: 34px"
+                  ></div>
+                </div>
+                <div
+                  data-pencil-name="Wrap_ep3"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 6px; height: 150px; justify-content: flex-end"
+                >
+                  <div
+                    data-pencil-name="Val_ep3"
+                    style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                  >
+                    4.5
+                  </div>
+                  <div
+                    data-pencil-name="Bar_ep3"
+                    style="background-color: #40676B; border-radius: 3px 3px 0px 0px; box-sizing: border-box; flex-shrink: 0; height: 67.5px; width: 34px"
+                  ></div>
+                </div>
+                <div
+                  data-pencil-name="Wrap_ep4"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 6px; height: 150px; justify-content: flex-end"
+                >
+                  <div
+                    data-pencil-name="Val_ep4"
+                    style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                  >
+                    5.0
+                  </div>
+                  <div
+                    data-pencil-name="Bar_ep4"
+                    style="background-color: #40676B; border-radius: 3px 3px 0px 0px; box-sizing: border-box; flex-shrink: 0; height: 75px; width: 34px"
+                  ></div>
+                </div>
+                <div
+                  data-pencil-name="Wrap_ep5"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 6px; height: 150px; justify-content: flex-end"
+                >
+                  <div
+                    data-pencil-name="Val_ep5"
+                    style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                  >
+                    6.0
+                  </div>
+                  <div
+                    data-pencil-name="Bar_ep5"
+                    style="background-color: #40676B; border-radius: 3px 3px 0px 0px; box-sizing: border-box; flex-shrink: 0; height: 90px; width: 34px"
+                  ></div>
+                </div>
+                <div
+                  data-pencil-name="Wrap_ep6"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 6px; height: 150px; justify-content: flex-end"
+                >
+                  <div
+                    data-pencil-name="Val_ep6"
+                    style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                  >
+                    7.5
+                  </div>
+                  <div
+                    data-pencil-name="Bar_ep6"
+                    style="background-color: #40676B; border-radius: 3px 3px 0px 0px; box-sizing: border-box; flex-shrink: 0; height: 112.5px; width: 34px"
+                  ></div>
+                </div>
+                <div
+                  data-pencil-name="Wrap_ep7"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 6px; height: 150px; justify-content: flex-end"
+                >
+                  <div
+                    data-pencil-name="Val_ep7"
+                    style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                  >
+                    8.5
+                  </div>
+                  <div
+                    data-pencil-name="Bar_ep7"
+                    style="background-color: #40676B; border-radius: 3px 3px 0px 0px; box-sizing: border-box; flex-shrink: 0; height: 127.5px; width: 34px"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="Baseline"
+              style="background-color: #E3DBCA; box-sizing: border-box; flex-shrink: 0; height: 1px; width: 100%"
+            ></div>
+            <div
+              data-pencil-name="EpochLabels"
+              style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 14px; height: fit-content; justify-content: flex-start; padding: 0px 0px 0px 34px; width: 100%"
+            >
+              <div
+                data-pencil-name="Lbl_ep1"
+                style='box-sizing: border-box; color: #8B8170; flex: 1 1 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: center'
+              >
+                ep1
+              </div>
+              <div
+                data-pencil-name="Lbl_ep2"
+                style='box-sizing: border-box; color: #8B8170; flex: 1 1 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: center'
+              >
+                ep2
+              </div>
+              <div
+                data-pencil-name="Lbl_ep3"
+                style='box-sizing: border-box; color: #8B8170; flex: 1 1 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: center'
+              >
+                ep3
+              </div>
+              <div
+                data-pencil-name="Lbl_ep4"
+                style='box-sizing: border-box; color: #8B8170; flex: 1 1 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: center'
+              >
+                ep4
+              </div>
+              <div
+                data-pencil-name="Lbl_ep5"
+                style='box-sizing: border-box; color: #8B8170; flex: 1 1 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: center'
+              >
+                ep5
+              </div>
+              <div
+                data-pencil-name="Lbl_ep6"
+                style='box-sizing: border-box; color: #8B8170; flex: 1 1 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: center'
+              >
+                ep6
+              </div>
+              <div
+                data-pencil-name="Lbl_ep7"
+                style='box-sizing: border-box; color: #8B8170; flex: 1 1 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: center'
+              >
+                ep7
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="StatTiles"
+            style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 14px; height: fit-content; justify-content: flex-start; width: 100%"
+          >
+            <div
+              data-pencil-name="Tile_AVG SCORE"
+              style="align-items: flex-start; background-color: #FCFAF5; border-radius: 8px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 5px; height: fit-content; justify-content: flex-start; padding: 13px 16px"
+            >
+              <div
+                data-pencil-name="Cap"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 1.2px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                AVG SCORE
+              </div>
+              <div
+                data-pencil-name="Val"
+                style="box-sizing: border-box; color: #40676B; font-family: Fraunces, system-ui, sans-serif; font-size: 26px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+              >
+                6.1
+              </div>
+              <div
+                data-pencil-name="Hint"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                +2.3 vs ep1
+              </div>
+            </div>
+            <div
+              data-pencil-name="Tile_EPOCHS"
+              style="align-items: flex-start; background-color: #FCFAF5; border-radius: 8px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 5px; height: fit-content; justify-content: flex-start; padding: 13px 16px"
+            >
+              <div
+                data-pencil-name="Cap"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 1.2px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                EPOCHS
+              </div>
+              <div
+                data-pencil-name="Val"
+                style="box-sizing: border-box; color: #2B2317; font-family: Fraunces, system-ui, sans-serif; font-size: 26px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+              >
+                7
+              </div>
+              <div
+                data-pencil-name="Hint"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                41 turns total
+              </div>
+            </div>
+            <div
+              data-pencil-name="Tile_TOKENS"
+              style="align-items: flex-start; background-color: #FCFAF5; border-radius: 8px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 5px; height: fit-content; justify-content: flex-start; padding: 13px 16px"
+            >
+              <div
+                data-pencil-name="Cap"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 1.2px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                TOKENS
+              </div>
+              <div
+                data-pencil-name="Val"
+                style="box-sizing: border-box; color: #2B2317; font-family: Fraunces, system-ui, sans-serif; font-size: 26px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+              >
+                48.2K
+              </div>
+              <div
+                data-pencil-name="Hint"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                12.4K in · 35.8K out
+              </div>
+            </div>
+            <div
+              data-pencil-name="Tile_BEST TURN"
+              style="align-items: flex-start; background-color: #FCFAF5; border-radius: 8px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 5px; height: fit-content; justify-content: flex-start; padding: 13px 16px"
+            >
+              <div
+                data-pencil-name="Cap"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 1.2px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                BEST TURN
+              </div>
+              <div
+                data-pencil-name="Val"
+                style="box-sizing: border-box; color: #2B2317; font-family: Fraunces, system-ui, sans-serif; font-size: 26px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+              >
+                8.5
+              </div>
+              <div
+                data-pencil-name="Hint"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                turn 38 · ep7
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="BottomRow"
+            style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 16px; justify-content: flex-start; width: 100%"
+          >
+            <div
+              data-pencil-name="RolloutCard"
+              style="align-items: flex-start; background-color: #FCFAF5; border-radius: 8px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 8px; height: 100%; justify-content: flex-start; overflow: hidden; padding: 14px 16px"
+            >
+              <div
+                data-pencil-name="RollHead"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <div
+                  data-pencil-name="RollTitle"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 1.2px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  ROLLOUT TIMELINE
+                </div>
+                <div
+                  data-pencil-name="RollSpacer"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="RollEp"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  epoch 7 · 6 turns
+                </div>
+              </div>
+              <div
+                data-pencil-name="Row_turn 34"
+                style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 10px; height: fit-content; justify-content: flex-start; padding: 6px 8px; width: 100%"
+              >
+                <div
+                  data-pencil-name="Marker"
+                  style="background-color: #40676B; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                ></div>
+                <div
+                  data-pencil-name="TurnNo"
+                  style='box-sizing: border-box; color: #57503F; flex-shrink: 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; width: 54px'
+                >
+                  turn 34
+                </div>
+                <div
+                  data-pencil-name="Chips"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 6px; height: fit-content; justify-content: flex-start"
+                >
+                  <div
+                    data-pencil-name="Chip_thinking"
+                    style="align-items: flex-start; background-color: #F1E8EC; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #7B4A68; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      thinking
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Chip_tool ×2"
+                    style="align-items: flex-start; background-color: #E9EBDD; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #5C7050; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      tool ×2
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Chip_final"
+                    style="align-items: flex-start; background-color: #F0E7D2; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #6F5322; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      final
+                    </div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="RowScore"
+                  style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  7.5
+                </div>
+              </div>
+              <div
+                data-pencil-name="Row_turn 35"
+                style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 10px; height: fit-content; justify-content: flex-start; padding: 6px 8px; width: 100%"
+              >
+                <div
+                  data-pencil-name="Marker"
+                  style="background-color: #40676B; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                ></div>
+                <div
+                  data-pencil-name="TurnNo"
+                  style='box-sizing: border-box; color: #57503F; flex-shrink: 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; width: 54px'
+                >
+                  turn 35
+                </div>
+                <div
+                  data-pencil-name="Chips"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 6px; height: fit-content; justify-content: flex-start"
+                >
+                  <div
+                    data-pencil-name="Chip_thinking"
+                    style="align-items: flex-start; background-color: #F1E8EC; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #7B4A68; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      thinking
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Chip_tool ×1"
+                    style="align-items: flex-start; background-color: #E9EBDD; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #5C7050; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      tool ×1
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Chip_final"
+                    style="align-items: flex-start; background-color: #F0E7D2; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #6F5322; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      final
+                    </div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="RowScore"
+                  style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  7.0
+                </div>
+              </div>
+              <div
+                data-pencil-name="Row_turn 36"
+                style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 10px; height: fit-content; justify-content: flex-start; padding: 6px 8px; width: 100%"
+              >
+                <div
+                  data-pencil-name="Marker"
+                  style="background-color: #40676B; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                ></div>
+                <div
+                  data-pencil-name="TurnNo"
+                  style='box-sizing: border-box; color: #57503F; flex-shrink: 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; width: 54px'
+                >
+                  turn 36
+                </div>
+                <div
+                  data-pencil-name="Chips"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 6px; height: fit-content; justify-content: flex-start"
+                >
+                  <div
+                    data-pencil-name="Chip_thinking"
+                    style="align-items: flex-start; background-color: #F1E8EC; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #7B4A68; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      thinking
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Chip_final"
+                    style="align-items: flex-start; background-color: #F0E7D2; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #6F5322; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      final
+                    </div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="RowScore"
+                  style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  8.0
+                </div>
+              </div>
+              <div
+                data-pencil-name="Row_turn 37"
+                style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 10px; height: fit-content; justify-content: flex-start; padding: 6px 8px; width: 100%"
+              >
+                <div
+                  data-pencil-name="Marker"
+                  style="background-color: #40676B; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                ></div>
+                <div
+                  data-pencil-name="TurnNo"
+                  style='box-sizing: border-box; color: #57503F; flex-shrink: 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; width: 54px'
+                >
+                  turn 37
+                </div>
+                <div
+                  data-pencil-name="Chips"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 6px; height: fit-content; justify-content: flex-start"
+                >
+                  <div
+                    data-pencil-name="Chip_thinking"
+                    style="align-items: flex-start; background-color: #F1E8EC; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #7B4A68; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      thinking
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Chip_tool ×3"
+                    style="align-items: flex-start; background-color: #E9EBDD; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #5C7050; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      tool ×3
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Chip_final"
+                    style="align-items: flex-start; background-color: #F0E7D2; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #6F5322; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      final
+                    </div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="RowScore"
+                  style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  8.0
+                </div>
+              </div>
+              <div
+                data-pencil-name="Row_turn 38"
+                style="align-items: center; background-color: #F0E7D2; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 10px; height: fit-content; justify-content: flex-start; padding: 6px 8px; width: 100%"
+              >
+                <div
+                  data-pencil-name="Marker"
+                  style="background-color: #8A6830; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                ></div>
+                <div
+                  data-pencil-name="TurnNo"
+                  style='box-sizing: border-box; color: #57503F; flex-shrink: 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; width: 54px'
+                >
+                  turn 38
+                </div>
+                <div
+                  data-pencil-name="Chips"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 6px; height: fit-content; justify-content: flex-start"
+                >
+                  <div
+                    data-pencil-name="Chip_thinking"
+                    style="align-items: flex-start; background-color: #F1E8EC; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #7B4A68; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      thinking
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Chip_tool ×1"
+                    style="align-items: flex-start; background-color: #E9EBDD; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #5C7050; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      tool ×1
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Chip_final"
+                    style="align-items: flex-start; background-color: #F0E7D2; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #6F5322; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      final
+                    </div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="RowScore"
+                  style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  8.5
+                </div>
+              </div>
+              <div
+                data-pencil-name="Row_turn 39"
+                style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 10px; height: fit-content; justify-content: flex-start; padding: 6px 8px; width: 100%"
+              >
+                <div
+                  data-pencil-name="Marker"
+                  style="background-color: #40676B; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+                ></div>
+                <div
+                  data-pencil-name="TurnNo"
+                  style='box-sizing: border-box; color: #57503F; flex-shrink: 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; width: 54px'
+                >
+                  turn 39
+                </div>
+                <div
+                  data-pencil-name="Chips"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 6px; height: fit-content; justify-content: flex-start"
+                >
+                  <div
+                    data-pencil-name="Chip_thinking"
+                    style="align-items: flex-start; background-color: #F1E8EC; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #7B4A68; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      thinking
+                    </div>
+                  </div>
+                  <div
+                    data-pencil-name="Chip_final"
+                    style="align-items: flex-start; background-color: #F0E7D2; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ChipLabel"
+                      style='box-sizing: border-box; color: #6F5322; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      final
+                    </div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="RowScore"
+                  style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  8.5
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="RubricCard"
+              style="align-items: flex-start; background-color: #FCFAF5; border-radius: 8px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 10px; height: 100%; justify-content: flex-start; overflow: hidden; padding: 14px 16px; width: 400px"
+            >
+              <div
+                data-pencil-name="RubHead"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <div
+                  data-pencil-name="RubTitle"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 1.2px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  TRAINER RUBRIC v2
+                </div>
+                <div
+                  data-pencil-name="RubSpacer"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="RubTrainer"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  claude -p
+                </div>
+              </div>
+              <div
+                data-pencil-name="Rub_正確性"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 4px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <div
+                  data-pencil-name="NameRow"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+                >
+                  <div
+                    data-pencil-name="CritName"
+                    style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                  >
+                    正確性
+                  </div>
+                  <div
+                    data-pencil-name="NameSpacer"
+                    style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                  ></div>
+                  <div
+                    data-pencil-name="ScorePill"
+                    style="align-items: flex-start; background-color: #EFE9DC; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ScoreTag"
+                      style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      [SCORE: 8.5/10]
+                    </div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="CritDesc"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; width: 100%'
+                >
+                  教師軌跡との差分は決済の冪等性のみ
+                </div>
+              </div>
+              <div
+                data-pencil-name="Rub_設計判断"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 4px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <div
+                  data-pencil-name="NameRow"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+                >
+                  <div
+                    data-pencil-name="CritName"
+                    style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                  >
+                    設計判断
+                  </div>
+                  <div
+                    data-pencil-name="NameSpacer"
+                    style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                  ></div>
+                  <div
+                    data-pencil-name="ScorePill"
+                    style="align-items: flex-start; background-color: #EFE9DC; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ScoreTag"
+                      style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      [SCORE: 7.0/10]
+                    </div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="CritDesc"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; width: 100%'
+                >
+                  3サービス分割は妥当・境界づけが明快
+                </div>
+              </div>
+              <div
+                data-pencil-name="Rub_tool 効率"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 4px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <div
+                  data-pencil-name="NameRow"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+                >
+                  <div
+                    data-pencil-name="CritName"
+                    style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                  >
+                    tool 効率
+                  </div>
+                  <div
+                    data-pencil-name="NameSpacer"
+                    style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                  ></div>
+                  <div
+                    data-pencil-name="ScorePill"
+                    style="align-items: flex-start; background-color: #EFE9DC; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ScoreTag"
+                      style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      [SCORE: 8.0/10]
+                    </div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="CritDesc"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; width: 100%'
+                >
+                  並列 exec / web_search を適切に活用
+                </div>
+              </div>
+              <div
+                data-pencil-name="Rub_説明の明快さ"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 4px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <div
+                  data-pencil-name="NameRow"
+                  style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+                >
+                  <div
+                    data-pencil-name="CritName"
+                    style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                  >
+                    説明の明快さ
+                  </div>
+                  <div
+                    data-pencil-name="NameSpacer"
+                    style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                  ></div>
+                  <div
+                    data-pencil-name="ScorePill"
+                    style="align-items: flex-start; background-color: #EFE9DC; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 2px 8px; width: fit-content"
+                  >
+                    <div
+                      data-pencil-name="ScoreTag"
+                      style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                    >
+                      [SCORE: 9.0/10]
+                    </div>
+                  </div>
+                </div>
+                <div
+                  data-pencil-name="CritDesc"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; width: 100%'
+                >
+                  Mermaid ER 図で設計意図を可視化
+                </div>
+              </div>
+              <div
+                data-pencil-name="RubDivider"
+                style="background-color: #E3DBCA; box-sizing: border-box; flex-shrink: 0; height: 1px; width: 100%"
+              ></div>
+              <div
+                data-pencil-name="RubTotal"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <div
+                  data-pencil-name="TotalName"
+                  style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  TOTAL · weighted
+                </div>
+                <div
+                  data-pencil-name="TotalSpacer"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="TotalPill"
+                  style="align-items: flex-start; background-color: #F0E7D2; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 3px 9px; width: fit-content"
+                >
+                  <div
+                    data-pencil-name="TotalTag"
+                    style='box-sizing: border-box; color: #6F5322; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                  >
+                    [SCORE: 8.0/10]
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

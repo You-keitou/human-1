@@ -1,0 +1,1211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces%3Awght%40100..900&family=Inter%3Awght%40100..900&family=JetBrains+Mono%3Awght%40100..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      *, ::before, ::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      data-pencil-name="C — Workspace Whiteboard"
+      style="align-items: flex-start; background-color: #F4EFE6; box-sizing: border-box; display: flex; flex-direction: column; gap: 0px; height: 900px; justify-content: flex-start; overflow: hidden; width: 1440px"
+    >
+      <div
+        data-pencil-name="Header"
+        style="align-items: center; border-color: #E3DBCA; border-style: solid; border-width: 0px 0px 1px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 26px; height: 64px; justify-content: flex-start; padding: 0px 28px; width: 100%"
+      >
+        <div
+          data-pencil-name="Logo"
+          style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 9px; height: fit-content; justify-content: flex-start; width: fit-content"
+        >
+          <div
+            data-pencil-name="LogoDot"
+            style="background-color: #8A6830; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 9px; width: 9px"
+          ></div>
+          <div
+            data-pencil-name="Wordmark"
+            style="box-sizing: border-box; color: #2B2317; font-family: Fraunces, system-ui, sans-serif; font-size: 19px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+          >
+            human-1
+          </div>
+          <div
+            data-pencil-name="Badge"
+            style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+          >
+            train
+          </div>
+        </div>
+        <div
+          data-pencil-name="Nav"
+          style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 18px; height: fit-content; justify-content: flex-start; width: fit-content"
+        >
+          <div
+            data-pencil-name="NavWorkspace"
+            style="align-items: flex-start; border-color: #8A6830; border-style: solid; border-width: 0px 0px 2px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 6px 2px; width: fit-content"
+          >
+            <div
+              data-pencil-name="NavWorkspaceLabel"
+              style="box-sizing: border-box; color: #8A6830; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+            >
+              Workspace
+            </div>
+          </div>
+          <div
+            data-pencil-name="NavRuns"
+            style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 6px 2px; width: fit-content"
+          >
+            <div
+              data-pencil-name="NavRunsLabel"
+              style="box-sizing: border-box; color: #8B8170; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+            >
+              Runs
+            </div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="HeaderSpacer"
+          style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+        ></div>
+        <div
+          data-pencil-name="TrainingChip"
+          style="align-items: center; border-radius: 999px; border: 1px solid #CFC4AD; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 7px; height: fit-content; justify-content: flex-start; padding: 6px 12px; width: fit-content"
+        >
+          <div
+            data-pencil-name="TrainDot"
+            style="background-color: #8A6830; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 7px; width: 7px"
+          ></div>
+          <div
+            data-pencil-name="TrainLabel"
+            style="box-sizing: border-box; color: #57503F; font-family: Inter, system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+          >
+            Training · epoch 3
+          </div>
+        </div>
+        <div
+          data-pencil-name="ScoreChip"
+          style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; width: fit-content"
+        >
+          <div
+            data-pencil-name="ScoreLabel"
+            style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+          >
+            avg
+          </div>
+          <div
+            data-pencil-name="ScoreVal"
+            style="box-sizing: border-box; color: #40676B; font-family: Fraunces, system-ui, sans-serif; font-size: 17px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+          >
+            8.4
+          </div>
+          <div
+            data-pencil-name="ScoreMax"
+            style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+          >
+            /10
+          </div>
+        </div>
+        <div
+          data-pencil-name="ConnChip"
+          style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 7px; height: fit-content; justify-content: flex-start; width: fit-content"
+        >
+          <div
+            data-pencil-name="ConnDot"
+            style="background-color: #5C7050; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 8px; width: 8px"
+          ></div>
+          <div
+            data-pencil-name="ConnLabel"
+            style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+          >
+            live
+          </div>
+        </div>
+      </div>
+      <div
+        data-pencil-name="Main"
+        style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 20px; justify-content: flex-start; padding: 20px; width: 100%"
+      >
+        <div
+          data-pencil-name="RequestCard"
+          style="align-items: flex-start; background-color: #FCFAF5; border-radius: 8px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 0px; height: 100%; justify-content: flex-start; overflow: hidden; width: 440px"
+        >
+          <div
+            data-pencil-name="ReqHeader"
+            style="align-items: center; border-color: #E3DBCA; border-style: solid; border-width: 0px 0px 1px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 10px; height: fit-content; justify-content: flex-start; padding: 13px 18px; width: 100%"
+          >
+            <div
+              data-pencil-name="ReqTitle"
+              style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 1.2px; line-height: normal; text-align: left; white-space: nowrap'
+            >
+              REQUEST · turn 4
+            </div>
+            <div
+              data-pencil-name="ReqSpacer"
+              style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+            ></div>
+            <div
+              data-pencil-name="TimerChip"
+              style="align-items: center; background-color: #F1E8EC; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 5px; height: fit-content; justify-content: flex-start; padding: 4px 10px; width: fit-content"
+            >
+              <svg
+                data-pencil-name="TimerIcon"
+                data-icon-name="brain"
+                data-icon-set="lucide"
+                viewBox="0 0 13.99993896484375 14"
+                preserveAspectRatio="xMidYMid meet"
+                xmlns="http://www.w3.org/2000/svg"
+                style="box-sizing: border-box; flex-shrink: 0; height: 12px; width: 12px"
+              >
+                <path
+                  d="M5.01074 0.60156q-0.75537 0.07178-1.32959 0.59815-0.57422 0.52295-0.72803 1.26465l-0.01367 0.09912-0.14013 0.06836q-0.43408 0.2085-0.78614 0.56738-0.34863 0.35547-0.55713 0.78955-0.14014 0.30762-0.20507 0.56738-0.06152 0.25977-0.0752 0.6084 0 0.2666 0.02051 0.45801 0.02051 0.18799 0.07861 0.42383l0.05469 0.1709-0.09912 0.10937q-0.33496 0.42041-0.51611 0.99463-0.18115 0.57422-0.12647 1.10742 0.07178 0.58789 0.32129 1.08691 0.25293 0.4956 0.68701 0.85792l0.15381 0.12646 0 0.18115q0.02734 0.43408 0.18799 0.84766 0.16064 0.41357 0.41357 0.74853 0.11279 0.14014 0.30078 0.32471 0.18799 0.18115 0.34522 0.27686 0.54346 0.39307 1.2373 0.49902 0.69385 0.10254 1.3501-0.11963 0.16748-0.04102 0.3999-0.16064 0.23242-0.11963 0.37256-0.22217 0.14014-0.10596 0.33496-0.28711 0.19482-0.18457 0.24268-0.25977 0.05127-0.07861 0.06494-0.07861 0.01367 0 0.06152 0.07861 0.05127 0.0752 0.2461 0.2666 0.19482 0.18799 0.32129 0.27002 0.15381 0.11279 0.39306 0.23243 0.23926 0.11963 0.42041 0.17431 0.56055 0.18115 1.1211 0.12647 0.5708-0.04102 1.06298-0.29395 0.39307-0.19482 0.71436-0.50586 0.19482-0.18115 0.31445-0.34179 0.11963-0.16065 0.2461-0.36914 0.30762-0.57422 0.34863-1.20655l0-0.18115 0.15381-0.12646q0.43408-0.36231 0.68359-0.85792 0.25293-0.49902 0.32471-1.08691 0.05469-0.5332-0.12647-1.10742-0.18115-0.57422-0.51611-0.99463l-0.09912-0.10937 0.05469-0.18458q0.11279-0.38965 0.09912-0.88183-0.01367-0.33496-0.07862-0.59473-0.06152-0.25977-0.20165-0.56738-0.2085-0.43408-0.56055-0.78955-0.34863-0.35889-0.78272-0.56738l-0.14013-0.06836-0.04102-0.19825q-0.11279-0.46143-0.42041-0.85791-0.30762-0.3999-0.72803-0.63916-0.29395-0.15381-0.64599-0.229-0.34863-0.07861-0.66992-0.0376-0.84082 0.07178-1.41504 0.62891l-0.14014 0.14014-0.14014-0.14014q-0.57422-0.55713-1.41504-0.62891-0.15381-0.02734-0.21875-0.02734-0.06152 0-0.21533 0.02734z m0.47852 1.17578q0.37598 0.08545 0.6289 0.36573 0.08545 0.08203 0.16748 0.24267 0.08545 0.16064 0.10596 0.25977 0.02051 0.09912 0.02735 1.28857 0.00684 1.18945-0.00684 1.42871-0.04102 0.37598-0.16748 0.66992-0.18115 0.36572-0.46143 0.60499-0.28027 0.23584-0.70068 0.38964-0.23926 0.08545-0.35205 0.29395-0.02734 0.05811-0.04102 0.09912-0.01367 0.04102-0.01367 0.15381 0 0.11279 0.01367 0.16064 0.01367 0.04785 0.04102 0.10596 0.08545 0.18115 0.29394 0.28027 0.14014 0.06836 0.32813 0.03418 0.19141-0.03418 0.50586-0.18115 0.31445-0.14697 0.49902-0.30078l0.06836-0.04443 0 1.40136q0 1.41504-0.02734 1.60987-0.01367 0.32129-0.14014 0.58105-0.12646 0.25977-0.34863 0.49561-0.19824 0.19824-0.3794 0.3042-0.18115 0.10254-0.43408 0.17431-0.11279 0.02734-0.1914 0.03418-0.0752 0.00684-0.24268 0.00684-0.2666 0-0.43408-0.04102-0.30762-0.08545-0.57422-0.27343-0.2666-0.19141-0.43408-0.44092-0.06836-0.11279-0.14698-0.26661-0.0752-0.15381-0.06152-0.16064 0.01367-0.00684 0.13672 0.00684 0.12646 0.01367 0.30762 0.01367 0.18457 0 0.2666-0.03418 0.08545-0.0376 0.18115-0.1333 0.09912-0.09912 0.1333-0.18115 0.0376-0.08545 0.0376-0.22559 0-0.14014-0.0376-0.22217-0.03418-0.08545-0.12646-0.17431-0.08887-0.09229-0.18116-0.13331-0.08887-0.04443-0.28369-0.0581-0.40674-0.02734-0.70068-0.16748-0.75537-0.37939-0.96729-1.24756-0.01367-0.08203-0.01367-0.3418 0-0.25977 0.04102-0.3999 0.1709-0.66992 0.75879-1.06299 0.14014-0.09912 0.19482-0.15381 0.05469-0.05811 0.09912-0.1538 0.08203-0.18115 0.04102-0.35206-0.08545-0.37598-0.44776-0.44775-0.08545-0.02734-0.09228-0.06152-0.00684-0.03418-0.00684-0.25977 0-0.79639 0.57422-1.31592l0.01367-0.01367q0.11279-0.09912 0.14014-0.09912 0.02734 0 0.07178 0.09912l0.01367 0.02735q0.0957 0.18115 0.18115 0.2666 0.08545 0.08545 0.23926 0.12646 0.26318 0.06836 0.4956-0.09912 0.23242-0.16748 0.23243-0.46142 0-0.08545-0.01026-0.13331-0.00684-0.04785-0.06152-0.14697-0.09912-0.22217-0.11963-0.29736-0.02051-0.07861-0.02051-0.29053 0-0.25293 0.04102-0.34863 0.09912-0.32471 0.32812-0.52637 0.23242-0.20166 0.55371-0.27344 0.22559-0.05469 0.46485 0z m3.46924 0q0.19824 0.02734 0.36572 0.12647 0.37939 0.21191 0.5332 0.67334 0.04102 0.0957 0.04102 0.34863 0 0.21191-0.02051 0.29053-0.02051 0.0752-0.11963 0.29736-0.05469 0.09912-0.06494 0.14697-0.00684 0.04785-0.00684 0.13331 0 0.29395 0.23243 0.46142 0.23242 0.16748 0.4956 0.09912 0.15381-0.04102 0.23926-0.12646 0.08545-0.08545 0.18115-0.2666l0.01367-0.02735q0.04443-0.09912 0.07178-0.09912 0.02734 0 0.14014 0.09912l0.01367 0.01367q0.39307 0.34863 0.5332 0.8545 0.02734 0.09912 0.04102 0.35888 0.01367 0.25635 0 0.3418-0.01367 0.04102-0.02735 0.05469-0.01367 0.01367-0.07177 0.02734-0.3623 0.07178-0.44776 0.44775-0.04101 0.1709 0.04102 0.35206 0.04443 0.0957 0.09912 0.1538 0.05469 0.05469 0.19482 0.15381 0.67334 0.46143 0.79981 1.23047 0.05469 0.39307-0.07862 0.79981-0.1333 0.40674-0.42724 0.68701-0.46143 0.46143-1.17578 0.50244-0.19482 0.01367-0.28711 0.0581-0.08887 0.04102-0.18115 0.13331-0.08887 0.08887-0.12647 0.17431-0.03418 0.08203-0.03418 0.22217 0 0.14014 0.03418 0.22559 0.0376 0.08203 0.1333 0.18115 0.09912 0.0957 0.18115 0.1333 0.08545 0.03418 0.26661 0.03418 0.18457 0 0.30761-0.01367 0.12646-0.01367 0.14014-0.00684 0.01367 0.00684-0.06494 0.16064-0.0752 0.15381-0.14356 0.26661-0.16748 0.24951-0.43408 0.44091-0.2666 0.18799-0.57422 0.27344-0.16748 0.04102-0.43408 0.04102-0.16748 0-0.24609-0.00684-0.0752-0.00684-0.18799-0.03418-0.25293-0.07178-0.43408-0.17431-0.18115-0.10596-0.3794-0.3042-0.26318-0.26318-0.38965-0.58789l0-0.02735q-0.07178-0.14014-0.08545-0.23926-0.01367-0.12305-0.02734-0.46142l-0.01367-2.77197 0.06836 0.04443q0.14014 0.10938 0.38623 0.23584 0.24609 0.12646 0.45459 0.19824 0.29395 0.0957 0.4956 0.00684 0.20508-0.09229 0.29053-0.27344 0.02734-0.05811 0.04102-0.10596 0.01367-0.04785 0.01367-0.16064 0-0.11279-0.01367-0.15381-0.01367-0.04102-0.04102-0.09912-0.11279-0.2085-0.35205-0.29395-0.42041-0.15381-0.70068-0.38964-0.28027-0.23926-0.46143-0.60499-0.12646-0.29395-0.16748-0.66992-0.01367-0.23926-0.00684-1.42871 0.00684-1.18945 0.03418-1.28857 0.02734-0.09912 0.1128-0.25977 0.08545-0.16064 0.15381-0.24267 0.2085-0.22559 0.4956-0.32129 0.28711-0.09912 0.58106-0.04444z"
+                  fill="#7B4A68"
+                ></path>
+              </svg>
+              <div
+                data-pencil-name="TimerVal"
+                style='box-sizing: border-box; color: #7B4A68; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                03:12
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="ReqBody"
+            style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 12px; justify-content: flex-start; padding: 18px; width: 100%"
+          >
+            <div
+              data-pencil-name="SystemMsg"
+              style="align-items: flex-start; background-color: #EFE9DC; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 7px; height: fit-content; justify-content: flex-start; padding: 10px 14px; width: 100%"
+            >
+              <div
+                data-pencil-name="SysHead"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <div
+                  data-pencil-name="SysRole"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 1.2px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  SYSTEM
+                </div>
+                <div
+                  data-pencil-name="SysSpacer"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="SysSize"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  8.2k chars
+                </div>
+              </div>
+              <div
+                data-pencil-name="SysCollapsed"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <div
+                  data-pencil-name="SysChevron"
+                  style="box-sizing: border-box; color: #8B8170; font-family: Inter, system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  ▸
+                </div>
+                <div
+                  data-pencil-name="SysPreview"
+                  style='box-sizing: border-box; color: #40676B; flex: 1 1 0; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left'
+                >
+                  &lt;system-reminder&gt; あなたは訓練中の human-1。応答は thinking→tools→final
+                  の順で…
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="ToolsCard"
+              style="align-items: flex-start; background-color: #EFE9DC; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 7px; height: fit-content; justify-content: flex-start; padding: 10px 14px; width: 100%"
+            >
+              <div
+                data-pencil-name="ToolsHead"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <div
+                  data-pencil-name="ToolsTitle"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 1.2px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  TOOLS
+                </div>
+                <div
+                  data-pencil-name="ToolsHSpacer"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="ToolsCount"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  リクエストで定義 · 4
+                </div>
+              </div>
+              <div
+                data-pencil-name="ToolRow-exec_command"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <svg
+                  data-pencil-name="ToolRowIcon-exec_command"
+                  data-icon-name="terminal"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="box-sizing: border-box; flex-shrink: 0; height: 13px; width: 13px"
+                >
+                  <path
+                    d="M2.2251 2.35156q-0.19482 0.02734-0.32129 0.17432-0.12646 0.14697-0.14697 0.35205-0.02051 0.20166 0.09228 0.36914 0.05469 0.07178 1.60986 1.60986l1.55176 1.55518-1.5791 1.58252q-1.06641 1.06299-1.32617 1.33642-0.25635 0.27344-0.30078 0.3418-0.10938 0.23926-0.01367 0.46485 0.09912 0.22217 0.32128 0.32128 0.22559 0.0957 0.46485-0.01367 0.06836-0.04443 0.37598-0.33838 0.30762-0.29395 1.5415-1.52441 1.81836-1.82178 1.86279-1.89014 0.05469-0.11279 0.05469-0.25976 0-0.14697-0.05469-0.27344-0.03076-0.05469-1.86279-1.89014-1.22021-1.23047-1.5415-1.53808-0.32129-0.30762-0.37598-0.33838-0.16748-0.06836-0.35205-0.04102z m4.63476 8.16211q-0.12646 0.02734-0.23925 0.1333-0.10938 0.10596-0.16749 0.23243-0.06836 0.2085 0.01368 0.42724 0.08545 0.21533 0.29394 0.31445l0.1128 0.04102 4.14599 0.01367q0.52978-0.01367 0.71094-0.02734 0.12647 0 0.20166-0.04102 0.07861-0.04443 0.14697-0.11963 0.07178-0.07861 0.11621-0.16064 0.0957-0.22559 0.01026-0.44775-0.08203-0.22559-0.32129-0.33838l-0.08203-0.02735-2.43702-0.01367q-2.41992 0-2.50537 0.01367z"
+                    fill="#5C7050"
+                  ></path>
+                </svg>
+                <div
+                  data-pencil-name="ToolRowName-exec_command"
+                  style='box-sizing: border-box; color: #2B2317; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  exec_command
+                </div>
+                <div
+                  data-pencil-name="ToolRowSpacer-exec_command"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="ToolRowSig-exec_command"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  (cmd)
+                </div>
+              </div>
+              <div
+                data-pencil-name="ToolRow-web_search"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <svg
+                  data-pencil-name="ToolRowIcon-web_search"
+                  data-icon-name="search"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="box-sizing: border-box; flex-shrink: 0; height: 13px; width: 13px"
+                >
+                  <path
+                    d="M6.00537 1.17578q-0.04102 0.01367-0.23584 0.02734-0.57422 0.07178-1.16211 0.29053-0.58789 0.21533-1.09375 0.5503-0.39307 0.2666-0.74853 0.61181-0.35547 0.3418-0.62207 0.7041-0.646 0.92285-0.86817 2.03028-0.05811 0.28027-0.07861 0.46142-0.02051 0.18115-0.02051 0.57422 0 0.43408 0.02734 0.68018 0.02734 0.24268 0.12647 0.59472 0.19482 0.75537 0.60156 1.43555 0.40674 0.67676 0.96729 1.18262 0.40674 0.3623 0.81689 0.60156 0.41357 0.23926 0.91944 0.43408 1.06299 0.39307 2.21826 0.29395 1.15527-0.09912 2.1499-0.65967 0.12646-0.06836 0.33496-0.2085 0.2085-0.14014 0.29395-0.21191l0.05468-0.05469 1.10743 1.10742q1.12109 1.104 1.20312 1.15528 0.08545 0.04785 0.23926 0.04785 0.15381 0 0.23584-0.03418 0.08545-0.0376 0.18115-0.1333 0.09912-0.09912 0.1333-0.18115 0.0376-0.08545 0.0376-0.23926 0-0.15381-0.05127-0.23584-0.04785-0.08545-1.15186-1.20654l-1.10742-1.10743 0.05469-0.06836q0.05811-0.05469 0.19824-0.25293 0.82373-1.23047 0.89209-2.70703 0.07178-1.47656-0.63916-2.76513-0.5332-0.96729-1.42187-1.64405-0.88867-0.68018-1.95508-0.9331-0.29395-0.06836-0.54004-0.09571-0.24268-0.03076-0.60498-0.04443-0.43408 0-0.49219 0z m0.7417 1.17578q0.37939 0.01367 0.79297 0.14014 0.41357 0.12646 0.78955 0.32129 0.7417 0.39307 1.28857 1.08008 0.54687 0.68359 0.75538 1.49707 0.07178 0.28027 0.09228 0.49902 0.02051 0.21533 0.02051 0.50928 0 0.70068-0.19483 1.30224-0.39307 1.16211-1.33984 1.91065-0.94336 0.74853-2.16016 0.875-0.19824 0.01367-0.49218 0.00683-0.29395-0.00684-0.48877-0.03418-0.5332-0.08545-1.03907-0.30761-0.50244-0.22559-0.93652-0.56055-0.14014-0.12646-0.35205-0.3418-0.2085-0.21875-0.33154-0.37256-0.57422-0.76904-0.7417-1.69531-0.08545-0.43408-0.06494-0.90918 0.02051-0.4751 0.11963-0.89551 0.29395-1.14844 1.18945-1.95849 0.89551-0.81348 2.05762-1.02539 0.18115-0.02734 0.42041-0.04102 0.23926-0.01367 0.34863-0.01367l0.2666 0.01367z"
+                    fill="#5C7050"
+                  ></path>
+                </svg>
+                <div
+                  data-pencil-name="ToolRowName-web_search"
+                  style='box-sizing: border-box; color: #2B2317; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  web_search
+                </div>
+                <div
+                  data-pencil-name="ToolRowSpacer-web_search"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="ToolRowSig-web_search"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  (query, max_results?)
+                </div>
+              </div>
+              <div
+                data-pencil-name="ToolRow-apply_patch"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <svg
+                  data-pencil-name="ToolRowIcon-apply_patch"
+                  data-icon-name="diff"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="box-sizing: border-box; flex-shrink: 0; height: 13px; width: 13px"
+                >
+                  <path
+                    d="M6.84619 1.18945q-0.25293 0.08545-0.37939 0.30762l-0.04102 0.08545 0 3.66748-3.65381 0.01367-0.09912 0.04102q-0.28027 0.12646-0.32812 0.42041-0.04785 0.29395 0.16064 0.51953 0.12646 0.12646 0.30762 0.15381 0.09912 0.02734 1.84912 0.02734l1.76367 0 0 3.38721q0 0.23926 0.02734 0.30761 0.08545 0.21192 0.29395 0.32471 0.09912 0.04102 0.25293 0.04102 0.15381 0 0.25293-0.04102 0.2085-0.11279 0.29394-0.32471 0.02734-0.06836 0.02735-0.30761l0-3.38721 1.76367 0q1.75 0 1.84912-0.02734 0.23584-0.04102 0.36914-0.23584 0.1333-0.19824 0.09229-0.4375-0.01367-0.0957-0.05127-0.16406-0.03418-0.07178-0.1128-0.14014-0.0752-0.07178-0.15722-0.11621l-0.09912-0.04102-3.65381-0.01367 0-3.66748-0.04102-0.08545q-0.09912-0.18115-0.28027-0.2666-0.08545-0.04102-0.22559-0.04785-0.14014-0.00684-0.18115 0.00683z m-4.11523 10.51368q-0.23926 0.08545-0.34522 0.3247-0.10254 0.23584-0.00683 0.46143 0.05811 0.0957 0.14013 0.18115 0.08545 0.08203 0.18457 0.12647l0.09571 0.02734 8.40136 0 0.09571-0.02734q0.09912-0.04443 0.18115-0.12647 0.08545-0.08545 0.1333-0.18799 0.05127-0.10596 0.05127-0.23242 0-0.12646-0.04102-0.23926-0.09912-0.19482-0.29394-0.29394l-0.08545-0.04102-4.22803 0q-4.22803 0-4.28271 0.02735z"
+                    fill="#5C7050"
+                  ></path>
+                </svg>
+                <div
+                  data-pencil-name="ToolRowName-apply_patch"
+                  style='box-sizing: border-box; color: #2B2317; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  apply_patch
+                </div>
+                <div
+                  data-pencil-name="ToolRowSpacer-apply_patch"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="ToolRowSig-apply_patch"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  (patch)
+                </div>
+              </div>
+              <div
+                data-pencil-name="ToolRow-view_image"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <svg
+                  data-pencil-name="ToolRowIcon-view_image"
+                  data-icon-name="image"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="box-sizing: border-box; flex-shrink: 0; height: 13px; width: 13px"
+                >
+                  <path
+                    d="M2.60449 1.20313q-0.50586 0.08545-0.87842 0.43749-0.36914 0.34863-0.50927 0.86475-0.02734 0.08545-0.02735 0.71436l-0.01367 3.78027 0.01367 3.78027q0 0.62891 0.02735 0.71436 0.14014 0.48877 0.46826 0.82031 0.33154 0.32813 0.82031 0.46826 0.08545 0.02734 0.71436 0.02735l3.78027 0.01367 3.78027-0.01367q0.62891 0 0.71436-0.02735 0.48877-0.14014 0.81689-0.46826 0.33154-0.33154 0.47168-0.82031 0.02734-0.08545 0.02735-0.71436l0.01367-3.78027-0.01367-3.78027q0-0.62891-0.02735-0.71436-0.12646-0.48877-0.458-0.81689-0.32813-0.33154-0.80323-0.47168l-0.14013-0.04102-4.32715 0q-4.3374 0-4.4502 0.02734z m8.70899 1.17578q0.2085 0.09912 0.30761 0.30761l0.04102 0.09912 0.01367 4.54932-0.46142-0.44775q-0.46143-0.46143-0.61524-0.56055-0.2666-0.18115-0.5332-0.24951-0.16748-0.04443-0.42041-0.04444-0.25293 0-0.43408 0.04444-0.33496 0.06836-0.64258 0.30762-0.11279 0.08203-2.71729 2.68652l-2.60449 2.60449-0.16748 0q-0.22217 0-0.3418-0.04101-0.11963-0.04443-0.23242-0.14014-0.06836-0.07178-0.12646-0.18115l-0.04102-0.09913 0-8.42871 0.04102-0.09912q0.07178-0.14014 0.18798-0.229 0.11963-0.09229 0.25977-0.11963 0.08545 0 4.22803 0l4.15967 0 0.09912 0.04102z m-6.34375 1.14843q-0.3623 0.05811-0.69385 0.2837-0.32813 0.22217-0.52295 0.52978-0.2666 0.46143-0.24609 0.97412 0.02051 0.50928 0.31445 0.93652 0.29395 0.42725 0.78613 0.62208 0.43408 0.16748 0.89551 0.10595 0.46143-0.06494 0.82373-0.35205 0.36572-0.28711 0.54688-0.71777 0.12646-0.32471 0.12646-0.65967 0-0.33496-0.12646-0.64258-0.18115-0.43408-0.54004-0.72119-0.35547-0.28711-0.8169-0.35889-0.28027-0.04102-0.54687 0z m0.5332 1.20313q0.18115 0.08545 0.2666 0.2666 0.02734 0.05811 0.04102 0.09912 0.01367 0.04102 0.01367 0.15381 0 0.11279-0.01367 0.15381-0.01367 0.04102-0.04102 0.09912-0.09912 0.18115-0.2666 0.28027-0.08545 0.04102-0.25293 0.04102-0.16748 0-0.25293-0.04102-0.16748-0.09912-0.2666-0.28027-0.02734-0.05811-0.04102-0.09912-0.01367-0.04102-0.01367-0.15381 0-0.11279 0.01367-0.15381 0.01367-0.04102 0.04102-0.09912 0.11279-0.22217 0.36572-0.30762 0.04102-0.01367 0.18115-0.00683 0.14014 0.00684 0.22559 0.04785z m4.36816 2.50879q0.08203 0.04102 0.93653 0.90918l0.86816 0.85449-0.01367 2.21142-0.04102 0.09913q-0.14014 0.27685-0.43408 0.33496-0.09912 0.02734-3.19238 0.02734l-3.07959 0 2.17041-2.18408q2.18408-2.18408 2.23877-2.21143 0.11279-0.07178 0.2666-0.07861 0.15381-0.00684 0.28027 0.0376z"
+                    fill="#5C7050"
+                  ></path>
+                </svg>
+                <div
+                  data-pencil-name="ToolRowName-view_image"
+                  style='box-sizing: border-box; color: #2B2317; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  view_image
+                </div>
+                <div
+                  data-pencil-name="ToolRowSpacer-view_image"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="ToolRowSig-view_image"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  (path)
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="TrainerMsg"
+              style="align-items: flex-start; background-color: #F0E7D2; border-color: #8A6830; border-radius: 6px; border-style: solid; border-width: 0px 0px 0px 2px; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 9px; height: fit-content; justify-content: flex-start; padding: 12px 16px; width: 100%"
+            >
+              <div
+                data-pencil-name="TrainerRole"
+                style='box-sizing: border-box; color: #6F5322; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 600; letter-spacing: 1.2px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                TRAINER · EPOCH 3
+              </div>
+              <div
+                data-pencil-name="TrainerLine"
+                style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 14px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: 23px; text-align: left; width: 100%"
+              >
+                前エポックの講評: DB分割の判断は良い(+1.5)。今回は EC
+                サイトの注文システムを設計せよ。全体アーキテクチャと ER 図を含めること。
+              </div>
+              <div
+                data-pencil-name="TrainerXml"
+                style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: 19px; text-align: left; width: 100%'
+              >
+                &lt;required&gt;図は Whiteboard で作成し Mermaid で添付&lt;/required&gt;
+              </div>
+            </div>
+            <div
+              data-pencil-name="ToolResultMsg"
+              style="align-items: flex-start; background-color: #E9EBDD; border-color: #5C7050; border-radius: 6px; border-style: solid; border-width: 0px 0px 0px 2px; box-sizing: border-box; display: flex; flex-direction: column; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; padding: 10px 16px; width: 100%"
+            >
+              <div
+                data-pencil-name="TrHead"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; width: 100%"
+              >
+                <div
+                  data-pencil-name="TrMarker"
+                  style='box-sizing: border-box; color: #AC5B3B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  [tool_result]
+                </div>
+                <div
+                  data-pencil-name="TrTool"
+                  style='box-sizing: border-box; color: #5C7050; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  exec_command · exit 0
+                </div>
+              </div>
+              <div
+                data-pencil-name="TrBody"
+                style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: 18px; text-align: left; width: 100%'
+              >
+                schema.sql · 42 lines
+                <br />
+                CREATE TABLE orders (id uuid PRIMARY KEY, user_id uuid, …
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          data-pencil-name="EditorCard"
+          style="align-items: flex-start; background-color: #FCFAF5; border-radius: 8px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: column; flex: 1 1 0; gap: 0px; height: 100%; justify-content: flex-start; overflow: hidden"
+        >
+          <div
+            data-pencil-name="EditorTopBar"
+            style="align-items: center; border-color: #E3DBCA; border-style: solid; border-width: 0px 0px 1px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 12px; height: fit-content; justify-content: flex-start; padding: 9px 18px; width: 100%"
+          >
+            <div
+              data-pencil-name="Tabs"
+              style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 18px; height: fit-content; justify-content: flex-start; width: fit-content"
+            >
+              <div
+                data-pencil-name="TabRaw"
+                style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 6px 2px; width: fit-content"
+              >
+                <div
+                  data-pencil-name="TabRawLabel"
+                  style="box-sizing: border-box; color: #8B8170; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  Raw output
+                </div>
+              </div>
+              <div
+                data-pencil-name="TabWb"
+                style="align-items: flex-start; border-color: #8A6830; border-style: solid; border-width: 0px 0px 2px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 6px 2px; width: fit-content"
+              >
+                <div
+                  data-pencil-name="TabWbLabel"
+                  style="box-sizing: border-box; color: #2B2317; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  Whiteboard
+                </div>
+              </div>
+              <div
+                data-pencil-name="TabCode"
+                style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; padding: 6px 2px; width: fit-content"
+              >
+                <div
+                  data-pencil-name="TabCodeLabel"
+                  style="box-sizing: border-box; color: #8B8170; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  Code
+                </div>
+                <div
+                  data-pencil-name="SoonPill"
+                  style="align-items: flex-start; background-color: #EFE9DC; border-radius: 999px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 1px 7px; width: fit-content"
+                >
+                  <div
+                    data-pencil-name="SoonLabel"
+                    style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                  >
+                    soon
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="TopSpacer"
+              style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+            ></div>
+            <div
+              data-pencil-name="DraftStatus"
+              style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; width: fit-content"
+            >
+              <div
+                data-pencil-name="DraftDot"
+                style="background-color: #5C7050; border-radius: 50%; box-sizing: border-box; flex-shrink: 0; height: 6px; width: 6px"
+              ></div>
+              <div
+                data-pencil-name="DraftLabel"
+                style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                ノード 7 · 自動保存
+              </div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="WbCanvas"
+            style="background-image: url('data:image/webp;base64,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s2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds1/1u7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7RFu7U/ADs2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2Ds2DrKcjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjSicjUKpR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR6pR58+UbU7U9o6FZ831+gy2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2S0y2TYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzX/W7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tEW7tT8AOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzYOzY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'); background-repeat: no-repeat; background-size: 100% 100%; box-sizing: border-box; flex: 1 1 0; overflow: hidden; position: relative; width: 100%"
+          >
+            <svg
+              data-pencil-name="EdgeGwOrd"
+              viewBox="0 0 20 84"
+              preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="box-sizing: border-box; height: 84px; left: 400px; overflow: visible; position: absolute; top: 130px; width: 20px; z-index: 0"
+            >
+              <path
+                d="M10 0c7 28-7 56 0 84"
+                fill="none"
+                stroke="#8B8170"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            </svg>
+            <svg
+              data-pencil-name="EdgeOrdPay"
+              viewBox="0 0 120 20"
+              preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="box-sizing: border-box; height: 20px; left: 490px; overflow: visible; position: absolute; top: 227px; width: 120px; z-index: 1"
+            >
+              <path
+                d="M0 10c40-8 80 8 120 0"
+                fill="none"
+                stroke="#8B8170"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            </svg>
+            <svg
+              data-pencil-name="EdgeOrdDb"
+              viewBox="0 0 20 84"
+              preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="box-sizing: border-box; height: 84px; left: 400px; overflow: visible; position: absolute; top: 260px; width: 20px; z-index: 2"
+            >
+              <path
+                d="M10 0c-7 28 7 56 0 84"
+                fill="none"
+                stroke="#8B8170"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            </svg>
+            <svg
+              data-pencil-name="EdgeErOrd"
+              viewBox="0 0 56 113"
+              preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="box-sizing: border-box; height: 113px; left: 274px; overflow: visible; position: absolute; top: 237px; width: 56px; z-index: 3"
+            >
+              <path
+                d="M0 113c34 0 20-113 56-113"
+                fill="none"
+                stroke="#8B8170"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            </svg>
+            <div
+              data-pencil-name="EdgeChip-HTTP"
+              style="align-items: flex-start; background-color: #FCFAF5; border-radius: 999px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: row; gap: 0px; height: fit-content; justify-content: flex-start; left: 424px; padding: 2px 8px; position: absolute; top: 162px; width: fit-content; z-index: 4"
+            >
+              <div
+                data-pencil-name="EdgeChipLabel-HTTP"
+                style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                HTTP
+              </div>
+            </div>
+            <div
+              data-pencil-name="EdgeChip-Saga"
+              style="align-items: flex-start; background-color: #FCFAF5; border-radius: 999px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: row; gap: 0px; height: fit-content; justify-content: flex-start; left: 526px; padding: 2px 8px; position: absolute; top: 226px; width: fit-content; z-index: 5"
+            >
+              <div
+                data-pencil-name="EdgeChipLabel-Saga"
+                style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                Saga
+              </div>
+            </div>
+            <div
+              data-pencil-name="EdgeChip-SQL"
+              style="align-items: flex-start; background-color: #FCFAF5; border-radius: 999px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: row; gap: 0px; height: fit-content; justify-content: flex-start; left: 424px; padding: 2px 8px; position: absolute; top: 292px; width: fit-content; z-index: 6"
+            >
+              <div
+                data-pencil-name="EdgeChipLabel-SQL"
+                style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                SQL
+              </div>
+            </div>
+            <div
+              data-pencil-name="EdgeChip-1:N"
+              style="align-items: flex-start; background-color: #FCFAF5; border-radius: 999px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: row; gap: 0px; height: fit-content; justify-content: flex-start; left: 284px; padding: 2px 8px; position: absolute; top: 296px; width: fit-content; z-index: 7"
+            >
+              <div
+                data-pencil-name="EdgeChipLabel-1:N"
+                style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                1:N
+              </div>
+            </div>
+            <div
+              data-pencil-name="NodeGw"
+              style="align-items: center; background-color: #F0E7D2; border-color: #8A6830; border-radius: 6px; border-style: solid; border-width: 0px 0px 0px 2px; box-sizing: border-box; display: flex; flex-direction: row; gap: 0px; height: 46px; justify-content: center; left: 330px; position: absolute; top: 84px; width: 160px; z-index: 8"
+            >
+              <div
+                data-pencil-name="NodeGwLabel"
+                style='box-sizing: border-box; color: #2B2317; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                API Gateway
+              </div>
+            </div>
+            <div
+              data-pencil-name="NodeOrd"
+              style="align-items: center; background-color: #F0E7D2; border-color: #8A6830; border-radius: 6px; border-style: solid; border-width: 0px 0px 0px 2px; box-sizing: border-box; display: flex; flex-direction: row; gap: 0px; height: 46px; justify-content: center; left: 330px; position: absolute; top: 214px; width: 160px; z-index: 9"
+            >
+              <div
+                data-pencil-name="NodeOrdLabel"
+                style='box-sizing: border-box; color: #2B2317; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                Order Service
+              </div>
+            </div>
+            <div
+              data-pencil-name="NodePay"
+              style="align-items: center; background-color: #F0E7D2; border-color: #8A6830; border-radius: 6px; border-style: solid; border-width: 0px 0px 0px 2px; box-sizing: border-box; display: flex; flex-direction: row; gap: 0px; height: 46px; justify-content: center; left: 610px; position: absolute; top: 214px; width: 160px; z-index: 10"
+            >
+              <div
+                data-pencil-name="NodePayLabel"
+                style='box-sizing: border-box; color: #2B2317; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                Payment Service
+              </div>
+            </div>
+            <div
+              data-pencil-name="Memo"
+              style="align-items: flex-start; background-color: #F2E9D3; border-color: #8C6A2F; border-radius: 6px; border-style: solid; border-width: 0px 0px 0px 2px; box-sizing: border-box; display: flex; flex-direction: column; gap: 0px; height: fit-content; justify-content: flex-start; left: 44px; padding: 10px 12px; position: absolute; top: 88px; transform-origin: top left; transform: rotate(-2deg); width: 190px; z-index: 11"
+            >
+              <div
+                data-pencil-name="MemoTxt"
+                style='box-sizing: border-box; color: #8C6A2F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: 18px; text-align: left; width: 100%'
+              >
+                決済は外部 PSP に委譲。
+                <br />
+                在庫は Saga で結果整合。
+              </div>
+            </div>
+            <div
+              data-pencil-name="NodeDb"
+              style="box-sizing: border-box; height: 78px; left: 345px; position: absolute; top: 344px; width: 130px; z-index: 12"
+            >
+              <svg
+                data-pencil-name="DbBody"
+                viewBox="0 0 130 78"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="box-sizing: border-box; height: 78px; left: 0px; overflow: visible; position: absolute; top: 0px; width: 130px; z-index: 0"
+              >
+                <path d="M0 11a65 11 0 0 1 130 0l0 56a65 11 0 0 1-130 0z" fill="#E9EBDD"></path>
+                <path
+                  d="M0 11a65 11 0 0 1 130 0l0 56a65 11 0 0 1-130 0z"
+                  fill="none"
+                  stroke="#5C7050"
+                  stroke-width="1.5"
+                  vector-effect="non-scaling-stroke"
+                ></path>
+              </svg>
+              <div
+                data-pencil-name="DbRim"
+                style="border-radius: 50%; border: 1.5px solid #5C7050; box-sizing: border-box; height: 22px; left: 0px; position: absolute; top: 0px; width: 130px; z-index: 1"
+              ></div>
+              <div
+                data-pencil-name="DbLabel"
+                style='box-sizing: border-box; color: #2B2317; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 600; left: 0px; letter-spacing: 0px; line-height: normal; position: absolute; text-align: center; top: 36px; width: 130px; z-index: 2'
+              >
+                orders-db
+              </div>
+              <div
+                data-pencil-name="DbSub"
+                style='box-sizing: border-box; color: #5C7050; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; left: 0px; letter-spacing: 0px; line-height: normal; position: absolute; text-align: center; top: 52px; width: 130px; z-index: 3'
+              >
+                PostgreSQL
+              </div>
+            </div>
+            <div
+              data-pencil-name="ErEntity"
+              style="align-items: flex-start; background-color: #FCFAF5; border-radius: 6px; border: 1.5px solid #40676B; box-sizing: border-box; display: flex; flex-direction: column; gap: 0px; height: fit-content; justify-content: flex-start; left: 64px; overflow: hidden; position: absolute; top: 300px; width: 210px; z-index: 13"
+            >
+              <div
+                data-pencil-name="ErHead"
+                style="align-items: center; background-color: #E4EBE7; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; padding: 6px 10px; width: 100%"
+              >
+                <div
+                  data-pencil-name="ErTitle"
+                  style='box-sizing: border-box; color: #40676B; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  orders
+                </div>
+                <div
+                  data-pencil-name="ErHeadSpacer"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="ErTag"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  entity
+                </div>
+              </div>
+              <div
+                data-pencil-name="ErRow-id"
+                style="align-items: center; border-color: #E3DBCA; border-style: solid; border-width: 1px 0px 0px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; padding: 4px 10px; width: 100%"
+              >
+                <div
+                  data-pencil-name="ErField-id"
+                  style='box-sizing: border-box; color: #2B2317; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  id
+                </div>
+                <div
+                  data-pencil-name="ErRowSpacer-id"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="ErType-id"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  uuid PK
+                </div>
+              </div>
+              <div
+                data-pencil-name="ErRow-user_id"
+                style="align-items: center; border-color: #E3DBCA; border-style: solid; border-width: 1px 0px 0px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; padding: 4px 10px; width: 100%"
+              >
+                <div
+                  data-pencil-name="ErField-user_id"
+                  style='box-sizing: border-box; color: #2B2317; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  user_id
+                </div>
+                <div
+                  data-pencil-name="ErRowSpacer-user_id"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="ErType-user_id"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  uuid FK
+                </div>
+              </div>
+              <div
+                data-pencil-name="ErRow-status"
+                style="align-items: center; border-color: #E3DBCA; border-style: solid; border-width: 1px 0px 0px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; padding: 4px 10px; width: 100%"
+              >
+                <div
+                  data-pencil-name="ErField-status"
+                  style='box-sizing: border-box; color: #2B2317; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  status
+                </div>
+                <div
+                  data-pencil-name="ErRowSpacer-status"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="ErType-status"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  enum
+                </div>
+              </div>
+              <div
+                data-pencil-name="ErRow-total"
+                style="align-items: center; border-color: #E3DBCA; border-style: solid; border-width: 1px 0px 0px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; padding: 4px 10px; width: 100%"
+              >
+                <div
+                  data-pencil-name="ErField-total"
+                  style='box-sizing: border-box; color: #2B2317; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  total
+                </div>
+                <div
+                  data-pencil-name="ErRowSpacer-total"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="ErType-total"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 10px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  int
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="ClassNode"
+              style="align-items: flex-start; background-color: #FCFAF5; border-radius: 6px; border: 1.5px solid #7B4A68; box-sizing: border-box; display: flex; flex-direction: column; gap: 0px; height: fit-content; justify-content: flex-start; left: 640px; overflow: hidden; position: absolute; top: 344px; width: 220px; z-index: 14"
+            >
+              <div
+                data-pencil-name="ClassHead"
+                style="align-items: center; background-color: #F1E8EC; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 8px; height: fit-content; justify-content: flex-start; padding: 6px 10px; width: 100%"
+              >
+                <div
+                  data-pencil-name="ClassTitle"
+                  style='box-sizing: border-box; color: #7B4A68; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  OrderSaga
+                </div>
+                <div
+                  data-pencil-name="ClassHeadSpacer"
+                  style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+                ></div>
+                <div
+                  data-pencil-name="ClassTag"
+                  style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 9px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  class
+                </div>
+              </div>
+              <div
+                data-pencil-name="ClassRow-+ start(order)"
+                style="align-items: flex-start; border-color: #E3DBCA; border-style: solid; border-width: 1px 0px 0px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 4px 10px; width: 100%"
+              >
+                <div
+                  data-pencil-name="ClassMethod-+ start(order)"
+                  style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  + start(order)
+                </div>
+              </div>
+              <div
+                data-pencil-name="ClassRow-+ reserveStock()"
+                style="align-items: flex-start; border-color: #E3DBCA; border-style: solid; border-width: 1px 0px 0px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 4px 10px; width: 100%"
+              >
+                <div
+                  data-pencil-name="ClassMethod-+ reserveStock()"
+                  style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  + reserveStock()
+                </div>
+              </div>
+              <div
+                data-pencil-name="ClassRow-+ capturePayment()"
+                style="align-items: flex-start; border-color: #E3DBCA; border-style: solid; border-width: 1px 0px 0px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: fit-content; justify-content: flex-start; padding: 4px 10px; width: 100%"
+              >
+                <div
+                  data-pencil-name="ClassMethod-+ capturePayment()"
+                  style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+                >
+                  + capturePayment()
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="NodePalette"
+              style="align-items: center; background-color: #FCFAF5; border-radius: 8px; border: 1px solid #CFC4AD; box-shadow: 0px 10px 24px -6px #3A2C1526; box-sizing: border-box; display: flex; flex-direction: row; gap: 2px; height: fit-content; justify-content: flex-start; left: 16px; padding: 4px; position: absolute; top: 14px; width: fit-content; z-index: 15"
+            >
+              <div
+                data-pencil-name="Pal-付箋"
+                style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; padding: 5px 10px; width: fit-content"
+              >
+                <svg
+                  data-pencil-name="PalIcon-付箋"
+                  data-icon-name="sticky-note"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="box-sizing: border-box; flex-shrink: 0; height: 13px; width: 13px"
+                >
+                  <path
+                    d="M2.60449 1.20313q-0.50586 0.08545-0.87842 0.43749-0.36914 0.34863-0.50927 0.86475-0.02734 0.08545-0.02735 0.71436l-0.01367 3.78027 0.01367 3.78027q0 0.62891 0.02735 0.71436 0.14014 0.48877 0.46826 0.82031 0.33154 0.32813 0.82031 0.46826 0.08545 0.02734 0.71436 0.02735l3.78027 0.01367 3.78027-0.01367q0.62891 0 0.71436-0.02735 0.48877-0.14014 0.81689-0.46826 0.33154-0.33154 0.47168-0.82031 0.02734-0.08545 0.02735-0.56055l0.01367-6.00537-0.04102-0.15381q-0.12646-0.44775-0.40674-0.78613-0.08545-0.10938-1.23388-1.25098-1.14502-1.1416-1.27149-1.22705-0.29395-0.19482-0.63232-0.28027l-0.16748-0.05469-3.17871 0q-3.17529 0-3.28809 0.02735z m5.57129 2.38232q0 0.04102 0 0.14014l0 0.86474q0 0.2666 0.02734 0.3794 0.01367 0.07178 0.08545 0.19482l0.01368 0.03076q0.06836 0.15381 0.20849 0.29395 0.14014 0.14014 0.29395 0.20849l0.03076 0.01368q0.12305 0.07178 0.19482 0.08544 0.11279 0.02734 0.3794 0.02735l2.26611 0-0.01367 5.39013-0.04102 0.09913q-0.14014 0.27685-0.43408 0.33496-0.09912 0.02734-4.18701 0.02734-4.08789 0-4.18701-0.02734-0.29395-0.05811-0.43408-0.33496l-0.04102-0.09913 0-8.42871 0.04102-0.09912q0.07178-0.14014 0.18798-0.229 0.11963-0.09229 0.25977-0.11963 0.08545 0 2.71729-0.01367l2.63183 0 0 1.26123z m2.21143 0.02734q1.02197 1.03564 1.02197 1.04932 0 0.01367-1.03565 0.01367l-1.04931 0 0-1.04932q0-1.03564 0.01367-1.03564 0.01367 0 1.04932 1.02197z"
+                    fill="#57503F"
+                  ></path>
+                </svg>
+                <div
+                  data-pencil-name="PalLabel-付箋"
+                  style="box-sizing: border-box; color: #57503F; font-family: Inter, system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  付箋
+                </div>
+              </div>
+              <div
+                data-pencil-name="Pal-サービス"
+                style="align-items: center; background-color: #F0E7D2; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; padding: 5px 10px; width: fit-content"
+              >
+                <svg
+                  data-pencil-name="PalIcon-サービス"
+                  data-icon-name="box"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="box-sizing: border-box; flex-shrink: 0; height: 13px; width: 13px"
+                >
+                  <path
+                    d="M6.65137 0.61523q-0.22559 0.05811-0.43408 0.15381-0.14014 0.07178-2.16358 1.23389-2.02344 1.16211-2.10889 1.2168-0.58789 0.39307-0.74169 1.07666-0.02734 0.11279-0.02735 0.49218l0 2.21143 0 2.14307q0 0.43408 0.02734 0.52978 0.07178 0.35205 0.26661 0.63916 0.19482 0.28711 0.48877 0.48194 0.18457 0.11279 2.20459 1.26806 2.02344 1.15527 2.12255 1.19629 0.19482 0.08203 0.34864 0.11963 0.15723 0.03418 0.37256 0.03418 0.21875 0 0.39306-0.04102 0.17432-0.04443 0.38281-0.1538 0.15381-0.07178 2.12598-1.19629 1.97559-1.12793 2.11572-1.22705 0.31104-0.19482 0.50586-0.48194 0.19482-0.28711 0.2666-0.63916 0.02734-0.0957 0.02735-0.52978l0-2.14307 0-2.14307q0-0.43408-0.02735-0.52978-0.07178-0.32471-0.25976-0.61865-0.18799-0.29395-0.45459-0.4751-0.12647-0.08203-2.15674-1.24414-2.03027-1.16211-2.18408-1.23389-0.18115-0.08203-0.32129-0.11621-0.14014-0.0376-0.37939-0.0376-0.28027 0-0.38965 0.01367z m0.57422 1.18946q0.0957 0.04443 1.96533 1.11426 1.86963 1.06982 1.86963 1.07666 0 0.00684-2.0166 1.1621-2.0166 1.15527-2.04395 1.15528-0.02734 0-2.04395-1.15528-2.0166-1.15527-2.0166-1.1621 0-0.00684 1.8628-1.06983 1.86279-1.06299 1.93798-1.104 0.07861-0.04443 0.13331-0.05811 0.05811-0.01367 0.17431 0 0.11963 0.01367 0.17774 0.04102z m-2.83008 4.36816l2.03027 1.16211 0 2.33789q0 2.33789-0.01367 2.32422l-1.91748-1.09033q-1.91748-1.09375-1.98242-1.15528-0.06152-0.06494-0.11963-0.17431l-0.05469-0.11279 0-4.06055q0-0.42041 0.01367-0.40674l2.04395 1.17578z m7.2666 1.34668l0 1.94483-0.05469 0.11279q-0.05811 0.10938-0.12305 0.17431-0.06152 0.06152-1.979 1.15528l-1.91748 1.09033q-0.01367 0.01367-0.01367-2.32422l0-2.33789 4.08789-2.33789 0 0.28027q0.01367 0.29395 0 2.24219z"
+                    fill="#6F5322"
+                  ></path>
+                </svg>
+                <div
+                  data-pencil-name="PalLabel-サービス"
+                  style="box-sizing: border-box; color: #6F5322; font-family: Inter, system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  サービス
+                </div>
+              </div>
+              <div
+                data-pencil-name="Pal-DB"
+                style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; padding: 5px 10px; width: fit-content"
+              >
+                <svg
+                  data-pencil-name="PalIcon-DB"
+                  data-icon-name="database"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="box-sizing: border-box; flex-shrink: 0; height: 13px; width: 13px"
+                >
+                  <path
+                    d="M6.49756 0.60156q-0.98096 0.02734-1.87647 0.16748-0.89551 0.14014-1.58252 0.3794-1.59619 0.56055-1.83544 1.46972-0.02734 0.09912-0.02735 0.70069l0 3.68115 0 3.68115q0 0.60156 0.02734 0.70069 0.21191 0.81348 1.4834 1.34326 0.86816 0.35205 2.08496 0.5332 1.22021 0.18115 2.52247 0.15381 1.32959-0.02734 2.50537-0.25293 0.86816-0.16748 1.51758-0.44092 0.65283-0.27344 1.01513-0.61523 0.36572-0.3418 0.46484-0.72119 0.02734-0.09912 0.02735-0.68702l0-3.69482 0-3.69482q0-0.58789-0.02735-0.68702-0.19824-0.76904-1.37402-1.28515-1.17578-0.51953-3.10693-0.69043-0.29395-0.02734-0.70069-0.04102l-0.51611-0.01367q-0.14014 0-0.60156 0.01367z m1.14502 1.16211q2.06104 0.09912 3.27783 0.61524 0.30762 0.14014 0.52295 0.29394 0.21875 0.15381 0.20508 0.25293 0.01367 0.02734-0.07178 0.11279-0.26318 0.28027-0.95703 0.52637-0.69385 0.24268-1.63037 0.38281-0.5332 0.07178-0.89209 0.09229-0.35547 0.02051-1.09717 0.02051-0.7417 0-1.10059-0.02051-0.35547-0.02051-0.88867-0.09229-0.81006-0.11279-1.44238-0.31445-0.62891-0.20166-0.96387-0.44092-0.09912-0.07178-0.17773-0.15381-0.0752-0.08545-0.0752-0.11279 0-0.09912 0.18115-0.23926 0.61865-0.4751 2.06446-0.73144 1.44922-0.25977 3.04541-0.19141z m-4.91162 2.79932q0.86816 0.36572 2.12597 0.54687 1.23389 0.16748 2.56348 0.14014 1.37061-0.04102 2.53272-0.29395 0.88184-0.18115 1.62353-0.51953l0.09912-0.04101-0.01367 2.63183-0.04102 0.05811q-0.05811 0.06836-0.21875 0.18115-0.16064 0.11279-0.32812 0.19483-0.92285 0.44775-2.53272 0.62548-1.60986 0.17432-3.17871-0.01025-0.72803-0.08203-1.37402-0.24268-0.64258-0.16064-1.05615-0.3623-0.41357-0.20508-0.54004-0.37256l-0.05469-0.07178-0.01367-2.63183 0.40674 0.16748z m0.02734 4.10156q1.16211 0.46484 2.98047 0.61865 0.33838 0.04102 1.26123 0.04102 0.92285 0 1.26123-0.04102 1.53809-0.14014 2.60107-0.47851 0.43408-0.15381 0.72803-0.29395l0.08545-0.04101 0 2.61816-0.05469 0.07178q-0.16748 0.23584-0.73486 0.4751-0.56738 0.23584-1.30908 0.37597-1.22021 0.23926-2.57715 0.23926-1.35693 0-2.57715-0.23926-0.7417-0.14014-1.30908-0.37597-0.56738-0.23926-0.73486-0.4751l-0.05469-0.07178 0-2.61816 0.11279 0.05468q0.0957 0.05811 0.32129 0.14014z"
+                    fill="#57503F"
+                  ></path>
+                </svg>
+                <div
+                  data-pencil-name="PalLabel-DB"
+                  style="box-sizing: border-box; color: #57503F; font-family: Inter, system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  DB
+                </div>
+              </div>
+              <div
+                data-pencil-name="Pal-ER"
+                style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; padding: 5px 10px; width: fit-content"
+              >
+                <svg
+                  data-pencil-name="PalIcon-ER"
+                  data-icon-name="table"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="box-sizing: border-box; flex-shrink: 0; height: 13px; width: 13px"
+                >
+                  <path
+                    d="M2.60449 1.20313q-0.50586 0.08545-0.87842 0.43749-0.36914 0.34863-0.50927 0.86475-0.02734 0.08545-0.02735 0.71436l-0.01367 3.78027 0.01367 3.78027q0 0.62891 0.02735 0.71436 0.14014 0.48877 0.46826 0.82031 0.33154 0.32813 0.82031 0.46826 0.08545 0.02734 0.71436 0.02735l3.78027 0.01367 3.78027-0.01367q0.62891 0 0.71436-0.02735 0.48877-0.14014 0.81689-0.46826 0.33154-0.33154 0.47168-0.82031 0.02734-0.08545 0.02735-0.71436l0.01367-3.78027-0.01367-3.78027q0-0.62891-0.02735-0.71436-0.12646-0.48877-0.458-0.81689-0.32813-0.33154-0.80323-0.47168l-0.14013-0.04102-4.32715 0q-4.3374 0-4.4502 0.02734z m3.82129 2.29687l0 1.17578-4.10156 0 0.01367-1.89014 0.04102-0.09912q0.07178-0.14014 0.18798-0.229 0.11963-0.09229 0.25977-0.11963 0.08545 0 1.83545-0.01367l1.76367 0 0 1.17578z m4.8877-1.12109q0.2085 0.09912 0.30761 0.30761l0.04102 0.09912 0.01367 1.89014-4.10156 0 0-2.35156 3.64013 0.01367 0.09913 0.04102z m-4.8877 4.62109l0 1.17578-4.10156 0 0-2.35156 4.10156 0 0 1.17578z m5.25 0l0 1.17578-4.10156 0 0-2.35156 4.10156 0 0 1.17578z m-5.25 3.5l0 1.17578-1.76367 0q-1.75 0-1.84912-0.02734-0.29395-0.05811-0.43408-0.33496l-0.04102-0.09912-0.01367-1.89014 4.10156 0 0 1.17578z m5.25-0.23926l-0.01367 0.95362-0.04102 0.09912q-0.14014 0.27685-0.43408 0.33496-0.09912 0.02734-1.84912 0.02734l-1.76367 0 0-2.35156 4.10156 0 0 0.93652z"
+                    fill="#57503F"
+                  ></path>
+                </svg>
+                <div
+                  data-pencil-name="PalLabel-ER"
+                  style="box-sizing: border-box; color: #57503F; font-family: Inter, system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  ER
+                </div>
+              </div>
+              <div
+                data-pencil-name="Pal-クラス"
+                style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; padding: 5px 10px; width: fit-content"
+              >
+                <svg
+                  data-pencil-name="PalIcon-クラス"
+                  data-icon-name="braces"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="box-sizing: border-box; flex-shrink: 0; height: 13px; width: 13px"
+                >
+                  <path
+                    d="M3.72559 1.20313q-0.50586 0.11279-0.87159 0.47167-0.3623 0.35547-0.48877 0.88868-0.01367 0.08203-0.02734 0.3623l-0.01367 3.06592-0.04102 0.08545q-0.09912 0.19482-0.29394 0.28027-0.08545 0.04102-0.25293 0.06836-0.25293 0.02734-0.39307 0.16748-0.0957 0.09912-0.1333 0.18457-0.03418 0.08203-0.03418 0.22217 0 0.14014 0.03418 0.22559 0.0376 0.08203 0.12647 0.17431 0.09229 0.08887 0.17431 0.12647 0.08545 0.03418 0.25977 0.06152 0.17432 0.02734 0.24267 0.06494 0.07178 0.03418 0.14698 0.11279 0.07861 0.0752 0.12304 0.15723l0.04102 0.08545 0.01367 3.06592q0.01367 0.28027 0.02734 0.3623 0.11279 0.46484 0.42041 0.81348 0.30762 0.34863 0.7417 0.48877 0.16748 0.0581 0.31446 0.07178 0.14697 0.01367 0.49902 0.01367 0.30762 0 0.38281-0.00684 0.07861-0.00684 0.14698-0.02051 0.21191-0.08545 0.3247-0.29394 0.04102-0.09912 0.04102-0.25293 0-0.15381-0.04102-0.25293-0.09912-0.19482-0.29394-0.28027-0.05811-0.02734-0.13672-0.03418-0.0752-0.00684-0.36914-0.00684-0.43408-0.01367-0.51953-0.04785-0.08203-0.0376-0.18799-0.12647-0.10254-0.09229-0.1333-0.18798l-0.04102-0.08545-0.02734-3.34619-0.04102-0.16748q-0.09912-0.32129-0.28027-0.57422l-0.09912-0.14014 0.09912-0.14014q0.18115-0.25293 0.28027-0.57422l0.04102-0.16748 0.02734-3.34619 0.04102-0.09912q0.12646-0.28027 0.43408-0.32129 0.11279-0.02734 0.44775-0.02734 0.22559 0 0.30078-0.00684 0.07861-0.00684 0.13331-0.02051 0.21191-0.08545 0.3247-0.29394 0.04102-0.09912 0.04102-0.25293 0-0.09912-0.00684-0.14014-0.00684-0.04102-0.03418-0.11279-0.04443-0.08203-0.13672-0.16406-0.08887-0.08545-0.18798-0.12989-0.06836-0.01367-0.15381-0.0205-0.08203-0.00684-0.38965-0.00684-0.44775 0-0.60156 0.02734z m5.4038-0.00001q-0.09912 0.04443-0.1914 0.12989-0.08887 0.08203-0.12647 0.16064-0.03418 0.0752-0.04101 0.11621-0.00684 0.04102-0.00684 0.14014 0 0.15381 0.04102 0.25293 0.11279 0.2085 0.3247 0.29395 0.05469 0.01367 0.12989 0.0205 0.07861 0.00684 0.3042 0.00684 0.27686 0 0.41699 0.02051 0.14014 0.02051 0.21191 0.06494 0.16748 0.0957 0.25293 0.26318l0.04102 0.09912 0.02734 3.34619 0.04102 0.16748q0.09912 0.32129 0.28027 0.5879l0.09912 0.12646-0.08545 0.12646q-0.10938 0.14014-0.17431 0.28028-0.06152 0.14014-0.1333 0.34863-0.02734 0.09912-0.02735 0.33496l-0.02734 3.1377-0.04102 0.09912q-0.04443 0.08203-0.11621 0.16064-0.06836 0.0752-0.13672 0.11963-0.14014 0.06836-0.61523 0.06836-0.23926 0-0.31104 0.00684-0.06836 0.00684-0.13672 0.02051-0.09912 0.04443-0.1914 0.12988-0.08887 0.08203-0.1333 0.16406-0.02734 0.07178-0.03418 0.11279-0.00684 0.04102-0.00684 0.14014 0 0.15381 0.04102 0.25293 0.11279 0.2085 0.3247 0.29395 0.06836 0.02734 0.1504 0.02734 0.08545 0 0.44775 0 0.36572 0 0.45459-0.01367 0.09229-0.01367 0.20508-0.04102 0.4751-0.14014 0.80322-0.48877 0.33154-0.35205 0.44434-0.84424 0.01367-0.08203 0.02734-0.3623l0.01367-3.06592 0.04102-0.08545q0.04443-0.08203 0.11963-0.15722 0.07861-0.07861 0.14697-0.1128 0.07178-0.0376 0.24609-0.06494 0.17432-0.02734 0.25635-0.06152 0.08545-0.0376 0.17432-0.12647 0.09228-0.09229 0.12646-0.17431 0.0376-0.08545 0.0376-0.22559 0-0.14014-0.0376-0.22217-0.03418-0.08545-0.12988-0.18457-0.14014-0.14014-0.39307-0.16748-0.16748-0.02734-0.25293-0.06836-0.19482-0.08545-0.29394-0.28027l-0.04102-0.08545-0.01367-3.06592q-0.01367-0.28027-0.02734-0.3623-0.11279-0.44775-0.39307-0.77588-0.28027-0.33154-0.68701-0.49903-0.18115-0.07178-0.34864-0.09228-0.16748-0.02051-0.54687-0.02051-0.30762 0-0.39307 0.00684-0.08203 0.00684-0.13672 0.02051z"
+                    fill="#57503F"
+                  ></path>
+                </svg>
+                <div
+                  data-pencil-name="PalLabel-クラス"
+                  style="box-sizing: border-box; color: #57503F; font-family: Inter, system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  クラス
+                </div>
+              </div>
+              <div
+                data-pencil-name="PalDivider"
+                style="align-items: flex-start; background-color: #E3DBCA; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 0px; height: 18px; justify-content: flex-start; width: 1px"
+              ></div>
+              <div
+                data-pencil-name="Pal-接続"
+                style="align-items: center; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; padding: 5px 10px; width: fit-content"
+              >
+                <svg
+                  data-pencil-name="PalIcon-接続"
+                  data-icon-name="spline"
+                  data-icon-set="lucide"
+                  viewBox="0 0 13.99993896484375 14"
+                  preserveAspectRatio="xMidYMid meet"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="box-sizing: border-box; flex-shrink: 0; height: 13px; width: 13px"
+                >
+                  <path
+                    d="M10.72559 1.20313q-0.40674 0.08545-0.73145 0.34521-0.32129 0.25635-0.48877 0.62207-0.08203 0.16748-0.09912 0.18115-0.01367 0.01367-0.09912 0.01367-0.08203 0-0.36231 0.0376-0.28027 0.03418-0.44775 0.06153-1.53809 0.29395-2.84033 1.18261-1.30225 0.88867-2.14307 2.21826-0.46143 0.71436-0.75537 1.55518-0.29395 0.84082-0.37939 1.66455l-0.01368 0.09912q-0.01367 0.18115-0.03418 0.21875-0.02051 0.03418-0.11962 0.08887l-0.05469 0.02734q-0.33838 0.15381-0.57764 0.44092-0.23584 0.28711-0.34863 0.65283-0.02734 0.11279-0.04102 0.18116-0.01367 0.06836-0.01367 0.28027 0 0.25293 0.02051 0.37256 0.02051 0.11621 0.10596 0.31445 0.12646 0.30762 0.37597 0.56055 0.25293 0.24951 0.56055 0.37597 0.21191 0.08545 0.32129 0.10596 0.11279 0.02051 0.36572 0.00684 0.21191 0 0.28027-0.00684 0.06836-0.00684 0.18116-0.03418 0.36572-0.11279 0.65283-0.34863 0.28711-0.23926 0.44092-0.56397 0.18115-0.37598 0.18115-0.76904 0-0.39307-0.16748-0.76904-0.09912-0.18115-0.25977-0.36914-0.16064-0.19141-0.32129-0.29737-0.16064-0.10596-0.3999-0.21533 0 0 0.03418-0.2666 0.0376-0.2666 0.06494-0.40674 0.22217-1.24414 0.90235-2.30029 0.68018-1.05957 1.72949-1.80127 1.11768-0.79639 2.51904-1.04932 0.14014-0.02734 0.40674-0.06152 0.2666-0.0376 0.2666-0.0376l0.05469 0.12647q0.11279 0.2666 0.33496 0.49902 0.22559 0.229 0.49219 0.35547 0.37598 0.16748 0.76904 0.16748 0.39307 0 0.76904-0.18115 0.32471-0.15381 0.56055-0.44092 0.23926-0.28711 0.35205-0.65283 0.02734-0.11279 0.03418-0.18116 0.00684-0.06836 0.02051-0.28027 0-0.25293-0.02051-0.3623-0.02051-0.11279-0.10596-0.32471-0.15381-0.3623-0.46826-0.63574-0.31445-0.27344-0.70752-0.38623-0.15381-0.02734-0.3999-0.03418-0.24268-0.00684-0.39648 0.0205z m0.60156 1.18945q0.24951 0.11279 0.31787 0.38623 0.07178 0.27344-0.0957 0.48193-0.12646 0.15381-0.29395 0.21192-0.16748 0.05469-0.33496 0-0.25293-0.07178-0.37939-0.33496-0.04102-0.09912-0.03418-0.23243 0.00684-0.1333 0.04785-0.23242 0.09912-0.22217 0.32129-0.29736 0.22558-0.07861 0.45117 0.01709z m-8.16211 8.16211q0.18115 0.09912 0.28027 0.29394 0.05469 0.09912 0.05469 0.23243 0 0.1333-0.05127 0.23242-0.04785 0.0957-0.11963 0.17431-0.06836 0.0752-0.14697 0.1128-0.0752 0.03418-0.18115 0.05468-0.10254 0.02051-0.18799-0.00683-0.22217-0.04102-0.35547-0.21533-0.1333-0.17773-0.11963-0.39307 0.01367-0.21875 0.18115-0.37256 0.12646-0.12646 0.30078-0.15381 0.17773-0.02734 0.34522 0.04102z"
+                    fill="#57503F"
+                  ></path>
+                </svg>
+                <div
+                  data-pencil-name="PalLabel-接続"
+                  style="box-sizing: border-box; color: #57503F; font-family: Inter, system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+                >
+                  接続
+                </div>
+              </div>
+            </div>
+            <div
+              data-pencil-name="MermaidBtn"
+              style="align-items: center; background-color: #8A6830; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; gap: 7px; height: fit-content; justify-content: flex-start; left: 757px; padding: 8px 14px; position: absolute; top: 16px; width: fit-content; z-index: 16"
+            >
+              <svg
+                data-pencil-name="MermaidIcon"
+                data-icon-name="git-branch"
+                data-icon-set="lucide"
+                viewBox="0 0 13.99993896484375 14"
+                preserveAspectRatio="xMidYMid meet"
+                xmlns="http://www.w3.org/2000/svg"
+                style="box-sizing: border-box; flex-shrink: 0; height: 14px; width: 14px"
+              >
+                <path
+                  d="M3.34619 1.18945q-0.25293 0.08545-0.37939 0.30762l-0.04102 0.08545 0 6.64795-0.16748 0.0581q-0.50586 0.16748-0.88525 0.54004-0.37598 0.36914-0.55713 0.85791-0.08545 0.22559-0.11279 0.3794-0.02734 0.15381-0.02735 0.43408 0 0.28027 0.02735 0.43408 0.02734 0.15381 0.11279 0.3794 0.16748 0.4751 0.52978 0.84082 0.36572 0.36231 0.84082 0.52978 0.22559 0.08545 0.3794 0.1128 0.15381 0.02734 0.43408 0.02734 0.28027 0 0.43408-0.02734 0.15381-0.02734 0.3794-0.1128 0.48877-0.18115 0.86474-0.57422 0.37939-0.39307 0.53321-0.89551l0.0581-0.1538 0.0957-0.01367q0.86816-0.08545 1.68165-0.43409 1.44238-0.61523 2.38574-1.89697 0.94678-1.28174 1.11425-2.85059l0.01368-0.0957 0.1538-0.0581q0.50244-0.15381 0.89551-0.52979 0.39307-0.37939 0.57422-0.86816 0.08545-0.22559 0.1128-0.3794 0.02734-0.15381 0.02734-0.43408 0-0.28027-0.02734-0.43408-0.02734-0.15381-0.1128-0.3794-0.18115-0.4751-0.56054-0.85107-0.37598-0.37939-0.86817-0.5332-0.2085-0.07178-0.35547-0.09912-0.14697-0.02734-0.3999-0.02735-0.25293 0-0.3999 0.02735-0.14697 0.02734-0.35547 0.09912-0.49219 0.15381-0.87158 0.5332-0.37598 0.37598-0.55713 0.85107-0.08545 0.22559-0.11279 0.3794-0.02734 0.15381-0.02735 0.43408 0 0.28027 0.02735 0.43408 0.02734 0.15381 0.11279 0.3794 0.18115 0.48877 0.56738 0.86816 0.38623 0.37598 0.875 0.52979l0.12647 0.04101 0 0.08545q-0.01367 0.11279-0.05811 0.32129-0.18115 0.90918-0.70068 1.68164-0.51611 0.76904-1.27832 1.28857-0.76221 0.51611-1.67481 0.69727-0.2085 0.04443-0.32129 0.05811l-0.09912 0-0.04101-0.12647q-0.16748-0.50586-0.56055-0.89551-0.38965-0.39307-0.90918-0.57422l-0.16748-0.0581 0-6.64795-0.04102-0.08545q-0.09912-0.18115-0.28027-0.2666-0.08545-0.04102-0.22559-0.04785-0.14014-0.00684-0.18115 0.00683z m7.44776 1.17578q0.28027 0.07178 0.52295 0.31788 0.24609 0.24268 0.31787 0.52294 0.02734 0.12646 0.02734 0.29395 0 0.16748-0.02734 0.28027-0.07178 0.29395-0.3042 0.53321-0.229 0.23584-0.53662 0.32129-0.11279 0.02734-0.29395 0.02734-0.18115 0-0.29395-0.02734-0.30762-0.08545-0.54003-0.32129-0.229-0.23926-0.30079-0.53321-0.02734-0.11279-0.02734-0.28027 0-0.16748 0.02734-0.29395 0.05811-0.22559 0.22559-0.43408 0.16748-0.2085 0.40674-0.32129 0.34863-0.18115 0.79639-0.08545z m-7 7q0.28027 0.07178 0.52294 0.31788 0.24609 0.24268 0.31788 0.52294 0.02734 0.12647 0.02734 0.29395 0 0.16748-0.02734 0.28027-0.07178 0.29395-0.3042 0.53321-0.229 0.23584-0.53662 0.32129-0.11279 0.02734-0.29395 0.02734-0.18115 0-0.29395-0.02734-0.30762-0.08545-0.54003-0.32129-0.229-0.23926-0.30079-0.53321-0.02734-0.11279-0.02734-0.28027 0-0.16748 0.02734-0.29395 0.05811-0.22559 0.22559-0.43408 0.16748-0.2085 0.40674-0.32129 0.34863-0.18115 0.79639-0.08545z"
+                  fill="#FBF6EA"
+                ></path>
+              </svg>
+              <div
+                data-pencil-name="MermaidLabel"
+                style="box-sizing: border-box; color: #FBF6EA; font-family: Inter, system-ui, sans-serif; font-size: 12px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+              >
+                Mermaid として挿入
+              </div>
+            </div>
+            <div
+              data-pencil-name="ZoomCtl"
+              style="align-items: center; background-color: #FCFAF5; border-radius: 6px; border: 1px solid #E3DBCA; box-sizing: border-box; display: flex; flex-direction: row; gap: 10px; height: fit-content; justify-content: flex-start; left: 16px; padding: 4px 10px; position: absolute; top: 649px; width: fit-content; z-index: 17"
+            >
+              <div
+                data-pencil-name="ZoomMinus"
+                style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                −
+              </div>
+              <div
+                data-pencil-name="ZoomVal"
+                style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                100%
+              </div>
+              <div
+                data-pencil-name="ZoomPlus"
+                style='box-sizing: border-box; color: #57503F; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+              >
+                +
+              </div>
+            </div>
+            <div
+              data-pencil-name="MiniMap"
+              style="background-color: #FCFAF5; border-radius: 8px; border: 1px solid #CFC4AD; box-shadow: 0px 10px 24px -6px #3A2C1526; box-sizing: border-box; height: 96px; left: 774px; position: absolute; top: 577px; width: 150px; z-index: 18"
+            >
+              <div
+                data-pencil-name="Mini-Gw"
+                style="background-color: #8A6830; border-radius: 1px; box-sizing: border-box; height: 9px; left: 56px; position: absolute; top: 12px; width: 24px; z-index: 0"
+              ></div>
+              <div
+                data-pencil-name="Mini-Ord"
+                style="background-color: #8A6830; border-radius: 1px; box-sizing: border-box; height: 9px; left: 56px; position: absolute; top: 34px; width: 24px; z-index: 1"
+              ></div>
+              <div
+                data-pencil-name="Mini-Pay"
+                style="background-color: #8A6830; border-radius: 1px; box-sizing: border-box; height: 9px; left: 96px; position: absolute; top: 34px; width: 24px; z-index: 2"
+              ></div>
+              <div
+                data-pencil-name="Mini-Db"
+                style="background-color: #5C7050; border-radius: 1px; box-sizing: border-box; height: 10px; left: 58px; position: absolute; top: 54px; width: 20px; z-index: 3"
+              ></div>
+              <div
+                data-pencil-name="Mini-Er"
+                style="background-color: #40676B; border-radius: 1px; box-sizing: border-box; height: 13px; left: 14px; position: absolute; top: 48px; width: 26px; z-index: 4"
+              ></div>
+              <div
+                data-pencil-name="Mini-Cls"
+                style="background-color: #7B4A68; border-radius: 1px; box-sizing: border-box; height: 13px; left: 100px; position: absolute; top: 56px; width: 28px; z-index: 5"
+              ></div>
+              <div
+                data-pencil-name="Mini-Memo"
+                style="background-color: #F2E9D3; border-radius: 1px; box-sizing: border-box; height: 12px; left: 12px; position: absolute; top: 10px; width: 20px; z-index: 6"
+              ></div>
+              <div
+                data-pencil-name="MiniViewport"
+                style="border-radius: 2px; border: 1px solid #6F5322; box-sizing: border-box; height: 60px; left: 44px; position: absolute; top: 6px; width: 76px; z-index: 7"
+              ></div>
+            </div>
+          </div>
+          <div
+            data-pencil-name="BottomBar"
+            style="align-items: center; border-color: #E3DBCA; border-style: solid; border-width: 1px 0px 0px 0px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 12px; height: fit-content; justify-content: flex-start; padding: 12px 18px; width: 100%"
+          >
+            <div
+              data-pencil-name="SendHint"
+              style='box-sizing: border-box; color: #8B8170; font-family: "JetBrains Mono", system-ui, sans-serif; font-size: 11px; font-style: normal; font-weight: 400; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap'
+            >
+              ⌘↵ で送信 · 図は Mermaid として本文に添付
+            </div>
+            <div
+              data-pencil-name="FootSpacer"
+              style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: row; flex: 1 1 0; gap: 0px; height: 1px; justify-content: flex-start"
+            ></div>
+            <div
+              data-pencil-name="ProgressBtn"
+              style="align-items: center; border-radius: 6px; border: 1px solid #CFC4AD; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 6px; height: fit-content; justify-content: flex-start; padding: 8px 14px; width: fit-content"
+            >
+              <svg
+                data-pencil-name="ProgIcon"
+                data-icon-name="activity"
+                data-icon-set="lucide"
+                viewBox="0 0 13.99993896484375 14"
+                preserveAspectRatio="xMidYMid meet"
+                xmlns="http://www.w3.org/2000/svg"
+                style="box-sizing: border-box; flex-shrink: 0; height: 14px; width: 14px"
+              >
+                <path
+                  d="M5.13721 0.60156q-0.0957 0.01367-0.18799 0.05811-0.09229 0.04102-0.19824 0.1333-0.10254 0.08887-0.14698 0.17432-0.04102 0.08203-0.7417 2.57373-0.69727 2.4917-0.73486 2.56347-0.03418 0.06836-0.1333 0.16065-0.0957 0.09229-0.16064 0.11279-0.06152 0.02051-0.21534 0.03418l-1.60986 0.01367-0.08545 0.04102q-0.22217 0.11279-0.30078 0.33838-0.0752 0.22217 0.00684 0.43408 0.05811 0.0957 0.14013 0.18115 0.08545 0.08203 0.16748 0.11963 0.08545 0.03418 0.22559 0.03418l0.76904 0q0.71436 0 0.89551-0.01367 0.18457-0.01367 0.37939-0.08545 0.32129-0.11279 0.60157-0.36914 0.28027-0.25977 0.40674-0.56739 0.04102-0.11279 0.1538-0.49218l0.53321-1.87305q0.33496-1.22021 0.34863-1.22021 0.01367 0 1.40479 4.97998 1.39453 4.97656 1.43554 5.07226 0.07178 0.14014 0.22559 0.25977 0.15381 0.11963 0.32129 0.14697 0.22559 0.02734 0.43408-0.0752 0.21191-0.10596 0.30762-0.3042 0.05811-0.08203 0.74853-2.56005 0.69385-2.47803 0.72803-2.55323 0.0376-0.07861 0.11963-0.16064 0.08545-0.08545 0.18457-0.12988l0.0957-0.04102 1.63721-0.02734q0.12646 0 0.19482-0.03418 0.07178-0.0376 0.15381-0.11963 0.08545-0.08545 0.12647-0.18115 0.04443-0.09912 0.04443-0.22559 0-0.12646-0.04102-0.23926-0.09912-0.19482-0.29394-0.29394l-0.08545-0.04102-0.89551 0q-0.62891 0-0.79297 0-0.16064 0-0.27002 0.02734-0.44775 0.09912-0.81347 0.40674-0.09912 0.08545-0.21875 0.23243-0.11621 0.14697-0.17432 0.27343-0.05469 0.12305-0.15381 0.43408-0.0957 0.30762-0.4751 1.65088-0.43408 1.59619-0.44775 1.59619-0.01367 0-1.41504-4.98339-1.39795-4.98682-1.44238-5.07569-0.04102-0.09229-0.1333-0.18115-0.08887-0.09229-0.17432-0.1333-0.19482-0.11279-0.44775-0.07178z"
+                  fill="#57503F"
+                ></path>
+              </svg>
+              <div
+                data-pencil-name="ProgLabel"
+                style="box-sizing: border-box; color: #57503F; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 600; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+              >
+                途中経過
+              </div>
+            </div>
+            <div
+              data-pencil-name="SendBtn"
+              style="align-items: center; background-color: #8A6830; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: row; flex-shrink: 0; gap: 7px; height: fit-content; justify-content: flex-start; padding: 9px 20px; width: fit-content"
+            >
+              <div
+                data-pencil-name="SendLabel"
+                style="box-sizing: border-box; color: #FBF6EA; font-family: Inter, system-ui, sans-serif; font-size: 13px; font-style: normal; font-weight: 700; letter-spacing: 0px; line-height: normal; text-align: left; white-space: nowrap"
+              >
+                送信
+              </div>
+              <svg
+                data-pencil-name="SendIcon"
+                data-icon-name="arrow-up"
+                data-icon-set="lucide"
+                viewBox="0 0 13.99993896484375 14"
+                preserveAspectRatio="xMidYMid meet"
+                xmlns="http://www.w3.org/2000/svg"
+                style="box-sizing: border-box; flex-shrink: 0; height: 15px; width: 15px"
+              >
+                <path
+                  d="M6.84619 2.35156q-0.08545 0.01367-0.15723 0.06494-0.06836 0.04785-2.16699 2.14649l-1.66455 1.69531q-0.36572 0.3623-0.46484 0.50244-0.05469 0.08545-0.05469 0.19824l0 0.04102q0 0.23926 0.18115 0.42041 0.11279 0.11279 0.28028 0.14697 0.16748 0.03418 0.32129-0.02051 0.08545-0.02734 0.32128-0.25976 0.23926-0.23242 1.37403-1.36377 1.58252-1.58252 1.59619-1.58252 0.01367 0 0.01367 3.42822l0 3.01123q0 0.44775 0.03418 0.53321 0.0376 0.08203 0.11963 0.16748 0.08545 0.08203 0.18799 0.1333 0.10596 0.04785 0.23242 0.04785 0.12646 0 0.229-0.04785 0.10596-0.05127 0.18799-0.1333 0.08545-0.08545 0.11963-0.16748 0.0376-0.08545 0.0376-0.53321l0-3.01123q0-3.42822 0.01367-3.42822 0.01367 0 1.59619 1.58252 1.13477 1.13135 1.37061 1.36377 0.23926 0.23242 0.32471 0.25976 0.15381 0.05469 0.32128 0.02051 0.16748-0.03418 0.28028-0.14697 0.18115-0.18115 0.18115-0.42041l0-0.04102q0-0.11279-0.05469-0.19824-0.09912-0.14014-0.46484-0.51611l-1.67822-1.68164q-2.10205-2.1123-2.17041-2.14649-0.06836-0.0376-0.16065-0.06494-0.09229-0.02734-0.14014-0.02734-0.04785 0-0.14697 0.02734z"
+                  fill="#FBF6EA"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+/*
+ * Style C — Atelier Warm デザイントークン。出所は design/human-1.pen の変数
+ * (docs/design-spec.md §1)。light を既定とし、dark も定義(実装は両対応必須)。
+ * dark は (1) prefers-color-scheme と (2) [data-theme] 属性の両方で切替可能。
+ */
+
+:root {
+  /* --- colors (light) --- */
+  --bg: #f4efe6;
+  --surface: #fcfaf5;
+  --surface2: #efe9dc;
+  --surface3: #e7dfce;
+  --border: #e3dbca;
+  --border-strong: #cfc4ad;
+  --text-primary: #2b2317;
+  --text-secondary: #57503f;
+  --text-muted: #8b8170;
+  --accent: #8a6830;
+  --accent-strong: #6f5322;
+  --accent-soft: #f0e7d2;
+  --on-accent: #fbf6ea;
+  --thinking: #7b4a68;
+  --thinking-soft: #f1e8ec;
+  --tool: #5c7050;
+  --tool-soft: #e9ebdd;
+  --xml: #40676b;
+  --xml-soft: #e4ebe7;
+  --curve: #40676b;
+  --memo: #8c6a2f;
+  --memo-soft: #f2e9d3;
+  --warn: #ac5b3b;
+  --warn-soft: #f3e2d8;
+
+  /* --- fonts --- */
+  /*
+   * フォールバックは Pencil 忠実 HTML(基準 PNG の出所)と完全一致させる。
+   * Pencil の export は 3 系統すべて末尾を `system-ui, sans-serif` にしており、
+   * CJK 文字は primary(Fraunces/JetBrains Mono には CJK グリフが無い)から
+   * このフォールバックへ落ちる。ここが `monospace` / `serif` だと CJK の
+   * グリフ・行ボックス高が基準とずれ、行が縦にずれて px 差になる(§docs/testing.md)。
+   */
+  --font-display: "Fraunces Variable", system-ui, sans-serif;
+  --font-ui: "Inter Variable", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", system-ui, sans-serif;
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #1e1a15;
+  --surface: #262119;
+  --surface2: #2f2921;
+  --surface3: #3a332a;
+  --border: #3b342a;
+  --border-strong: #4c4437;
+  --text-primary: #f0eae0;
+  --text-secondary: #c6bcac;
+  --text-muted: #94897a;
+  --accent: #c29a5b;
+  --accent-strong: #d3af77;
+  --accent-soft: #33291a;
+  --on-accent: #241c0f;
+  --thinking: #b98ba9;
+  --thinking-soft: #322631;
+  --tool: #96ae88;
+  --tool-soft: #2a3024;
+  --xml: #7fa7ac;
+  --xml-soft: #253135;
+  --curve: #7fa7ac;
+  --memo: #d6b380;
+  --memo-soft: #362e1e;
+  --warn: #d08a6a;
+  --warn-soft: #3a2a20;
+
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1e1a15;
+    --surface: #262119;
+    --surface2: #2f2921;
+    --surface3: #3a332a;
+    --border: #3b342a;
+    --border-strong: #4c4437;
+    --text-primary: #f0eae0;
+    --text-secondary: #c6bcac;
+    --text-muted: #94897a;
+    --accent: #c29a5b;
+    --accent-strong: #d3af77;
+    --accent-soft: #33291a;
+    --on-accent: #241c0f;
+    --thinking: #b98ba9;
+    --thinking-soft: #322631;
+    --tool: #96ae88;
+    --tool-soft: #2a3024;
+    --xml: #7fa7ac;
+    --xml-soft: #253135;
+    --curve: #7fa7ac;
+    --memo: #d6b380;
+    --memo-soft: #362e1e;
+    --warn: #d08a6a;
+    --warn-soft: #3a2a20;
+
+    color-scheme: dark;
+  }
+}
