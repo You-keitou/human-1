@@ -53,7 +53,7 @@
 ## マイルストーン
 
 - [x] M0: 設計合意・Pencil モック(`design/human-1.pen`)
-- [ ] M1: モノレポ scaffold + shared(型・パーサ移植)
+- [x] M1: モノレポ scaffold + shared(型・パーサ移植。並列複数 tool call 対応で `ParsedTurn.toolCalls` は配列)
 - [ ] M2: server(Workers + DO、両 API、WS、認証、永続化、並列 tool call)
 - [ ] M3: ui(エディタ移植・デザイン一新・Runs・モバイル)
 - [ ] M4: cli(`hllm`)

@@ -1,0 +1,15 @@
+{
+  "name": "@human-1/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "hllm": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@human-1/shared": "workspace:*"
+  }
+}
