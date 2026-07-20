@@ -38,9 +38,12 @@ export type WsRequestMessage = {
   tools?: ToolInfo[]
 }
 
+// replay: WS 再接続時に DO が過去の終端イベントを再送する際だけ true。
+// 生配信時は付かない。クライアントは requestId で重複排除する。
 export type WsTimeoutMessage = {
   type: 'timeout'
   requestId: string
+  replay?: boolean
 }
 
 // 以下は観測者(トレーナー AI・theater)向け通知。
@@ -62,12 +65,14 @@ export type WsAnsweredMessage = {
   type: 'answered'
   requestId: string
   content: string
+  replay?: boolean
 }
 
 export type WsScoreMessage = {
   type: 'score'
   rolloutId: string
   score: Score
+  replay?: boolean
 }
 
 export type WsServerMessage =

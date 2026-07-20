@@ -9,6 +9,7 @@ import { json } from './http'
 //   POST /api/runs/:id/rollouts        { task } で rollout 作成
 //   GET  /api/rollouts/:id             rollout 単体
 //   POST /api/rollouts/:id/score       { text } で採点抽出、または { value, max, comment } 直接指定
+//   POST /api/rollouts/:id/end         score なしで rollout を終了(タイムアウト/失敗の終端記録)
 export async function handleApi(
   ctx: HumanLlmDO,
   request: Request,
@@ -62,6 +63,15 @@ export async function handleApi(
     if (!rollout) return json({ error: { message: 'rollout not found' } }, 404)
     // 学習曲線として観測者へ配信する。
     ctx.broadcast({ type: 'score', rolloutId, score })
+    return json({ rollout })
+  }
+
+  const rolloutEnd = path.match(/^\/api\/rollouts\/([^/]+)\/end$/)
+  if (rolloutEnd) {
+    const rolloutId = decodeURIComponent(rolloutEnd[1] as string)
+    if (method !== 'POST') return json({ error: { message: 'method not allowed' } }, 405)
+    const rollout = ctx.endRollout(rolloutId, Date.now())
+    if (!rollout) return json({ error: { message: 'rollout not found' } }, 404)
     return json({ rollout })
   }
 

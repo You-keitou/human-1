@@ -5,6 +5,7 @@
 // 既定インスタンス(startWrangler)はスイート全体で 1 回だけ共有する。
 // タイムアウト検証など特殊な env が要る場合は startWranglerInstance で別ポートに立てる。
 
+import { rm } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { type Subprocess, spawn } from 'bun'
 
@@ -25,9 +26,6 @@ type LaunchConfig = {
   vars?: Record<string, string>
 }
 
-// 競合しない固定ポート(通常の wrangler dev の 8787 とずらす)。
-const DEFAULT_CONFIG: LaunchConfig = { port: 8799, inspectorPort: 9799 }
-
 async function readAuthToken(): Promise<string> {
   try {
     const text = await Bun.file(devVarsPath).text()
@@ -41,15 +39,7 @@ async function readAuthToken(): Promise<string> {
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
-let started: Promise<ServerHandle> | null = null
-
-// シングルトン起動。複数テストファイルから呼ばれても既定インスタンスは 1 プロセスだけ。
-export function startWrangler(): Promise<ServerHandle> {
-  if (!started) started = launch(DEFAULT_CONFIG)
-  return started
-}
-
-// 独立インスタンスを別ポートに立てる(既定インスタンスとは別プロセス・別 DO 状態)。
+// 指定ポートに独立インスタンスを立てる(別プロセス・別 DO 状態)。
 export function startWranglerInstance(config: LaunchConfig): Promise<ServerHandle> {
   return launch(config)
 }
@@ -58,8 +48,14 @@ async function launch(config: LaunchConfig): Promise<ServerHandle> {
   const { port, inspectorPort, vars } = config
   const token = await readAuthToken()
   const baseUrl = `http://127.0.0.1:${port}`
-  // インスタンスごとに DO 永続先を分ける(.wrangler は gitignore 済み)。
-  const persistDir = resolve(serverDir, '.wrangler', `test-state-${port}`)
+  // 起動ごとに新鮮な DO 永続先を使う(.wrangler は gitignore 済み)。ポート再利用の連続実行で
+  // SQLite state を共有すると、終端イベント履歴の跨ぎ蓄積やロック競合で workerd が不安定化するため、
+  // 各起動で隔離し stop() で破棄する。
+  const persistDir = resolve(
+    serverDir,
+    '.wrangler',
+    `test-state-${port}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+  )
 
   const varArgs = Object.entries(vars ?? {}).flatMap(([k, v]) => ['--var', `${k}:${v}`])
   const proc: Subprocess = spawn(
@@ -99,6 +95,8 @@ async function launch(config: LaunchConfig): Promise<ServerHandle> {
         // 既に終了していれば無視
       }
       await proc.exited
+      // 使い捨ての永続先を破棄(ディスクに溜めない)。
+      await rm(persistDir, { recursive: true, force: true }).catch(() => {})
     },
   }
 

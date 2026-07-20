@@ -9,15 +9,23 @@ import { afterAll, beforeAll, describe, expect, test } from 'bun:test'
 import type { ToolCallItem } from '@human-1/shared'
 import { HumanSim } from './helpers/humansim'
 import { readSse, type SseEvent } from './helpers/sse'
-import { type ServerHandle, startWrangler, startWranglerInstance } from './helpers/wrangler'
+import { type ServerHandle, startWranglerInstance } from './helpers/wrangler'
 
 let server: ServerHandle
 let sim: HumanSim
 
 const TEST_TIMEOUT = 20_000
+// テスト用に短縮注入するタイムアウト。シミュレータは即答するため全テストで安全に効き、
+// タイムアウト検証は独立インスタンスを別立てせず単一 wrangler で回せる(同時 2 起動による
+// メモリ圧・OOM を避け flaky を抑える)。
+const SERVER_TIMEOUT_MS = 3000
 
 beforeAll(async () => {
-  server = await startWrangler()
+  server = await startWranglerInstance({
+    port: 8799,
+    inspectorPort: 9799,
+    vars: { HUMAN_TIMEOUT_MS: String(SERVER_TIMEOUT_MS) },
+  })
   sim = await HumanSim.connect(server.wsUrl(server.token))
   // 人間往復で worker をリロード窓の先まで温める(以降の mutating POST は素の fetch で 503 を踏まない)。
   await primeRoundTrip(server, sim)
@@ -626,39 +634,16 @@ describe('Runs API', () => {
 // 独立インスタンスを別ポートに立てて検証する。既定の共有スイート(30 分)には影響しない。
 
 describe('タイムアウトと再武装', () => {
-  const T = 3000
-  let ts: ServerHandle
-  let tsim: HumanSim
-
-  // mutating な POST は再試行しない(素の fetch)。リロード窓は beforeAll の priming で吸収する。
-  const tPost = (path: string, body: unknown): Promise<Response> =>
-    fetch(`${ts.baseUrl}${path}`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', authorization: `Bearer ${ts.token}` },
-      body: JSON.stringify(body),
-    })
-
-  beforeAll(async () => {
-    ts = await startWranglerInstance({
-      port: 8798,
-      inspectorPort: 9798,
-      vars: { HUMAN_TIMEOUT_MS: String(T) },
-    })
-    tsim = await HumanSim.connect(ts.wsUrl(ts.token))
-    // prime: 人間往復で worker をリロード窓の先まで温める(priming は使い捨てなので 503 リトライ可)。
-    await primeRoundTrip(ts, tsim)
-  }, 90_000)
-
-  afterAll(async () => {
-    tsim?.close()
-    await ts?.stop()
-  })
+  // 単一 wrangler(main)に集約。短い HUMAN_TIMEOUT_MS は main へ注入済みなので、
+  // 共有 server / sim をそのまま使う(別インスタンスを立てない=同時起動によるメモリ圧回避)。
+  const T = SERVER_TIMEOUT_MS
+  const tPost = (path: string, body: unknown): Promise<Response> => postJson(path, body)
 
   test('A: 人間無反応 → messages 非ストリームが 400 timeout_error を返し WS に timeout 配信', async () => {
-    tsim.reset()
+    sim.reset()
     let reqId = ''
     // 応答しない(requestId だけ捕捉する)。
-    tsim.onRequest((req) => {
+    sim.onRequest((req) => {
       reqId = req.requestId
     })
     const start = Date.now()
@@ -676,14 +661,16 @@ describe('タイムアウトと再武装', () => {
     // 概ね T 経過している(素の待機が効いていることの傍証)。
     expect(elapsed).toBeGreaterThanOrEqual(T * 0.7)
     // WS に timeout イベントが同じ requestId で配信される。
-    const ev = await tsim.waitFor('timeout', (m) => m.requestId === reqId, 4000)
+    const ev = await sim.waitFor('timeout', (m) => m.requestId === reqId, 4000)
     expect(ev.type).toBe('timeout')
+    // 生配信には replay フィールドが付かない。
+    expect('replay' in ev).toBe(false)
   }, 20_000)
 
   test('A: 人間無反応 → responses 非ストリームも 400 timeout_error + WS timeout', async () => {
-    tsim.reset()
+    sim.reset()
     let reqId = ''
-    tsim.onRequest((req) => {
+    sim.onRequest((req) => {
       reqId = req.requestId
     })
     const res = await tPost('/v1/responses', {
@@ -695,14 +682,14 @@ describe('タイムアウトと再武装', () => {
     // OpenAI 形式 timeout_error。
     expect(res.status).toBe(400)
     expect(asObj(body.error).type).toBe('timeout_error')
-    const ev = await tsim.waitFor('timeout', (m) => m.requestId === reqId, 4000)
+    const ev = await sim.waitFor('timeout', (m) => m.requestId === reqId, 4000)
     expect(ev.type).toBe('timeout')
   }, 20_000)
 
   test('A(stream): messages ストリームは event: error 送出後にクローズ(message_stop なし)', async () => {
-    tsim.reset()
+    sim.reset()
     let reqId = ''
-    tsim.onRequest((req) => {
+    sim.onRequest((req) => {
       reqId = req.requestId
     })
     const res = await tPost('/v1/messages', {
@@ -718,7 +705,7 @@ describe('タイムアウトと再武装', () => {
     expect(types).not.toContain('message_stop')
     const errEvent = events.find((e) => e.event === 'error')
     expect(asObj(asObj(errEvent?.data).error).type).toBe('timeout_error')
-    const ev = await tsim.waitFor('timeout', (m) => m.requestId === reqId, 4000)
+    const ev = await sim.waitFor('timeout', (m) => m.requestId === reqId, 4000)
     expect(ev.type).toBe('timeout')
   }, 20_000)
 
@@ -726,9 +713,9 @@ describe('タイムアウトと再武装', () => {
   // タイムアウトは「正常終了マスキング」に変更された: reasoning/message を正しく閉じ、
   // [human-1] timeout: 告知を output_text に載せ、response.completed(status:"completed")で終端する。
   test('A(stream): responses ストリームは response.completed でマスクして終端(failed 無し)', async () => {
-    tsim.reset()
+    sim.reset()
     let reqId = ''
-    tsim.onRequest((req) => {
+    sim.onRequest((req) => {
       reqId = req.requestId
     })
     const res = await tPost('/v1/responses', {
@@ -751,17 +738,17 @@ describe('タイムアウトと再武装', () => {
     const text = String(asObj((asObj(message).content as Array<Record<string, unknown>>)[0]).text)
     expect(text).toContain('[human-1] timeout:')
     // WS timeout は維持される。
-    const ev = await tsim.waitFor('timeout', (m) => m.requestId === reqId, 4000)
+    const ev = await sim.waitFor('timeout', (m) => m.requestId === reqId, 4000)
     expect(ev.type).toBe('timeout')
   }, 20_000)
 
   test('A(stream合成): responses は途中テキスト + timeout 告知を載せて completed で終端', async () => {
-    tsim.reset()
+    sim.reset()
     let reqId = ''
     // 途中まで delta を出してから沈黙 → タイムアウト。告知は既存テキストに \n\n で追記される。
-    tsim.onRequest((req) => {
+    sim.onRequest((req) => {
       reqId = req.requestId
-      tsim.delta(req.requestId, '途中まで書いた回答')
+      sim.delta(req.requestId, '途中まで書いた回答')
     })
     const res = await tPost('/v1/responses', {
       model: 'human',
@@ -782,17 +769,17 @@ describe('タイムアウトと再武装', () => {
     // 途中テキストと告知の両方が最終 output に載る。
     expect(text).toContain('途中まで書いた回答')
     expect(text).toContain('[human-1] timeout:')
-    const ev = await tsim.waitFor('timeout', (m) => m.requestId === reqId, 5000)
+    const ev = await sim.waitFor('timeout', (m) => m.requestId === reqId, 5000)
     expect(ev.type).toBe('timeout')
   }, 20_000)
 
   test('B: 再武装 — 0.7T で reasoning、1.4T で final を送ると素のタイムアウト超過でも正常完了', async () => {
-    tsim.reset()
+    sim.reset()
     // reasoning を 0.7T(素のタイムアウト前)に送って再武装し、
     // final を 1.4T(素のタイムアウトなら死んでいる時刻)に送る。
-    tsim.onRequest((req) => {
-      setTimeout(() => tsim.reasoning(req.requestId, '生きてます(再武装)'), T * 0.7)
-      setTimeout(() => tsim.respond(req.requestId, '再武装後の最終回答'), T * 1.4)
+    sim.onRequest((req) => {
+      setTimeout(() => sim.reasoning(req.requestId, '生きてます(再武装)'), T * 0.7)
+      setTimeout(() => sim.respond(req.requestId, '再武装後の最終回答'), T * 1.4)
     })
     const start = Date.now()
     const res = await tPost('/v1/messages', {
@@ -814,7 +801,43 @@ describe('タイムアウトと再武装', () => {
     )
     expect(String(asObj(asObj(textDelta?.data).delta).text)).toContain('再武装後の最終回答')
     // タイムアウトは配信されていない。
-    expect(tsim.received.some((m) => m.type === 'timeout')).toBe(false)
+    expect(sim.received.some((m) => m.type === 'timeout')).toBe(false)
+  }, 20_000)
+
+  // timeout の replay: 終端イベントの記録は WS 接続の有無に依らず broadcast 時に行われるため、
+  // 完了後に接続した新規 WS が replay:true で受け取れることを検証する(切断窓での取りこぼし復旧)。
+  test('replay: 完了した timeout が新規接続に replay:true で届く', async () => {
+    sim.reset()
+    let reqId = ''
+    // 応答しない → timeout。
+    sim.onRequest((req) => {
+      reqId = req.requestId
+    })
+    const res = await tPost('/v1/messages', {
+      model: 'human',
+      messages: [{ role: 'user', content: 'replay 対象(無反応→timeout)' }],
+      stream: false,
+    })
+    expect(res.status).toBe(400)
+    await res.text()
+    // 生配信の timeout(replay 無し)。requestId を確定する。
+    const live = await sim.waitFor('timeout', (m) => m.requestId === reqId, 4000)
+    expect('replay' in live).toBe(false)
+
+    // 完了後に接続した新規 WS には replay:true 付きで届く。
+    const replaySim = await HumanSim.connect(server.wsUrl(server.token))
+    const replayed = await replaySim.waitFor(
+      'timeout',
+      (m) => m.requestId === reqId && m.replay === true,
+      5000,
+    )
+    expect(replayed.replay).toBe(true)
+    // 同じ requestId の timeout は 1 件だけ(re-record による重複が無い)。
+    const count = replaySim.received.filter(
+      (m) => m.type === 'timeout' && m.requestId === reqId,
+    ).length
+    expect(count).toBe(1)
+    replaySim.close()
   }, 20_000)
 })
 
@@ -1015,6 +1038,55 @@ describe('WS 再接続で pending スナップショット再送', () => {
     )
     expect(String(asObj(asObj(textDelta?.data).delta).text)).toContain('再接続後に回答した')
     sim2.close()
+  }, 30_000)
+})
+
+// ---------- 回帰: 終端イベントの replay 再送(answered)----------
+
+describe('終端イベントの replay 再送', () => {
+  test('answered replay: 完了後の新規接続に replay:true が届き、生配信には replay が付かない', async () => {
+    // 一意な内容で answered を確定させる(履歴・並走 run と衝突しないよう requestId で照合)。
+    sim.reset()
+    const content = `replay-answered-${crypto.randomUUID()}`
+    let reqId = ''
+    sim.onRequest((req) => {
+      reqId = req.requestId
+      sim.respond(req.requestId, content)
+    })
+    const res = await postJson('/v1/messages?beta=true', {
+      model: 'human',
+      messages: [{ role: 'user', content: 'replay 対象(即答→answered)' }],
+      stream: false,
+    })
+    expect(res.status).toBe(200)
+    await res.json()
+
+    // 生配信の answered には replay フィールドが付かない(item 3)。
+    const live = await sim.waitFor('answered', (m) => m.requestId === reqId, 5000)
+    expect('replay' in live).toBe(false)
+
+    // 完了後に接続した新規 WS には replay:true 付きで届く(切断窓中の完了を取りこぼさない)。
+    const simB = await HumanSim.connect(server.wsUrl(server.token))
+    const replayed = await simB.waitFor(
+      'answered',
+      (m) => m.requestId === reqId && m.replay === true,
+      5000,
+    )
+    expect(replayed.replay).toBe(true)
+    expect(replayed.content).toBe(content)
+    // 同 requestId は 1 件だけ(記録は 1 回・replay で re-record されない)。
+    expect(simB.received.filter((m) => m.type === 'answered' && m.requestId === reqId).length).toBe(
+      1,
+    )
+    simB.close()
+
+    // さらに別の新規接続でも 1 件のまま(simB への replay が履歴へ二重記録されていない)。
+    const simC = await HumanSim.connect(server.wsUrl(server.token))
+    await simC.waitFor('answered', (m) => m.requestId === reqId && m.replay === true, 5000)
+    expect(simC.received.filter((m) => m.type === 'answered' && m.requestId === reqId).length).toBe(
+      1,
+    )
+    simC.close()
   }, 30_000)
 })
 

@@ -14,6 +14,10 @@ import { handleMessages } from './messages'
 import { handleResponses } from './responses'
 import { handleApi } from './runs'
 
+// 終端イベント履歴の保持件数と replay 対象の時間窓(過去 24h)。
+const TERMINAL_HISTORY_MAX = 100
+const TERMINAL_HISTORY_WINDOW_MS = 24 * 60 * 60 * 1000
+
 // pending リクエスト 1 件ぶんのコールバック束(pendingRequests.ts 相当)。
 // SSE ストリーム(または非ストリーム Promise)への橋渡しを、WS からの
 // delta / reasoning / tool_calls / response で駆動する。
@@ -59,6 +63,14 @@ export class HumanLlmDO extends DurableObject<Env> {
           score_max REAL,
           score_comment TEXT,
           score_at INTEGER
+        );
+        -- 終端イベント(answered / timeout / score)の短期履歴リングバッファ。
+        -- WS 切断窓中に完了したリクエストの終端は pending 削除済みでスナップショット再送に乗らないため、
+        -- ここに永続化(hibernation を跨いで生存)して再接続時に replay する。
+        CREATE TABLE IF NOT EXISTS terminal_events (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          at INTEGER NOT NULL,
+          event TEXT NOT NULL
         );
       `)
     })
@@ -118,6 +130,8 @@ export class HumanLlmDO extends DurableObject<Env> {
         // 送信不能なら無視
       }
     }
+    // 切断窓中に完了した終端イベント(answered / timeout / score)も replay して復旧可能にする。
+    this.replayTerminalEvents(server)
     return new Response(null, { status: 101, webSocket: client })
   }
 
@@ -160,12 +174,55 @@ export class HumanLlmDO extends DurableObject<Env> {
 
   // 全 WS へ配信(人間 UI・観測者トレーナー共通)。
   broadcast(msg: WsServerMessage): void {
+    // 終端イベントは再接続 replay 用に履歴へ残す(生配信には replay を付けない)。
+    if (msg.type === 'answered' || msg.type === 'timeout' || msg.type === 'score') {
+      this.recordTerminal(msg)
+    }
     const data = JSON.stringify(msg)
     for (const ws of this.ctx.getWebSockets()) {
       try {
         ws.send(data)
       } catch {
         // 送信不能なソケットは無視(close 時に破棄される)
+      }
+    }
+  }
+
+  // 終端イベントを追記し、古いものを刈る。件数キャップ(TERMINAL_HISTORY_MAX)に加え、
+  // 保持期間(TERMINAL_HISTORY_WINDOW_MS)を超えた行も削除する。件数キャップだけだと
+  // 古い回答内容が押し出されるまで SQLite に残り続けるため(告知どおりの保持期間に揃える)。
+  private recordTerminal(msg: WsServerMessage): void {
+    const now = Date.now()
+    this.ctx.storage.sql.exec(
+      'INSERT INTO terminal_events (at, event) VALUES (?, ?)',
+      now,
+      JSON.stringify(msg),
+    )
+    this.ctx.storage.sql.exec(
+      'DELETE FROM terminal_events WHERE at < ?',
+      now - TERMINAL_HISTORY_WINDOW_MS,
+    )
+    this.ctx.storage.sql.exec(
+      'DELETE FROM terminal_events WHERE id NOT IN (SELECT id FROM terminal_events ORDER BY id DESC LIMIT ?)',
+      TERMINAL_HISTORY_MAX,
+    )
+  }
+
+  // 新規 WS へ、直近 TERMINAL_HISTORY_WINDOW_MS 内の終端イベントを古い順に replay: true 付きで再送する。
+  private replayTerminalEvents(ws: WebSocket): void {
+    const cutoff = Date.now() - TERMINAL_HISTORY_WINDOW_MS
+    const rows = this.ctx.storage.sql
+      .exec<{ event: string }>(
+        'SELECT event FROM terminal_events WHERE at >= ? ORDER BY id ASC',
+        cutoff,
+      )
+      .toArray()
+    for (const row of rows) {
+      try {
+        const msg = JSON.parse(row.event) as WsServerMessage
+        ws.send(JSON.stringify({ ...msg, replay: true }))
+      } catch {
+        // 壊れた履歴行は無視
       }
     }
   }
@@ -319,6 +376,17 @@ export class HumanLlmDO extends DurableObject<Env> {
       }
     }
     return rollout
+  }
+
+  // score を付けずに rollout を終了する(タイムアウト/失敗した rollout の終端記録)。
+  // 既に ended_at があれば上書きしない(採点済みを鈍化させない)。
+  endRollout(rolloutId: string, at: number): Rollout | null {
+    const existing = this.getRollout(rolloutId)
+    if (!existing) return null
+    if (existing.endedAt === undefined) {
+      this.ctx.storage.sql.exec('UPDATE rollouts SET ended_at = ? WHERE id = ?', at, rolloutId)
+    }
+    return this.getRollout(rolloutId)
   }
 
   setScore(rolloutId: string, score: Score): Rollout | null {

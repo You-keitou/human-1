@@ -11,5 +11,8 @@
   },
   "dependencies": {
     "@human-1/shared": "workspace:*"
+  },
+  "optionalDependencies": {
+    "node-pty": "^1.1.0"
   }
 }
