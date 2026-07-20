@@ -1,0 +1,29 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "human-1",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-18",
+  // 単一インスタンス運用: すべてのリクエスト / WS を idFromName('main') の 1 DO に集約する。
+  "durable_objects": {
+    "bindings": [{ "name": "HUMAN_LLM", "class_name": "HumanLlmDO" }]
+  },
+  // SQLite backed DO(runs / rollouts / scores の永続化に sql.exec を使う)。
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["HumanLlmDO"] }],
+  // 応答待ちタイムアウト(ミリ秒)。本番デフォルトは 30 分。テストでは短い値を
+  // .dev.vars や `--var HUMAN_TIMEOUT_MS:<ms>` で上書き注入できる。
+  "vars": {
+    "HUMAN_TIMEOUT_MS": "1800000"
+  },
+  // UI 静的配信。本番は packages/ui/dist をここへビルド/コピーする想定。
+  // ビルド成果物が無くても dev が動くよう、コミット済みの placeholder ディレクトリを指す。
+  // API / WS 経路は run_worker_first で必ず Worker を先に通し、それ以外は SPA として index.html を返す。
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/v1/*", "/api/*", "/ws"]
+  },
+  "observability": {
+    "enabled": true
+  }
+}

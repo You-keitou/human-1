@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "test": "bun test packages",
+    "test:server": "bun test packages/server",
     "e2e": "playwright test",
     "verify:pixels": "bun run scripts/verify-pixels.ts",
     "verify:pixels:bootstrap": "bun run scripts/verify-pixels.ts --allow-missing",

@@ -50,11 +50,18 @@
 - 人間は遅い: サーバータイムアウトは 30 分+thinking/delta で再武装。codex 側は `stream_idle_timeout_ms` を延長
 - `claude -p --resume` は毎回新 session_id に fork する(返却された最新 ID を追跡)
 
+## M2 実装知見(server)
+
+- タイムアウトの終端はクライアントに再試行させない形が必須(再試行=人間への二重出題)。非ストリームは両プロトコル形式の **400**(SDK は 408/409/429/5xx を自動再試行するため)、messages ストリームは `event: error`、**responses ストリームは `response.failed` 不可**(codex が retryable と解釈)— `[human-1] timeout:` 告知テキスト+`response.completed` の正常終了マスキングで閉じる。タイムアウトの正準シグナルは WS `timeout` イベント(rejectPending は `answered` を出さないので rollout/score は汚染されない)
+- **M4 への申し送り**: トレーナーはタイムアウトを WS `timeout` イベント(+`[human-1] timeout:` マーカー)で検出すること。空回答として誤採点しない
+- WS 新規接続時は in-flight pending のスナップショットを再送する(スマホ再接続で宙に浮くのを防ぐ)。部分回答(delta 蓄積)の再送は未実装 — delta UI を出す時に要対応
+- DEFER: OpenAI SSE の `sequence_number` / `response.content_part.done` 等の完全正準化
+
 ## マイルストーン
 
 - [x] M0: 設計合意・Pencil モック(`design/human-1.pen`)
 - [x] M1: モノレポ scaffold + shared(型・パーサ移植。並列複数 tool call 対応で `ParsedTurn.toolCalls` は配列)
-- [ ] M2: server(Workers + DO、両 API、WS、認証、永続化、並列 tool call)
+- [x] M2: server(Workers + DO、両 API、WS、認証、永続化、並列 tool call。統合テスト 36 件=人間シミュレータ方式)
 - [ ] M3: ui(エディタ移植・デザイン一新・Runs・モバイル)
 - [ ] M4: cli(`hllm`)
 - [ ] M5: deploy + 実機 E2E(codex / claude 両殻)

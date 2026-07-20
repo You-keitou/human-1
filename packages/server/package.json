@@ -4,9 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@human-1/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "wrangler": "^4.112.0"
   }
 }

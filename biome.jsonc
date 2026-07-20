@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!poc", "!**/*.pen"]
+    "includes": ["**", "!poc", "!**/*.pen", "!**/worker-configuration.d.ts"]
   },
   "formatter": {
     "enabled": true,

@@ -1,4 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["src"]
+  "compilerOptions": {
+    // Workers ランタイム型は wrangler types 生成の worker-configuration.d.ts が globals として供給する。
+    // @types/node 等を引き込まないよう types は空にする。
+    "types": []
+  },
+  "include": ["src", "worker-configuration.d.ts"]
 }
