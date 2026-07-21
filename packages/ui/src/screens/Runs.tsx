@@ -26,15 +26,24 @@ const CHIP: Record<RolloutChip['kind'], { fill: string; color: string }> = {
 // data 注入で live(API 由来)/ preview(fixture)双方を同一レイアウトで描画する。
 // 既定は fixture のため /preview/runs のピクセルは不変。
 export function Runs({ data = runsFixture }: { data?: RunsFixture }): ReactElement {
-  const { header, list, detail } = data
+  const { header } = data
   return (
     <DesktopFrame>
       <Header active="runs" epoch={header.epoch} avg={header.avg} />
-      <Frame dir="row" grow w="fill" gap={20} pad={20} align="start">
-        <RunsList list={list} />
-        <RunDetail detail={detail} />
-      </Frame>
+      <RunsBody data={data} />
     </DesktopFrame>
+  )
+}
+
+// 本体(ヘッダーを除く)。preview(/preview/runs)は上の Runs が静的 Header を付けて
+// 従来と同一ツリーを描く(px 不変)。live(/runs)は LiveRuns が LiveHeader + 中央寄せで包む。
+export function RunsBody({ data = runsFixture }: { data?: RunsFixture }): ReactElement {
+  const { list, detail } = data
+  return (
+    <Frame dir="row" grow w="fill" gap={20} pad={20} align="start">
+      <RunsList list={list} />
+      <RunDetail detail={detail} />
+    </Frame>
   )
 }
 

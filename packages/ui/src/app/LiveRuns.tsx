@@ -1,22 +1,15 @@
 import type { TrainingRun } from '@human-1/shared'
-import { type ReactElement, useEffect, useState } from 'react'
+import { type ReactElement, type ReactNode, useEffect, useState } from 'react'
 import { fetchRun, fetchRuns } from '../lib/api'
 import { buildRunsView, type RunDetailData } from '../lib/runsView'
-import { Runs } from '../screens/Runs'
+import { RunsBody } from '../screens/Runs'
 import { Frame, Text } from '../ui/primitives'
-import { ThemeSwitcher } from './ThemeSwitcher'
+import { LiveHeader } from './LiveHeader'
+import { CenteredBody, WideCenteredBody } from './liveLayout'
 
-// /runs は px 凍結の静的 Runs ヘッダを流用するため、カラーモード切替を右上に浮かせて添える
-// (テーマは localStorage でグローバル永続。Workspace と同じ操作性を /runs でも保つ)。
-function FloatingTheme(): ReactElement {
-  return (
-    <div style={{ position: 'fixed', top: 14, right: 16, zIndex: 50 }}>
-      <ThemeSwitcher />
-    </div>
-  )
-}
-
-// /api/runs から一覧・詳細・スコアを取得し、Runs レイアウト(fixture と同形)へ流し込む。
+// live の /runs は LiveHeader(実 <a> ナビ + テーマスイッチャ内蔵)を使い、本体は px 凍結の
+// 静的レイアウトと同形の RunsBody を max-width 中央寄せで描く。WS を張らないため answered/live
+// は出さず、avg のみ表示(runs の文脈で自然)。/preview/runs の静的ヘッダは触らない。
 export function LiveRuns({ token }: { token: string }): ReactElement {
   const [runs, setRuns] = useState<TrainingRun[] | null>(null)
   const [details, setDetails] = useState<Map<string, RunDetailData>>(new Map())
@@ -46,23 +39,37 @@ export function LiveRuns({ token }: { token: string }): ReactElement {
     }
   }, [token])
 
-  if (error) return <Centered text={`読み込みエラー: ${error}`} />
-  if (!runs) return <Centered text="読み込み中…" />
-  if (runs.length === 0) return <Centered text="訓練 run がまだありません" />
+  let message: string | null = null
+  if (error) message = `読み込みエラー: ${error}`
+  else if (!runs) message = '読み込み中…'
+  else if (runs.length === 0) message = '訓練 run がまだありません'
 
-  const selectedId = runs[0]?.id ?? null
-  const data = buildRunsView(runs, details, selectedId)
+  let avg = '0.0'
+  let body: ReactNode
+  if (message !== null) {
+    body = <CenteredBody>{<Centered text={message} />}</CenteredBody>
+  } else {
+    const data = buildRunsView(runs as TrainingRun[], details, runs?.[0]?.id ?? null)
+    avg = data.header.avg
+    // Runs は desktop 専用。狭い画面ではページを横スクロールさせず本体だけ内部スクロール。
+    body = (
+      <WideCenteredBody>
+        <RunsBody data={data} />
+      </WideCenteredBody>
+    )
+  }
+
   return (
-    <>
-      <FloatingTheme />
-      <Runs data={data} />
-    </>
+    <Frame dir="col" w="fill" style={{ minHeight: '100vh' }}>
+      <LiveHeader active="runs" avg={avg} />
+      {body}
+    </Frame>
   )
 }
 
 function Centered({ text }: { text: string }): ReactElement {
   return (
-    <Frame dir="col" w="fill" align="center" justify="center" style={{ minHeight: '60vh' }}>
+    <Frame dir="col" grow w="fill" align="center" justify="center" style={{ minHeight: '60vh' }}>
       <Text size={14} color="var(--text-secondary)" family="mono">
         {text}
       </Text>

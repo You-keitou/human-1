@@ -8,6 +8,7 @@ import { useIsMobile } from '../lib/useMedia'
 import { Frame, Spacer, Text } from '../ui/primitives'
 import { FlowWhiteboard } from '../whiteboard/FlowWhiteboard'
 import { LiveHeader } from './LiveHeader'
+import { CenteredBody } from './liveLayout'
 
 type Tab = 'raw' | 'whiteboard'
 
@@ -68,58 +69,60 @@ export function Workspace({ token, tab = 'raw' }: { token: string; tab?: Tab }):
         epoch={store.state.history.length}
         avg={avg}
       />
-      <Frame
-        dir={isMobile ? 'col' : 'row'}
-        grow
-        w="fill"
-        gap={isMobile ? 12 : 20}
-        pad={isMobile ? 12 : 20}
-        align="start"
-        style={{ minHeight: 0 }}
-      >
-        <ConversationPanel store={store} isMobile={isMobile} />
+      <CenteredBody>
         <Frame
-          dir="col"
+          dir={isMobile ? 'col' : 'row'}
           grow
-          h={isMobile ? 'fit' : 'fill'}
           w="fill"
-          fill="var(--surface)"
-          border={[1, 'var(--border)']}
-          radius={8}
-          clip
-          style={{ minHeight: isMobile ? 380 : 0 }}
+          gap={isMobile ? 12 : 20}
+          pad={isMobile ? 12 : 20}
+          align="start"
+          style={{ minHeight: 0 }}
         >
-          <EditorTabs activeTab={activeTab} onTab={setActiveTab} />
-          {/* エディタは常時マウント(タブ切替で unmount すると下書き・Mermaid 挿入先が失われる)。
-              非表示側は display:none で隠す。 */}
-          <div
-            style={{
-              display: activeTab === 'raw' ? 'flex' : 'none',
-              flex: 1,
-              flexDirection: 'column',
-              minHeight: 0,
-              width: '100%',
-            }}
+          <ConversationPanel store={store} isMobile={isMobile} />
+          <Frame
+            dir="col"
+            grow
+            h={isMobile ? 'fit' : 'fill'}
+            w="fill"
+            fill="var(--surface)"
+            border={[1, 'var(--border)']}
+            radius={8}
+            clip
+            style={{ minHeight: isMobile ? 380 : 0 }}
           >
-            <RawPanel
-              selected={selected}
-              warnings={warnings}
-              blocked={blocked !== null}
-              onForceSend={forceSend}
-              onReady={(h) => {
-                editorRef.current = h
+            <EditorTabs activeTab={activeTab} onTab={setActiveTab} />
+            {/* エディタは常時マウント(タブ切替で unmount すると下書き・Mermaid 挿入先が失われる)。
+              非表示側は display:none で隠す。 */}
+            <div
+              style={{
+                display: activeTab === 'raw' ? 'flex' : 'none',
+                flex: 1,
+                flexDirection: 'column',
+                minHeight: 0,
+                width: '100%',
               }}
-              onSend={onSend}
-              onSendClick={() => editorRef.current?.send()}
-            />
-          </div>
-          {activeTab === 'whiteboard' && (
-            <div style={{ flex: 1, minHeight: 320 }}>
-              <FlowWhiteboard onInsertMermaid={insertMermaid} />
+            >
+              <RawPanel
+                selected={selected}
+                warnings={warnings}
+                blocked={blocked !== null}
+                onForceSend={forceSend}
+                onReady={(h) => {
+                  editorRef.current = h
+                }}
+                onSend={onSend}
+                onSendClick={() => editorRef.current?.send()}
+              />
             </div>
-          )}
+            {activeTab === 'whiteboard' && (
+              <div style={{ flex: 1, minHeight: 320 }}>
+                <FlowWhiteboard onInsertMermaid={insertMermaid} />
+              </div>
+            )}
+          </Frame>
         </Frame>
-      </Frame>
+      </CenteredBody>
     </Frame>
   )
 }
@@ -138,14 +141,20 @@ function ConversationPanel({
   return (
     <Frame
       dir="col"
-      w={isMobile ? 'fill' : 440}
+      w={isMobile ? 'fill' : undefined}
       h={isMobile ? 'fit' : 'fill'}
       fill="var(--surface)"
       border={[1, 'var(--border)']}
       radius={8}
       clip
       align="start"
-      style={{ flexShrink: 0, minHeight: 0 }}
+      // ワイド画面では会話履歴に余裕を配分(単純センタリングより読みやすい)。
+      // min 440(モック密度)〜 max 560、コンテナ幅の 34% で追従。モバイルは fill。
+      style={{
+        flexShrink: 0,
+        minHeight: 0,
+        width: isMobile ? undefined : 'clamp(440px, 34%, 560px)',
+      }}
     >
       <PendingSwitcher
         requests={requests}
