@@ -84,6 +84,26 @@ async function launch(config: LaunchConfig): Promise<ServerHandle> {
     exited = true
   })
 
+  // stderr を継続的に排出する。'pipe' のまま読まずに放置すると、長時間のスイート中に wrangler が
+  // stderr を大量出力した際、OS のパイプバッファ(~64KB)が満杯になり write() がブロック → wrangler が
+  // ハングして接続不能になる(bun のプロセス/stdio 挙動変化で顕在化しやすい)。末尾 8KB だけ診断用に保持。
+  let stderrTail = ''
+  const drainStderr = async () => {
+    if (!proc.stderr) return
+    try {
+      const reader = (proc.stderr as ReadableStream<Uint8Array>).getReader()
+      const dec = new TextDecoder()
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        stderrTail = (stderrTail + dec.decode(value, { stream: true })).slice(-8192)
+      }
+    } catch {
+      // 読めなくなったら諦める(プロセス終了時など)
+    }
+  }
+  void drainStderr()
+
   const handle: ServerHandle = {
     baseUrl,
     token,
@@ -104,8 +124,9 @@ async function launch(config: LaunchConfig): Promise<ServerHandle> {
   const deadline = Date.now() + 60_000
   while (Date.now() < deadline) {
     if (exited) {
-      const stderr = proc.stderr ? await new Response(proc.stderr).text() : ''
-      throw new Error(`wrangler dev が起動前に終了しました:\n${stderr}`)
+      // 少し待って drain 済みの stderr 末尾を診断に添える。
+      await sleep(50)
+      throw new Error(`wrangler dev が起動前に終了しました:\n${stderrTail}`)
     }
     try {
       const res = await fetch(`${baseUrl}/v1/models`, {

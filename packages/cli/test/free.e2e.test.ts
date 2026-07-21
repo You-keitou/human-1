@@ -11,7 +11,7 @@ import type { Subprocess } from 'bun'
 import { HumanSim } from '../../server/test/helpers/humansim'
 import { type ServerHandle, startWranglerInstance } from '../../server/test/helpers/wrangler'
 import {
-  cliEntry,
+  cliLauncher,
   makeTempDir,
   readJsonl,
   rmTempDir,
@@ -97,7 +97,7 @@ function spawnFree(
 ): SpawnedFree {
   const args = ['free', '--shell', 'codex']
   if (theme !== undefined) args.push(theme)
-  const proc = Bun.spawn(['bun', cliEntry, ...args], {
+  const proc = Bun.spawn([...cliLauncher, ...args], {
     env: {
       ...process.env,
       PATH: `${fakeDir}:${process.env.PATH}`,

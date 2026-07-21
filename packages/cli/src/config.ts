@@ -3,6 +3,7 @@
 // 解決の優先順位: CLI フラグ > 環境変数(HLLM_SERVER / HLLM_TOKEN)> 設定ファイル。
 
 import { chmodSync, mkdirSync } from 'node:fs'
+import { readFile, writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
 import { join } from 'node:path'
 
@@ -28,7 +29,7 @@ export function normalizeServer(server: string): string {
 
 export async function loadConfig(): Promise<Partial<Config>> {
   try {
-    const text = await Bun.file(configPath()).text()
+    const text = await readFile(configPath(), 'utf8')
     const parsed = JSON.parse(text) as Partial<Config>
     const out: Partial<Config> = {}
     if (typeof parsed.server === 'string') out.server = normalizeServer(parsed.server)
@@ -46,7 +47,7 @@ export async function saveConfig(config: Config): Promise<string> {
   const path = configPath()
   mkdirSync(dir, { recursive: true, mode: 0o700 })
   chmodSync(dir, 0o700)
-  await Bun.write(
+  await writeFile(
     path,
     `${JSON.stringify({ ...config, server: normalizeServer(config.server) }, null, 2)}\n`,
   )

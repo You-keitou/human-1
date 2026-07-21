@@ -3,6 +3,7 @@
 // 既定値にした対話プロンプト。環境変数経由にすることで、トークンを argv(ps で可視)に
 // 載せずに login できる。保存前に GET /v1/models で疎通確認する。
 
+import { createInterface } from 'node:readline/promises'
 import { ping } from './api'
 import { type Config, loadConfig, normalizeServer, saveConfig } from './config'
 import { bold, dim, green, info, red } from './log'
@@ -14,13 +15,18 @@ export type LoginOptions = {
   skipPing: boolean
 }
 
-function ask(question: string, fallback?: string): string | null {
+// 対話プロンプト(TTY のときだけ)。ランタイム非依存に node:readline を使う
+// (Bun/browser の prompt() グローバルには依存しない)。
+async function ask(question: string, fallback?: string): Promise<string | null> {
   if (!process.stdin.isTTY) return fallback ?? null
-  const suffix = fallback ? ` [${fallback}]` : ''
-  const answer = prompt(`${question}${suffix}:`)
-  const trimmed = answer?.trim()
-  if (trimmed) return trimmed
-  return fallback ?? null
+  const rl = createInterface({ input: process.stdin, output: process.stdout })
+  try {
+    const suffix = fallback ? ` [${fallback}]` : ''
+    const answer = (await rl.question(`${question}${suffix}: `)).trim()
+    return answer || (fallback ?? null)
+  } finally {
+    rl.close()
+  }
 }
 
 export async function runLogin(opts: LoginOptions): Promise<number> {
@@ -29,12 +35,12 @@ export async function runLogin(opts: LoginOptions): Promise<number> {
   const server =
     opts.server ??
     process.env.HLLM_SERVER ??
-    ask('サーバー URL', existing.server ?? 'http://127.0.0.1:8787')
+    (await ask('サーバー URL', existing.server ?? 'http://127.0.0.1:8787'))
   if (!server) {
     info(red('サーバー URL が指定されていません(--server / HLLM_SERVER か対話入力が必要)'))
     return 1
   }
-  const token = opts.token ?? process.env.HLLM_TOKEN ?? ask('認証トークン', existing.token)
+  const token = opts.token ?? process.env.HLLM_TOKEN ?? (await ask('認証トークン', existing.token))
   if (!token) {
     info(red('認証トークンが指定されていません(--token / HLLM_TOKEN か対話入力が必要)'))
     return 1

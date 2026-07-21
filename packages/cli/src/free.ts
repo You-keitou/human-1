@@ -15,6 +15,7 @@ import { join } from 'node:path'
 import { createInterface } from 'node:readline'
 import type { Config } from './config'
 import { bold, dim, error, info, magenta, warn, yellow } from './log'
+import { isBunRuntime, PtyBridge } from './pty'
 import { createShell, type ShellHandle, type ShellKind } from './shell'
 import { ClaudeTrainer } from './trainer'
 import { buildTranscript, renderEvent } from './transcript'
@@ -36,6 +37,9 @@ export type FreeOptions = {
   cwd?: string
   keepWorkdir: boolean
   timeoutMs: number
+  // TUI 透過。undefined=自動(実 TTY かつ Node なら TUI、それ以外はヘッドレス)、
+  // true=強制 TUI、false=強制ヘッドレス。
+  tui?: boolean
 }
 
 // AI 対話役のシステムプロンプト(採点者ではなくカジュアルな対話相手)。
@@ -75,6 +79,7 @@ export async function runFree(opts: FreeOptions): Promise<number> {
 
   const inflight: { handle: ShellHandle | null } = { handle: null }
   let observer: Observer | null = null
+  let bridge: PtyBridge | null = null
   let resumeId: string | null = null
 
   // AI 対話役。/new で作り直して新セッションにする。
@@ -109,6 +114,7 @@ export async function runFree(opts: FreeOptions): Promise<number> {
   const onSigint = () => {
     warn('SIGINT — 終了します')
     inflight.handle?.kill()
+    bridge?.kill()
     observer?.close()
     rl.close()
     cleanupWorkdir()
@@ -146,6 +152,21 @@ export async function runFree(opts: FreeOptions): Promise<number> {
         info(line)
     })
 
+    // TUI 透過(既定): 実 TTY かつ Node なら殻の画面をそのまま開く。不可なら headless。
+    const startBridge = async (): Promise<PtyBridge | null> => {
+      try {
+        const b = await PtyBridge.start(shell.tui(), workdir)
+        await b.waitReady()
+        return b
+      } catch (e) {
+        warn(yellow(`TUI を開始できません(${(e as Error).message})— ヘッドレスで続行します`))
+        return null
+      }
+    }
+    const wantTui = opts.tui ?? (process.stdout.isTTY === true && !isBunRuntime())
+    if (wantTui) bridge = await startBridge()
+    info(dim(`   モード: ${bridge ? 'TUI(殻の画面を表示)' : 'ヘッドレス'}`))
+
     // 殻の完了を待って exit code を返す(resumeId 書き戻し)。30s cap 超過で kill → 2 段目有界 join。
     const joinChild = async (handle: ShellHandle): Promise<number | null> => {
       const raceJoin = (ms: number) =>
@@ -174,18 +195,31 @@ export async function runFree(opts: FreeOptions): Promise<number> {
       const injected = `${message}\n\n${marker}`
       const mark = obs.received.length
       const controller = new AbortController()
-      const handle = shell.runHeadless(injected, resumeId)
-      inflight.handle = handle
+      // TUI モードでは常駐の殻へ注入(会話は殻セッション側で継続)。headless では毎回 spawn。
+      let handle: ShellHandle | null = null
+      if (bridge) {
+        await bridge.inject(injected)
+        if (bridge.hasExited()) {
+          warn(yellow('殻(TUI)が終了しました — 次のお題へ'))
+          return { failed: true, timedOut: false, transcript: '' }
+        }
+      } else {
+        handle = shell.runHeadless(injected, resumeId)
+        inflight.handle = handle
+      }
       try {
         const termP = obs
           .waitForRolloutEnd(mark, marker, opts.timeoutMs, controller.signal)
           .then((end) => ({ kind: 'term' as const, end }))
         termP.catch(() => {}) // 敗者側 waiter の late abort rejection を握り潰す
-        const childP = handle.promise.then(
-          (res) => ({ kind: 'child' as const, res }),
-          (err) => ({ kind: 'childErr' as const, err: err as Error }),
-        )
-        const first = await Promise.race([termP, childP])
+        const childP = handle
+          ? handle.promise.then(
+              (res) => ({ kind: 'child' as const, res }),
+              (err) => ({ kind: 'childErr' as const, err: err as Error }),
+            )
+          : null
+
+        const first = await (childP ? Promise.race([termP, childP]) : termP)
 
         if (first.kind === 'childErr') {
           warn(yellow(`殻の実行に失敗しました: ${first.err.message}`))
@@ -206,7 +240,7 @@ export async function runFree(opts: FreeOptions): Promise<number> {
           }
         }
 
-        const childExit = await joinChild(handle)
+        const childExit = handle ? await joinChild(handle) : 0
         await sleep(200) // trailing イベントの取りこぼし防止
         const timedOut = end.msg.type === 'timeout'
         if (timedOut) warn(yellow('タイムアウトしました — スキップして次のお題へ'))
@@ -228,6 +262,11 @@ export async function runFree(opts: FreeOptions): Promise<number> {
         ai = makeAi()
         resumeId = null
         nextPrompt = openingPrompt(opts.theme)
+        // TUI モードは殻が常駐しているので、新セッション化のため再起動する。
+        if (bridge) {
+          bridge.kill()
+          bridge = await startBridge()
+        }
         info(dim('   (AI・殻とも新セッションを開始します)'))
       }
 
@@ -268,6 +307,7 @@ export async function runFree(opts: FreeOptions): Promise<number> {
   } finally {
     process.off('SIGINT', onSigint)
     inflight.handle?.kill()
+    bridge?.kill()
     observer?.close()
     rl.close()
     cleanupWorkdir()

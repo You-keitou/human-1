@@ -16,7 +16,7 @@ import { HumanSim } from '../../server/test/helpers/humansim'
 import { type ServerHandle, startWranglerInstance } from '../../server/test/helpers/wrangler'
 import type { Rollout, TrainingRun } from '../src/api'
 import {
-  cliEntry,
+  cliLauncher,
   makeTempDir,
   readJsonl,
   rmTempDir,
@@ -73,7 +73,7 @@ async function runTrain(
   xdg: string,
   extraEnv: Record<string, string> = {},
 ): Promise<{ exitCode: number; stdout: string; stderr: string }> {
-  const proc = Bun.spawn(['bun', cliEntry, ...args], {
+  const proc = Bun.spawn([...cliLauncher, ...args], {
     env: {
       ...process.env,
       PATH: `${fakeDir}:${process.env.PATH}`,

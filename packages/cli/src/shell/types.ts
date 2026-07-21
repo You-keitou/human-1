@@ -20,12 +20,15 @@ export type ShellHandle = {
   kill: () => void
 }
 
+// TUI 起動時のダイアログ自動応答ルール。画面に pattern が現れたら keys を送る。
+// 殻ごとに複数種のダイアログ(更新確認・ディレクトリ信頼など)があるので配列で持つ。
+export type TrustRule = { pattern: RegExp; keys: string }
+
 export type TuiSpawn = {
   cmd: string
   args: string[]
   env: Record<string, string>
-  // TUI 起動時の信頼/更新ダイアログを自動応答するためのパターンとキー入力。
-  trust: { pattern: RegExp; keys: string }
+  trust: TrustRule[]
 }
 
 export interface Shell {

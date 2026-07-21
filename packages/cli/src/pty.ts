@@ -1,11 +1,15 @@
-// node-pty による殻 TUI の透過(ベストエフォート)。
+// node-pty による殻 TUI の透過。
 //
-// 重要な制約(検証済み): node-pty は Node では動くが、Bun 1.2 では pty の読み出しで
-// ENXIO を起こし透過できない。hllm のシェバンは bun なので、TUI 透過は既定では無効。
-// train は既定でヘッドレス(素のパイプ表示)で動作する。--tui は node ランタイム下でのみ
-// 機能する実験的経路。ここでは動的 import で node-pty を遅延ロードし、
-// 使えない場合は明確なエラーで倒す(無警告のフォールバックはしない)。
+// ランタイム方針(監督者決定): CLI は常に Node で動かし、node-pty で TUI を透過する。
+// node-pty は Node v24 で動作実証済み。Bun では(1.3 で posix_spawnp は解消したが)pty の
+// データが流れないため使えない — 万一 Bun 下で呼ばれたら明確なエラーで倒し、呼び出し側は
+// ヘッドレスへ graceful fallback する。node-pty は optionalDependency。macOS の prebuild
+// spawn-helper は chmod/quarantine 対処が要ることがあるので start 時に自動修復する。
 
+import { execFileSync } from 'node:child_process'
+import { chmodSync, existsSync } from 'node:fs'
+import { createRequire } from 'node:module'
+import { dirname, join } from 'node:path'
 import type { TuiSpawn } from './shell/types'
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
@@ -36,13 +40,39 @@ export function isBunRuntime(): boolean {
   return typeof (globalThis as { Bun?: unknown }).Bun !== 'undefined'
 }
 
+// prebuild の spawn-helper に実行権限が無い / quarantine が付いていると spawn に失敗するので
+// start 前に best-effort で修復する(M4 知見)。
+function ensurePtyHelper(): void {
+  try {
+    const require = createRequire(import.meta.url)
+    const root = dirname(require.resolve('node-pty/package.json'))
+    const helper = join(root, 'prebuilds', `${process.platform}-${process.arch}`, 'spawn-helper')
+    if (!existsSync(helper)) return
+    try {
+      chmodSync(helper, 0o755)
+    } catch {
+      // 権限変更できなくても続行
+    }
+    if (process.platform === 'darwin') {
+      try {
+        execFileSync('xattr', ['-d', 'com.apple.quarantine', helper], { stdio: 'ignore' })
+      } catch {
+        // quarantine 属性が無ければ失敗するが問題ない
+      }
+    }
+  } catch {
+    // node-pty の場所が解決できなければ何もしない(import 側でエラーになる)
+  }
+}
+
 async function loadPty(): Promise<PtyModule> {
   if (isBunRuntime()) {
     throw new Error(
-      'TUI 透過は Bun ランタイムでは node-pty の非互換(ENXIO)により使えません。' +
-        'ヘッドレスモード(既定)を使うか、node で実行してください。',
+      'TUI 透過は Bun ランタイムでは node-pty のデータ透過不可のため使えません。' +
+        'CLI を Node で実行してください(bin/hllm は node を使います)。',
     )
   }
+  ensurePtyHelper()
   try {
     return (await import('node-pty')) as unknown as PtyModule
   } catch (e) {
@@ -57,8 +87,11 @@ export class PtyBridge {
   private exited = false
   private sawOutput = false
   private lastDataAt = 0
+  private readonly spawnInfo: TuiSpawn
 
-  private constructor(private readonly spawnInfo: TuiSpawn) {}
+  private constructor(spawnInfo: TuiSpawn) {
+    this.spawnInfo = spawnInfo
+  }
 
   static async start(spawnInfo: TuiSpawn, cwd: string): Promise<PtyBridge> {
     const pty = await loadPty()
@@ -87,15 +120,21 @@ export class PtyBridge {
     return this.exited
   }
 
+  // 現在の画面バッファ(検証・デバッグ用)。
+  screenBuffer(): string {
+    return this.screen
+  }
+
   // 描画が落ち着く(出力が 2s 途切れる)まで待つ。信頼/更新ダイアログは自動応答する。
   async waitReady(maxMs = 30_000): Promise<void> {
     const begin = Date.now()
     while (Date.now() - begin < maxMs) {
       if (this.exited) throw new Error(`${this.spawnInfo.cmd} が起動直後に終了しました`)
-      if (this.spawnInfo.trust.pattern.test(this.screen)) {
+      const rule = this.spawnInfo.trust.find((r) => r.pattern.test(this.screen))
+      if (rule) {
         this.screen = ''
         await sleep(300)
-        this.proc?.write(this.spawnInfo.trust.keys)
+        this.proc?.write(rule.keys)
         await sleep(1000)
         continue
       }

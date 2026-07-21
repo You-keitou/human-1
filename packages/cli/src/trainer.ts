@@ -3,6 +3,8 @@
 // 最新 session_id を追跡して次の --resume に渡す。トレーナーは本物の Claude API を
 // 使うため、殻向けの ANTHROPIC_BASE_URL / ANTHROPIC_AUTH_TOKEN は env から除去する。
 
+import { spawnHandle } from './shell/spawn'
+
 export type TrainerOptions = {
   systemPrompt: string
   model?: string
@@ -30,8 +32,11 @@ const TRAINER_STRIP_ENV = [
 
 export class ClaudeTrainer {
   private sessionId: string | null = null
+  private readonly opts: TrainerOptions
 
-  constructor(private readonly opts: TrainerOptions) {}
+  constructor(opts: TrainerOptions) {
+    this.opts = opts
+  }
 
   currentSessionId(): string | null {
     return this.sessionId
@@ -49,17 +54,14 @@ export class ClaudeTrainer {
     }
     for (const k of TRAINER_STRIP_ENV) delete env[k]
 
-    const proc = Bun.spawn(['claude', ...args], {
+    const { promise } = spawnHandle(
+      ['claude', ...args],
       env,
-      stdout: 'pipe',
-      stderr: 'pipe',
-      timeout: this.opts.timeoutMs ?? 300_000,
-    })
-    const [stdout, stderr, exitCode] = await Promise.all([
-      new Response(proc.stdout).text(),
-      new Response(proc.stderr).text(),
-      proc.exited,
-    ])
+      process.cwd(),
+      this.opts.timeoutMs ?? 300_000,
+      false,
+    )
+    const { exitCode, stdout, stderr } = await promise
     if (exitCode !== 0) {
       throw new Error(`claude -p が異常終了しました(exit=${exitCode}): ${stderr.slice(0, 400)}`)
     }

@@ -6,7 +6,7 @@
 import { afterAll, beforeAll, describe, expect, test } from 'bun:test'
 import { existsSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
-import { makeTempDir, rmTempDir, runCli } from './helpers/cli'
+import { binHllm, makeTempDir, rmTempDir, runCli } from './helpers/cli'
 
 let xdg: string
 
@@ -33,6 +33,18 @@ describe('--version / --help', () => {
     const r = await runCli(['--version'], { XDG_CONFIG_HOME: xdg })
     expect(r.exitCode).toBe(0)
     expect(r.stdout).toContain('0.1.0')
+  })
+
+  test('bin/hllm ラッパ経由 --version(本番起動路のスモーク)', async () => {
+    // bash ラッパ → tsx で Node ランタイム起動する本番経路をそのまま叩く。
+    const proc = Bun.spawn(['bash', binHllm, '--version'], {
+      stdout: 'pipe',
+      stderr: 'pipe',
+      stdin: 'ignore',
+    })
+    const [stdout, exitCode] = await Promise.all([new Response(proc.stdout).text(), proc.exited])
+    expect(exitCode).toBe(0)
+    expect(stdout).toContain('hllm 0.1.0')
   })
 
   test('引数なし → help を出して exit 0', async () => {

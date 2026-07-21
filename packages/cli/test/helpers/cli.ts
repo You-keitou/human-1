@@ -4,7 +4,7 @@
 // - writeFakes: PATH 先頭に置くフェイク実行ファイル(トレーナー役 claude・殻役 codex)を書き出す。
 //   フェイクはリポジトリ外の一時 dir に生成するので biome / tsc の対象にならない。
 
-import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { chmodSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { connect } from 'node:net'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
@@ -38,13 +38,24 @@ export async function waitPortFree(port: number, timeoutMs = 20_000): Promise<vo
 
 export const cliEntry = resolve(import.meta.dir, '..', '..', 'src', 'index.ts')
 
+// CLI は本番で Node ランタイム(tsx ローダ)上で動く。テストも同じ経路で起動する:
+// ローカル / hoist の tsx バイナリを優先し、無ければ `node --import tsx` にフォールバックする。
+const repoRoot = resolve(import.meta.dir, '..', '..', '..', '..')
+const tsxBin = resolve(repoRoot, 'node_modules', '.bin', 'tsx')
+export const cliLauncher: string[] = existsSync(tsxBin)
+  ? [tsxBin, cliEntry]
+  : ['node', '--import', 'tsx', cliEntry]
+
+// bin/hllm(bash ラッパ)経由の起動をスモークで叩くためのパス。
+export const binHllm = resolve(repoRoot, 'packages', 'cli', 'bin', 'hllm')
+
 export type CliResult = {
   exitCode: number
   stdout: string
   stderr: string
 }
 
-// 子プロセスで CLI を実行する。env は既存 process.env に上書きを重ねる。
+// 子プロセスで CLI を実行する(本番と同じ Node/tsx 経路)。env は既存 process.env に上書きを重ねる。
 // 一時 dir を汚さないため XDG_CONFIG_HOME 等は呼び出し側が overrides で指定する。
 export async function runCli(
   args: string[],
@@ -53,7 +64,7 @@ export async function runCli(
   const env: Record<string, string> = {}
   for (const [k, v] of Object.entries(process.env)) if (v !== undefined) env[k] = v
   Object.assign(env, overrides)
-  const proc = Bun.spawn(['bun', cliEntry, ...args], {
+  const proc = Bun.spawn([...cliLauncher, ...args], {
     env,
     stdout: 'pipe',
     stderr: 'pipe',

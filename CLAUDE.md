@@ -32,7 +32,7 @@
 
 ## 決定事項(変更には相談が必要)
 
-- **パッケージ管理は bun**。npm / yarn は使わない
+- **パッケージ管理・テストランナーは bun**。npm / yarn は使わない。**CLI(hllm)の実行ランタイムは Node(tsx)** — bun の pty バグ(1.2/1.3 とも)で TUI 透過が動かないため。`bin/hllm` ラッパが tsx 実行を隠蔽する。TUI 透過は Node でのみ動作(bun 実行時はヘッドレスにフォールバック)
 - response の準拠範囲: thinking / **並列複数 tool call** / tool 結果後の継続 thinking / final。
   **delta streaming の UI ボタンは出さない**(プロトコル対応はサーバーに残す)
 - 人間の出力記法は **Claude 方言に統一**: `<thinking>…</thinking>`、`<function_calls><invoke name="X"><parameter name="y">…</parameter></invoke></function_calls>`、タグ外テキスト = final。パーサは寛容(崩れタグは警告して本文扱い)
@@ -74,6 +74,7 @@
 - codex 0.144.6 は `model_supports_reasoning_summaries=true` でも reasoning summaries が無効(`reasoning summaries: none`)。**制約として受容** — thinking はサーバー/UI には流れる
 - **claude 殻は cwd の CLAUDE.md を全リクエストに注入する**。本ファイルが裏方検出リテラルを含むため誤判定事故が起きた。対策(二重): 殻は既定で中立一時 cwd 起動(`--cwd` 明示で上書き、`--keep-workdir` で保持)+ server の裏方検出は**最後の user メッセージのみ**を見る
 - `/v1/models` は OpenAI 形式に加えて codex 期待の `models` キーを併記
+- **bun 1.3.14 でも node-pty は不動作**(posix_spawnp は quarantine 解除で直るがデータが流れない)→ CLI は Node(tsx)実行に移行。殻の信頼ダイアログへの自動応答は codex/claude とも **Enter**(codex に「2」を送ると No,quit になる)。TUI 注入は殻の composer 到達前だと遅延しうる(waitReady の composer 検出は今後の改善)
 
 ## マイルストーン
 

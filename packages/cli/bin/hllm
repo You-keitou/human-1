@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# hllm ランチャ: CLI を常に Node ランタイムで起動する(node-pty TUI を有効化するため)。
+# TS の実行は tsx(esbuild ベースのローダ)で行う — 拡張子なし import・型ストリップを両対応。
+# symlink 経由(node_modules/.bin)でも動くよう BASH_SOURCE を辿って実ファイルを解決する。
+set -euo pipefail
+src="${BASH_SOURCE[0]}"
+while [ -h "$src" ]; do
+  dir="$(cd -P "$(dirname "$src")" && pwd)"
+  src="$(readlink "$src")"
+  case "$src" in /*) ;; *) src="$dir/$src" ;; esac
+done
+dir="$(cd -P "$(dirname "$src")" && pwd)"
+entry="$dir/../src/index.ts"
+# tsx バイナリ(ローカル / ルート hoist)を探して起動。無ければ node --import tsx にフォールバック。
+for c in "$dir/../node_modules/.bin/tsx" "$dir/../../../node_modules/.bin/tsx"; do
+  if [ -x "$c" ]; then exec "$c" "$entry" "$@"; fi
+done
+exec node --import tsx "$entry" "$@"

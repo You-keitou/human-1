@@ -1,5 +1,6 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 // hllm — human-1 の CLI(login / train / free / theater)。
+// ランタイムは Node(v24+ の型ストリップで .ts を直接実行)。node-pty で TUI を透過する。
 // トレーナー AI = claude -p、殻(codex / claude)経由で人間 LLM に出題する。
 // free は採点なしの自由対話モード(AI 対話役が自由にお題を出して人間と継続対話)。
 // 依存は最小限(引数パースは手書き)。ランタイムは bun。
@@ -15,6 +16,7 @@ import { runTrain } from './train'
 const BOOLEAN_FLAGS = new Set([
   'dry-run',
   'tui',
+  'headless',
   'skip-ping',
   'help',
   'version',
@@ -77,6 +79,7 @@ const HELP = `hllm — human-1 訓練 CLI
   hllm train   [ドメイン] [--shell codex|claude] [--epochs N] [--trainer-model M]
                [--profile NAME] [--cwd DIR] [--keep-workdir] [--timeout MS] [--dry-run] [--tui]
   hllm free    [テーマ] [--shell codex|claude] [--cwd DIR] [--keep-workdir] [--timeout MS]
+               [--tui | --headless]   (既定: 実 TTY なら殻の TUI を表示、それ以外は headless)
   hllm theater
   hllm help | --version
 
@@ -179,6 +182,9 @@ async function main(): Promise<number> {
         return 1
       }
       const timeout = Number(str(flags, 'timeout') ?? 45 * 60 * 1000)
+      // TUI 三値: --tui=強制 / --headless=強制ヘッドレス / 無指定=自動(実 TTY で TUI)。
+      const tuiFlag =
+        flags.get('tui') === true ? true : flags.get('headless') === true ? false : undefined
       return await runFree({
         config,
         shell: shellFlag,
@@ -186,6 +192,7 @@ async function main(): Promise<number> {
         cwd: str(flags, 'cwd'),
         keepWorkdir: flags.get('keep-workdir') === true,
         timeoutMs: Number.isFinite(timeout) && timeout > 0 ? timeout : 45 * 60 * 1000,
+        tui: tuiFlag,
       })
     }
 

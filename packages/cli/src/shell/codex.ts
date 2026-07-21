@@ -12,6 +12,7 @@
 // 留まることを検証する(パストラバーサル防止)。TOML へ差し込む文字列(サーバー URL)は
 // エスケープする。
 
+import { writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import type { Config } from '../config'
@@ -88,7 +89,10 @@ export class CodexShell implements Shell {
   readonly kind = 'codex' as const
   readonly displayName = 'codex'
 
-  constructor(private readonly opts: ShellFactoryOptions) {
+  private readonly opts: ShellFactoryOptions
+
+  constructor(opts: ShellFactoryOptions) {
+    this.opts = opts
     // profile 名を早期に検証する(不正なら即エラー)。
     profilePath(opts.profile)
   }
@@ -96,7 +100,7 @@ export class CodexShell implements Shell {
   async setup(dryRun: boolean): Promise<{ summary: string }> {
     const path = profilePath(this.opts.profile)
     const toml = buildProfileToml(this.opts.config)
-    if (!dryRun) await Bun.write(path, toml)
+    if (!dryRun) await writeFile(path, toml)
     return {
       summary: [
         `${dryRun ? '(dry-run) 書き出し予定' : '書き出し済み'}: ${path}`,
@@ -134,7 +138,11 @@ export class CodexShell implements Shell {
       cmd: 'codex',
       args: ['--profile', this.opts.profile],
       env: shellEnv(this.opts.config),
-      trust: { pattern: /Update now|trust|allow/i, keys: '2\r' },
+      trust: [
+        // 更新確認は Skip(2)。ディレクトリ信頼は Enter で「Yes, continue」を選ぶ。
+        { pattern: /Update now/i, keys: '2\r' },
+        { pattern: /trust the (?:files|contents)|Do you trust/i, keys: '\r' },
+      ],
     }
   }
 }

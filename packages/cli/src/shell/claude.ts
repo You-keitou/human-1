@@ -23,7 +23,11 @@ export class ClaudeShell implements Shell {
   readonly kind = 'claude' as const
   readonly displayName = 'Claude Code'
 
-  constructor(private readonly opts: ShellFactoryOptions) {}
+  private readonly opts: ShellFactoryOptions
+
+  constructor(opts: ShellFactoryOptions) {
+    this.opts = opts
+  }
 
   async setup(_dryRun: boolean): Promise<{ summary: string }> {
     const env = shellEnv(this.opts.config)
@@ -66,7 +70,7 @@ export class ClaudeShell implements Shell {
       cmd: 'claude',
       args: ['--model', 'human'],
       env: shellEnv(this.opts.config),
-      trust: { pattern: /trust the files|Do you trust/i, keys: '\r' },
+      trust: [{ pattern: /trust the files|Do you trust/i, keys: '\r' }],
     }
   }
 }
