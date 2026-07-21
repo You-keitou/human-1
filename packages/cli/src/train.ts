@@ -166,6 +166,7 @@ export async function runTrain(opts: TrainOptions): Promise<number> {
   const onSigint = () => {
     warn('SIGINT — in-flight の殻を停止して終了します')
     inflight.handle?.kill()
+    bridge?.detachStdin()
     bridge?.kill()
     observer?.close()
     cleanupWorkdir()
@@ -200,6 +201,8 @@ export async function runTrain(opts: TrainOptions): Promise<number> {
     if (opts.tui) {
       bridge = await PtyBridge.start(shell.tui(), workdir)
       await bridge.waitReady()
+      // stdin を pty へ独占接続(信頼ダイアログ等を人間が直接操作可)。Ctrl-C で後始末終了。
+      bridge.attachStdin(onSigint)
     }
     const tuiBridge = bridge
 
@@ -398,6 +401,7 @@ export async function runTrain(opts: TrainOptions): Promise<number> {
   } finally {
     process.off('SIGINT', onSigint)
     inflight.handle?.kill()
+    bridge?.detachStdin()
     bridge?.kill()
     observer?.close()
     cleanupWorkdir()

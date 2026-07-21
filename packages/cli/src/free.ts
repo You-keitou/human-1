@@ -86,21 +86,12 @@ export async function runFree(opts: FreeOptions): Promise<number> {
   const makeAi = () => new ClaudeTrainer({ systemPrompt: systemPrompt(opts.theme) })
   let ai = makeAi()
 
-  // stdin は方向づけヒント。待機中に打った行を貯め、次の AI 生成に渡す。
+  // stdin: headless モードのヒント機構でのみ使う(hints/exit/new)。
+  // TUI モードは pty へ stdin を独占接続するので readline は張らない。
   const hints: string[] = []
   let exitRequested = false
   let newRequested = false
-  const rl = createInterface({ input: process.stdin, terminal: false })
-  rl.on('line', (line) => {
-    const t = line.trim()
-    if (t === '/exit') exitRequested = true
-    else if (t === '/new') newRequested = true
-    else if (t) hints.push(t)
-  })
-  rl.on('close', () => {
-    // Ctrl-D / EOF は終了扱い(現ターン完了後に抜ける)。
-    exitRequested = true
-  })
+  let rl: ReturnType<typeof createInterface> | null = null
 
   const cleanupWorkdir = () => {
     if (!ephemeralWorkdir || opts.keepWorkdir) return
@@ -111,14 +102,19 @@ export async function runFree(opts: FreeOptions): Promise<number> {
     }
   }
 
-  const onSigint = () => {
-    warn('SIGINT — 終了します')
+  // 後始末して終了(SIGINT / TUI の Ctrl-C 共通)。detachStdin で端末を raw から戻す。
+  const shutdown = (code: number): never => {
     inflight.handle?.kill()
+    bridge?.detachStdin()
     bridge?.kill()
     observer?.close()
-    rl.close()
+    rl?.close()
     cleanupWorkdir()
-    process.exit(130)
+    process.exit(code)
+  }
+  const onSigint = () => {
+    warn('SIGINT — 終了します')
+    shutdown(130)
   }
   process.on('SIGINT', onSigint)
 
@@ -130,7 +126,6 @@ export async function runFree(opts: FreeOptions): Promise<number> {
       `   殻の作業場: ${workdir}${ephemeralWorkdir ? ' (中立一時・終了後に削除)' : ' (--cwd 指定)'}`,
     ),
   )
-  info(dim('   入力=次の生成への方向づけヒント / /new=新セッション / /exit・Ctrl-C・Ctrl-D=終了'))
 
   try {
     await shell.setup(false)
@@ -165,7 +160,29 @@ export async function runFree(opts: FreeOptions): Promise<number> {
     }
     const wantTui = opts.tui ?? (process.stdout.isTTY === true && !isBunRuntime())
     if (wantTui) bridge = await startBridge()
-    info(dim(`   モード: ${bridge ? 'TUI(殻の画面を表示)' : 'ヘッドレス'}`))
+    if (bridge) {
+      // TUI: stdin を pty へ独占接続し、人間が殻の画面(信頼ダイアログ等)を直接操作できる。
+      // ヒント用 readline は張らない(stdin 競合=キー化けの原因)。Ctrl-C で後始末終了。
+      bridge.attachStdin(() => shutdown(130))
+      info(dim('   モード: TUI(殻の画面に直接入力できます・Ctrl-C で終了)'))
+    } else {
+      // headless: stdin を行単位のヒント/コマンドとして使う。
+      rl = createInterface({ input: process.stdin, terminal: false })
+      rl.on('line', (line) => {
+        const t = line.trim()
+        if (t === '/exit') exitRequested = true
+        else if (t === '/new') newRequested = true
+        else if (t) hints.push(t)
+      })
+      rl.on('close', () => {
+        // Ctrl-D / EOF は終了扱い(現ターン完了後に抜ける)。
+        exitRequested = true
+      })
+      info(dim('   モード: ヘッドレス'))
+      info(
+        dim('   入力=次の生成への方向づけヒント / /new=新セッション / /exit・Ctrl-C・Ctrl-D=終了'),
+      )
+    }
 
     // 殻の完了を待って exit code を返す(resumeId 書き戻し)。30s cap 超過で kill → 2 段目有界 join。
     const joinChild = async (handle: ShellHandle): Promise<number | null> => {
@@ -257,6 +274,11 @@ export async function runFree(opts: FreeOptions): Promise<number> {
     // メインループ: AI がお題生成 → 殻経由で人間が回答 → 回答を AI に渡して次へ。無限(/exit まで)。
     let nextPrompt = openingPrompt(opts.theme)
     while (!exitRequested) {
+      // TUI モードで人間が殻を終了した場合はループを抜ける。
+      if (bridge?.hasExited()) {
+        info(dim('   (殻が終了しました)'))
+        break
+      }
       if (newRequested) {
         newRequested = false
         ai = makeAi()
@@ -307,9 +329,10 @@ export async function runFree(opts: FreeOptions): Promise<number> {
   } finally {
     process.off('SIGINT', onSigint)
     inflight.handle?.kill()
+    bridge?.detachStdin()
     bridge?.kill()
     observer?.close()
-    rl.close()
+    rl?.close()
     cleanupWorkdir()
   }
 }

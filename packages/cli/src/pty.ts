@@ -88,6 +88,8 @@ export class PtyBridge {
   private sawOutput = false
   private lastDataAt = 0
   private readonly spawnInfo: TuiSpawn
+  private stdinOnData: ((data: Buffer) => void) | null = null
+  private onWinch: (() => void) | null = null
 
   private constructor(spawnInfo: TuiSpawn) {
     this.spawnInfo = spawnInfo
@@ -148,6 +150,59 @@ export class PtyBridge {
     this.proc?.write(line)
     await sleep(600)
     this.proc?.write('\r')
+  }
+
+  // TUI モード: 親の stdin を raw で pty へ独占接続する(矢印キー等の生バイトをそのまま透過)。
+  // raw mode では SIGINT が来ないので Ctrl-C(0x03)を検出して onCtrlC を呼ぶ。
+  // SIGWINCH(stdout の resize)で pty をリサイズする。
+  attachStdin(onCtrlC: () => void): void {
+    const stdin = process.stdin
+    if (stdin.isTTY) {
+      try {
+        stdin.setRawMode(true)
+      } catch {
+        // raw mode にできなくても続行(パイプ入力など)
+      }
+    }
+    stdin.resume()
+    const onData = (data: Buffer) => {
+      if (data.includes(0x03)) {
+        onCtrlC()
+        return
+      }
+      this.proc?.write(data.toString('utf8'))
+    }
+    this.stdinOnData = onData
+    stdin.on('data', onData)
+    const onWinch = () =>
+      this.proc?.resize(process.stdout.columns || 120, process.stdout.rows || 36)
+    this.onWinch = onWinch
+    process.stdout.on('resize', onWinch)
+  }
+
+  // stdin の独占を解除し、端末を元に戻す(process.exit 前に必ず呼ぶ)。
+  detachStdin(): void {
+    const stdin = process.stdin
+    if (this.stdinOnData) {
+      stdin.off('data', this.stdinOnData)
+      this.stdinOnData = null
+    }
+    if (this.onWinch) {
+      process.stdout.off('resize', this.onWinch)
+      this.onWinch = null
+    }
+    if (stdin.isTTY) {
+      try {
+        stdin.setRawMode(false)
+      } catch {
+        // 元に戻せなくても続行
+      }
+    }
+    try {
+      stdin.pause()
+    } catch {
+      // 既に pause 済みなら無視
+    }
   }
 
   kill(): void {
