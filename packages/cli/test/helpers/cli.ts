@@ -127,6 +127,19 @@ try {
   state = JSON.parse(readFileSync(statePath, 'utf8'))
 } catch {}
 state.calls++
+// free の AI 役として使う際: MAX_CALLS 回だけ成功し、それを超える呼び出しで exit 1 する
+// (AI 生成失敗でループが警告つき終了する検証 + 往復回数を有界にする)。
+//   未設定 = 無制限(train テストは影響なし)/ '0' = 初回から失敗 / 'N' = N 回成功後に失敗。
+const maxCallsEnv = process.env.HLLM_FAKE_CLAUDE_MAX_CALLS
+if (maxCallsEnv !== undefined && state.calls > Number(maxCallsEnv)) {
+  writeFileSync(statePath, JSON.stringify(state))
+  appendFileSync(
+    dir + '/trainer-log.jsonl',
+    JSON.stringify({ role: 'trainer', argv, resume, prompt, failed: true, overMax: true }) + '\\n',
+  )
+  process.stderr.write('fake claude over max calls\\n')
+  process.exit(1)
+}
 const isEval = /エポック/.test(prompt)
 const isTimeout = /タイムアウト/.test(prompt)
 if (isEval && process.env.HLLM_FAKE_CLAUDE_FAIL_ON_EVAL === '1') {
@@ -163,9 +176,11 @@ process.stdout.write(JSON.stringify({ result, session_id: sessionId }) + '\\n')
 //                    session を出し exit 0(次 rollout 前の子完了 await = resume 書き戻しの検証)。
 //   - 'answerfail' : POST(人間が回答)後、session を出さず exit 3(回答受信後の殻非ゼロ終了 →
 //                    race の勝敗に関係なく失敗になる検証。要件1)。
+//   - 'failonce'   : 最初の 1 回だけ POST せず exit 3、2 回目以降は normal(殻失敗後も続行して
+//                    次ターンを正常処理できる検証。free 要件5)。
 //   いずれも argv / resume / 出した session を codex-log.jsonl に追記する。
 const FAKE_CODEX = `#!/usr/bin/env bun
-import { appendFileSync } from 'node:fs'
+import { appendFileSync, existsSync, writeFileSync } from 'node:fs'
 const argv = Bun.argv.slice(2)
 const dir = process.env.HLLM_FAKE_DIR
 const mode = process.env.HLLM_FAKE_CODEX_MODE ?? 'normal'
@@ -183,6 +198,14 @@ appendFileSync(
 if (mode === 'fail') {
   process.stderr.write('fake codex forced failure\\n')
   process.exit(3)
+}
+if (mode === 'failonce') {
+  const marker = dir + '/.codex-failed-once'
+  if (!existsSync(marker)) {
+    writeFileSync(marker, '1')
+    process.stderr.write('fake codex failonce (first turn)\\n')
+    process.exit(3)
+  }
 }
 try {
   const res = await fetch(server + '/v1/responses', {
