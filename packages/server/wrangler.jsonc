@@ -14,8 +14,9 @@
   "vars": {
     "HUMAN_TIMEOUT_MS": "1800000"
   },
-  // UI 静的配信。本番は packages/ui/dist をここへビルド/コピーする想定。
-  // ビルド成果物が無くても dev が動くよう、コミット済みの placeholder ディレクトリを指す。
+  // UI 静的配信。dev/test は wrangler dev をこのディレクトリで起動するため、ビルド成果物が
+  // 無くても動くよう、コミット済みの placeholder(index.html)を指す。`bun run deploy` が
+  // packages/ui の build 成果物(dist)をここへ同期してから wrangler deploy する(ビルドコピー方式)。
   // API / WS 経路は run_worker_first で必ず Worker を先に通し、それ以外は SPA として index.html を返す。
   "assets": {
     "directory": "./public",

@@ -16,7 +16,9 @@
     "typecheck": "bun run --filter '*' typecheck",
     "format": "biome format --write .",
     "lint": "biome lint .",
-    "check": "biome check --write ."
+    "check": "biome check --write .",
+    "build:ui": "bun run --filter '@human-1/ui' build",
+    "deploy": "bun run build:ui && rm -rf packages/server/public && cp -R packages/ui/dist packages/server/public && cd packages/server && bunx wrangler deploy"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.4",
