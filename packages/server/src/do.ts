@@ -98,17 +98,16 @@ export class HumanLlmDO extends DurableObject<Env> {
   }
 
   private handleModels(): Response {
-    return Response.json({
-      object: 'list',
-      data: [
-        {
-          id: 'human',
-          object: 'model',
-          created: Math.floor(Date.now() / 1000),
-          owned_by: 'human-1',
-        },
-      ],
-    })
+    // OpenAI 形式(object/data)と codex 0.144.6 が期待する形式(models)を併記して両クライアントを満たす。
+    const models = [
+      {
+        id: 'human',
+        object: 'model',
+        created: Math.floor(Date.now() / 1000),
+        owned_by: 'human-1',
+      },
+    ]
+    return Response.json({ object: 'list', data: models, models })
   }
 
   // ---------- WebSocket(Hibernation API)----------

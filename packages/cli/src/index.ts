@@ -10,7 +10,15 @@ import { isShellKind } from './shell'
 import { runTheater } from './theater'
 import { runTrain } from './train'
 
-const BOOLEAN_FLAGS = new Set(['dry-run', 'tui', 'skip-ping', 'help', 'version', 'debug'])
+const BOOLEAN_FLAGS = new Set([
+  'dry-run',
+  'tui',
+  'skip-ping',
+  'help',
+  'version',
+  'debug',
+  'keep-workdir',
+])
 
 type Parsed = {
   command: string | null
@@ -65,13 +73,17 @@ const HELP = `hllm — human-1 訓練 CLI
 使い方:
   hllm login   [--server URL] [--token TOKEN] [--skip-ping]
   hllm train   [ドメイン] [--shell codex|claude] [--epochs N] [--trainer-model M]
-               [--profile NAME] [--cwd DIR] [--timeout MS] [--dry-run] [--tui]
+               [--profile NAME] [--cwd DIR] [--keep-workdir] [--timeout MS] [--dry-run] [--tui]
   hllm theater
   hllm help | --version
 
 共通フラグ:
   --server URL     サーバー URL(未指定なら env HLLM_SERVER / 設定ファイル)
   --token TOKEN    認証トークン(未指定なら env HLLM_TOKEN / 設定ファイル)
+
+train フラグ:
+  --cwd DIR        殻の作業ディレクトリ(未指定なら中立の一時 dir を作り訓練後に削除)
+  --keep-workdir   中立一時 dir を削除せず残す
 
 例:
   hllm login --server https://human-1.example.workers.dev --token s3cret
@@ -141,7 +153,9 @@ async function main(): Promise<number> {
         epochs,
         trainerModel: str(flags, 'trainer-model'),
         profile: str(flags, 'profile') ?? 'hllm',
-        cwd: str(flags, 'cwd') ?? process.cwd(),
+        // --cwd 未指定なら runTrain が中立の一時ディレクトリを作る(渡さない)。
+        cwd: str(flags, 'cwd'),
+        keepWorkdir: flags.get('keep-workdir') === true,
         rolloutTimeoutMs: Number.isFinite(timeout) && timeout > 0 ? timeout : 45 * 60 * 1000,
         dryRun: flags.get('dry-run') === true,
         tui: flags.get('tui') === true,

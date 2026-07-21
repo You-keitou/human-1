@@ -2,18 +2,25 @@ import type { ChatMessage } from '@human-1/shared'
 
 // 裏方リクエストの自動応答(PoC 知見)。
 // エージェントの殻が水面下で投げるメタ生成リクエストは人間に届かせず、サーバーが即座に
-// 妥当なダミーを返す。判定はメッセージ本文の連結に対するパターン一致で行う。
+// 妥当なダミーを返す。
 //
 //   - Claude Code: セッションタイトル生成(<session> + "Write the title")と [SUGGESTION MODE
 //   - codex:       メモリ生成("Analyze this rollout" + "rollout_slug")
+//
+// 検出は「最後の user メッセージの内容のみ」にスコープする。全メッセージ横断だと、Claude Code が
+// cwd の CLAUDE.md を全リクエストへ注入する(本リポジトリの CLAUDE.md は裏方検出の説明として
+// これらリテラルを含む)ため、本物のタスクリクエストを誤判定して自動応答してしまう(実機で確認)。
+// 上記 3 種はいずれも「最後の user メッセージ自体」がその指示なので、注入テキストや会話履歴中の
+// 言及では発火しなくなる。
 
 export type BackgroundKind = 'title' | 'suggestion' | 'rollout'
 
 export function detectBackground(messages: ChatMessage[]): BackgroundKind | null {
-  const flat = messages.map((m) => m.content).join('\n')
-  if (flat.includes('<session>') && /Write the title/i.test(flat)) return 'title'
-  if (flat.includes('[SUGGESTION MODE')) return 'suggestion'
-  if (flat.includes('Analyze this rollout') && flat.includes('rollout_slug')) return 'rollout'
+  const lastUser = [...messages].reverse().find((m) => m.role === 'user')
+  const text = lastUser?.content ?? ''
+  if (text.includes('<session>') && /Write the title/i.test(text)) return 'title'
+  if (text.includes('[SUGGESTION MODE')) return 'suggestion'
+  if (text.includes('Analyze this rollout') && text.includes('rollout_slug')) return 'rollout'
   return null
 }
 

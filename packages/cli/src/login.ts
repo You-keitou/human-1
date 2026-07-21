@@ -1,6 +1,7 @@
 // `hllm login` — サーバー URL とトークンを設定ファイルへ保存する。
-// --server / --token を優先し、欠けていれば既存設定を既定値に対話プロンプトで補う。
-// 保存前に GET /v1/models で疎通確認する。
+// 優先順位: --server / --token フラグ > 環境変数(HLLM_SERVER / HLLM_TOKEN)> 既存設定を
+// 既定値にした対話プロンプト。環境変数経由にすることで、トークンを argv(ps で可視)に
+// 載せずに login できる。保存前に GET /v1/models で疎通確認する。
 
 import { ping } from './api'
 import { type Config, loadConfig, normalizeServer, saveConfig } from './config'
@@ -25,14 +26,17 @@ function ask(question: string, fallback?: string): string | null {
 export async function runLogin(opts: LoginOptions): Promise<number> {
   const existing = await loadConfig()
 
-  const server = opts.server ?? ask('サーバー URL', existing.server ?? 'http://127.0.0.1:8787')
+  const server =
+    opts.server ??
+    process.env.HLLM_SERVER ??
+    ask('サーバー URL', existing.server ?? 'http://127.0.0.1:8787')
   if (!server) {
-    info(red('サーバー URL が指定されていません(--server か対話入力が必要)'))
+    info(red('サーバー URL が指定されていません(--server / HLLM_SERVER か対話入力が必要)'))
     return 1
   }
-  const token = opts.token ?? ask('認証トークン', existing.token)
+  const token = opts.token ?? process.env.HLLM_TOKEN ?? ask('認証トークン', existing.token)
   if (!token) {
-    info(red('認証トークンが指定されていません(--token か対話入力が必要)'))
+    info(red('認証トークンが指定されていません(--token / HLLM_TOKEN か対話入力が必要)'))
     return 1
   }
 

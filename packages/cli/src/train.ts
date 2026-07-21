@@ -8,6 +8,9 @@
 //   (b) 次 rollout 前に子完了(resumeId 書き戻し)を await、
 //   (c) train 終了・エラー・SIGINT 時に in-flight の子を kill する。
 
+import { mkdirSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { extractScore } from '@human-1/shared'
 import { createRollout, createRun, endRollout, ping, scoreFromText } from './api'
 import type { Config } from './config'
@@ -35,7 +38,10 @@ export type TrainOptions = {
   epochs: number
   trainerModel?: string
   profile: string
-  cwd: string
+  // 殻の作業ディレクトリ。未指定なら中立の一時ディレクトリをセッションごとに作る。
+  cwd?: string
+  // 一時作業ディレクトリを訓練後に削除しない(--keep-workdir)。
+  keepWorkdir: boolean
   rolloutTimeoutMs: number
   dryRun: boolean
   tui: boolean
@@ -87,10 +93,18 @@ function evalPrompt(epoch: number, transcript: string, failed: boolean, isLast: 
 }
 
 export async function runTrain(opts: TrainOptions): Promise<number> {
+  // 殻の作業ディレクトリ: --cwd 明示時はそれを尊重(意図して repo を触らせるケース)。
+  // 未指定なら中立の一時ディレクトリをセッションごとに作り、訓練後に削除する
+  // (訓練タスクは設計課題で repo 編集ではないため。加えて claude 殻は cwd の CLAUDE.md を
+  // リクエストに注入するので、中立 cwd は裏方検出との衝突も避ける — M5 実機知見)。
+  const ephemeralWorkdir = opts.cwd === undefined
+  const workdir = opts.cwd ?? join(tmpdir(), `hllm-shell-${crypto.randomUUID()}`)
+  if (ephemeralWorkdir && !opts.dryRun) mkdirSync(workdir, { recursive: true })
+
   const shell = createShell(opts.shell, {
     config: opts.config,
     profile: opts.profile,
-    cwd: opts.cwd,
+    cwd: workdir,
     timeoutMs: opts.rolloutTimeoutMs,
     echo: opts.shell === 'codex',
   })
@@ -99,6 +113,11 @@ export async function runTrain(opts: TrainOptions): Promise<number> {
   info(dim(`   ドメイン: ${opts.domain}`))
   info(dim(`   殻: ${shell.displayName} / エポック: ${opts.epochs} / トレーナー: claude -p`))
   info(dim(`   サーバー: ${opts.config.server}`))
+  info(
+    dim(
+      `   殻の作業場: ${workdir}${ephemeralWorkdir ? ' (中立一時・訓練後に削除)' : ' (--cwd 指定)'}`,
+    ),
+  )
 
   const setup = await shell.setup(opts.dryRun)
   info('')
@@ -134,11 +153,22 @@ export async function runTrain(opts: TrainOptions): Promise<number> {
   let bridge: PtyBridge | null = null
   let resumeId: string | null = null
 
+  // 中立一時作業ディレクトリの後始末(--keep-workdir 指定時は残す)。best-effort。
+  const cleanupWorkdir = () => {
+    if (!ephemeralWorkdir || opts.keepWorkdir) return
+    try {
+      rmSync(workdir, { recursive: true, force: true })
+    } catch {
+      // 消せなければ諦める
+    }
+  }
+
   const onSigint = () => {
     warn('SIGINT — in-flight の殻を停止して終了します')
     inflight.handle?.kill()
     bridge?.kill()
     observer?.close()
+    cleanupWorkdir()
     process.exit(130)
   }
   process.on('SIGINT', onSigint)
@@ -168,7 +198,7 @@ export async function runTrain(opts: TrainOptions): Promise<number> {
     info(dim(`   run: ${run.id}`))
 
     if (opts.tui) {
-      bridge = await PtyBridge.start(shell.tui(), opts.cwd)
+      bridge = await PtyBridge.start(shell.tui(), workdir)
       await bridge.waitReady()
     }
     const tuiBridge = bridge
@@ -370,5 +400,6 @@ export async function runTrain(opts: TrainOptions): Promise<number> {
     inflight.handle?.kill()
     bridge?.kill()
     observer?.close()
+    cleanupWorkdir()
   }
 }

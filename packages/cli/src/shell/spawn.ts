@@ -24,6 +24,9 @@ export function spawnHandle(
   const proc = Bun.spawn(cmd, {
     cwd,
     env,
+    // codex exec は stdin が開いていると `<stdin>` ブロックの追加入力を待つ。プロンプトは
+    // 引数で渡すので stdin は閉じる(claude -p も引数プロンプトなので影響なし)。
+    stdin: 'ignore',
     stdout: 'pipe',
     stderr: 'pipe',
     timeout: timeoutMs,

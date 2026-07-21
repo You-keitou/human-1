@@ -2,8 +2,11 @@
 // `~/.codex/<name>.config.toml` を `--profile <name>` で読み込む。
 //   ヘッドレス: codex --profile <name> exec [resume <id>] --skip-git-repo-check <prompt>
 //   TUI:       codex --profile <name>
-// PoC 知見: model_supports_reasoning_summaries=true で thinking がスピナー横に出る。
-// stream_idle_timeout_ms を延ばして人間の遅延に耐える。認証は bearer_token_env_var 経由。
+// PoC 知見: model_supports_reasoning_summaries=true で thinking がスピナー横に出る想定。
+// ただし codex 0.144.6 の headless では `reasoning summaries: none` となり機能しない
+//(M5 実機で確認。制約として受容 — 人間の thinking はサーバー/UI には従来どおり流れる)。
+// stream_idle_timeout_ms を延ばして人間の遅延に耐える。認証は env_key(codex 0.144 の
+// model_providers 認証キー。旧称 bearer_token_env_var は 0.144.6 で未認識 → env_key に追随)経由。
 //
 // 安全化: profile 名は保守的な識別子([A-Za-z0-9_-]+)に限定し、解決パスが ~/.codex 直下に
 // 留まることを検証する(パストラバーサル防止)。TOML へ差し込む文字列(サーバー URL)は
@@ -67,7 +70,7 @@ sandbox_mode = "workspace-write"
 name = "human-1"
 base_url = "${baseUrl}"
 wire_api = "responses"
-bearer_token_env_var = "${TOKEN_ENV}"
+env_key = "${TOKEN_ENV}"
 stream_idle_timeout_ms = 1800000
 `
 }

@@ -66,6 +66,15 @@
 - トレーナー子環境から ANTHROPIC_API_KEY 等を除去必須(サブスク認証が API キー課金化するのを防ぐ)
 - M5 で要検証(codex DEFER): 実 codex/claude のツール連鎖が履歴にマーカーを保持するか、実 codex の JSON 出力形式、取りこぼしたマーカー付き request の replay
 
+## M5 実機知見(deploy + 実機 E2E)
+
+- 本番: **https://human-1.youkeitou327.workers.dev**(deploy は root の `bun run deploy` = ui build → server/public へコピー → wrangler deploy。トークンは `~/.config/hllm/deploy-token.txt`)
+- **マーカー相関は実機で PASS**: 実 codex のツール連鎖 2 発目(tool_result 込み)も会話履歴でマーカーを保持し、相関が決定的に追従する
+- codex 0.144.6 の profile 認証キーは **`env_key`**(旧 `bearer_token_env_var` は未認識で 401)。`--strict-config` が設定フィールド検証に有用
+- codex 0.144.6 は `model_supports_reasoning_summaries=true` でも reasoning summaries が無効(`reasoning summaries: none`)。**制約として受容** — thinking はサーバー/UI には流れる
+- **claude 殻は cwd の CLAUDE.md を全リクエストに注入する**。本ファイルが裏方検出リテラルを含むため誤判定事故が起きた。対策(二重): 殻は既定で中立一時 cwd 起動(`--cwd` 明示で上書き、`--keep-workdir` で保持)+ server の裏方検出は**最後の user メッセージのみ**を見る
+- `/v1/models` は OpenAI 形式に加えて codex 期待の `models` キーを併記
+
 ## マイルストーン
 
 - [x] M0: 設計合意・Pencil モック(`design/human-1.pen`)
