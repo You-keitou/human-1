@@ -9,13 +9,29 @@ import { type ReactElement, useEffect, useRef } from 'react'
 const SPACING = 24
 const RADIUS = 1.1
 const FALLOFF = 1.2
-const BG: [number, number, number] = [252, 250, 245] // #FCFAF5
-const DOT: [number, number, number] = [207, 196, 173] // #CFC4AD
 const BLEND = 0.55
+
+// design 既定(light)。CSS 変数が読めない場合のフォールバック。
+const BG_FALLBACK: [number, number, number] = [252, 250, 245] // #FCFAF5 = --surface(light)
+const DOT_FALLBACK: [number, number, number] = [207, 196, 173] // #CFC4AD = --border-strong(light)
 
 function smoothstep(e0: number, e1: number, x: number): number {
   const t = Math.min(1, Math.max(0, (x - e0) / (e1 - e0)))
   return t * t * (3 - 2 * t)
+}
+
+// `#rrggbb` / `#rgb` を RGB へ。読めなければ fallback を返す(テーマ追従用)。
+function readColor(name: string, fallback: [number, number, number]): [number, number, number] {
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(raw)
+  if (!m) return fallback
+  let h = m[1] as string
+  if (h.length === 3)
+    h = h
+      .split('')
+      .map((c) => c + c)
+      .join('')
+  return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)]
 }
 
 export function DotGridBackground(): ReactElement {
@@ -30,6 +46,9 @@ export function DotGridBackground(): ReactElement {
     const paint = (): void => {
       const rect = parent.getBoundingClientRect()
       if (rect.width === 0 || rect.height === 0) return
+      // ドット/背景色はトークン(--surface / --border-strong)から読み、light/dark に追従する。
+      const BG = readColor('--surface', BG_FALLBACK)
+      const DOT = readColor('--border-strong', DOT_FALLBACK)
       const dpr = window.devicePixelRatio || 1
       const w = Math.round(rect.width * dpr)
       const h = Math.round(rect.height * dpr)
@@ -69,7 +88,17 @@ export function DotGridBackground(): ReactElement {
     paint()
     const ro = new ResizeObserver(() => paint())
     ro.observe(parent)
-    return () => ro.disconnect()
+    // テーマ切替(data-theme 属性 / prefers-color-scheme)で再描画する。
+    const mo = new MutationObserver(() => paint())
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    const onScheme = (): void => paint()
+    mq.addEventListener('change', onScheme)
+    return () => {
+      ro.disconnect()
+      mo.disconnect()
+      mq.removeEventListener('change', onScheme)
+    }
   }, [])
 
   // aria-hidden は装飾ラッパ div 側に置く(canvas 直付けは a11y lint に触れるため)。

@@ -4,6 +4,17 @@ import { fetchRun, fetchRuns } from '../lib/api'
 import { buildRunsView, type RunDetailData } from '../lib/runsView'
 import { Runs } from '../screens/Runs'
 import { Frame, Text } from '../ui/primitives'
+import { ThemeSwitcher } from './ThemeSwitcher'
+
+// /runs は px 凍結の静的 Runs ヘッダを流用するため、カラーモード切替を右上に浮かせて添える
+// (テーマは localStorage でグローバル永続。Workspace と同じ操作性を /runs でも保つ)。
+function FloatingTheme(): ReactElement {
+  return (
+    <div style={{ position: 'fixed', top: 14, right: 16, zIndex: 50 }}>
+      <ThemeSwitcher />
+    </div>
+  )
+}
 
 // /api/runs から一覧・詳細・スコアを取得し、Runs レイアウト(fixture と同形)へ流し込む。
 export function LiveRuns({ token }: { token: string }): ReactElement {
@@ -41,7 +52,12 @@ export function LiveRuns({ token }: { token: string }): ReactElement {
 
   const selectedId = runs[0]?.id ?? null
   const data = buildRunsView(runs, details, selectedId)
-  return <Runs data={data} />
+  return (
+    <>
+      <FloatingTheme />
+      <Runs data={data} />
+    </>
+  )
 }
 
 function Centered({ text }: { text: string }): ReactElement {

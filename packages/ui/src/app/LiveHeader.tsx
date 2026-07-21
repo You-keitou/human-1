@@ -2,6 +2,7 @@ import type { ReactElement } from 'react'
 import { useIsMobile } from '../lib/useMedia'
 import type { WsStatus } from '../lib/useWebSocket'
 import { Box, Frame, Spacer, Text } from '../ui/primitives'
+import { ThemeSwitcher } from './ThemeSwitcher'
 
 // live ルート用ヘッダ。静的 Header と同トーンだが、ナビは実リンク(<a>)・状態は WS 接続状態を反映。
 // preview の Header は不変(px ゲート)なので別実装にしている。
@@ -41,7 +42,7 @@ function DesktopHeader({
       dir="row"
       w="fill"
       h={64}
-      gap={26}
+      gap={20}
       pad={[0, 28]}
       align="center"
       borderSides={{ bottom: 1 }}
@@ -93,13 +94,15 @@ function DesktopHeader({
           {st.label}
         </Text>
       </Frame>
+
+      <ThemeSwitcher />
     </Frame>
   )
 }
 
 // design MobHeader / M-Header 相当のコンパクトヘッダ。ナビ・指標を畳み、logo + train +
-// ステータス(live)のみを残して 390px に収める(横溢れゼロ)。ナビはワークスペース内タブ/
-// リンクで代替する前提。
+// テーマスイッチャ + ステータス(live)のみを残して 390px に収める(横溢れゼロ)。ナビは
+// ワークスペース内タブ/リンクで代替する前提。
 function MobileHeader({
   status,
   epoch,
@@ -116,7 +119,7 @@ function MobileHeader({
       dir="row"
       w="fill"
       gap={8}
-      pad={[12, 16]}
+      pad={[12, 14]}
       align="center"
       borderSides={{ bottom: 1 }}
       borderColor="var(--border)"
@@ -126,19 +129,17 @@ function MobileHeader({
       <Text size={17} family="display" weight={600} nowrap>
         human-1
       </Text>
-      <Text size={10.5} family="mono" color="var(--text-muted)" nowrap>
-        train
-      </Text>
       <Spacer />
-      <Text size={11} family="mono" color="var(--text-muted)" nowrap>
+      <Text size={10.5} family="mono" color="var(--text-muted)" nowrap>
         {epoch}·{avg}
       </Text>
-      <Frame dir="row" gap={5} align="center">
+      <Frame dir="row" gap={4} align="center">
         <Box w={8} h={8} fill={st.color} radius={999} />
         <Text size={10.5} family="mono" color="var(--text-muted)" nowrap>
           {st.label}
         </Text>
       </Frame>
+      <ThemeSwitcher compact />
     </Frame>
   )
 }

@@ -19,3 +19,4 @@ design/reference/html/.rendered/
 artifacts/
 test-results/
 playwright-report/
+packages/server/public/assets/

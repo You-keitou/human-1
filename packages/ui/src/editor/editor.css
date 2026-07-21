@@ -143,6 +143,40 @@
   padding: 4px;
 }
 
+/* メニュー先頭のヘッダ: 現在入力中のコマンド文字列を確認できる。 */
+.slash-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 10px 6px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid var(--border);
+}
+
+.slash-query {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-strong);
+}
+
+.slash-header-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* マッチ 0 件の明示表示(黙って閉じない)。 */
+.slash-empty {
+  padding: 8px 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
 .slash-item {
   display: flex;
   width: 100%;
@@ -173,6 +207,48 @@
   font-family: var(--font-mono);
   font-size: 10px;
   color: var(--text-muted);
+}
+
+/* 誤送信ガードのバナー(「/ex」打ち損ね対策)。警告より目立たせる。 */
+.misfire-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--warn);
+  border-left-width: 3px;
+  background: var(--warn-soft);
+}
+
+.misfire-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: var(--warn);
+}
+
+.misfire-body {
+  flex: 1 1 180px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.misfire-force {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--on-accent);
+  background: var(--warn);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
 }
 
 .parse-warnings {

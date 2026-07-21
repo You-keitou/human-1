@@ -8,6 +8,7 @@ import {
   useNodesState,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
+import './flow.css'
 import { type ReactElement, useCallback, useState } from 'react'
 import { seedEdges, seedNodes, type WbFlowNode } from '../fixtures/whiteboard'
 import {

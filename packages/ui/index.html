@@ -6,6 +6,16 @@
     <!-- verify:pixels / readiness チェックが「別プロセスのサーバー」を誤認しないためのアプリ固有マーカー。 -->
     <meta name="app" content="human-1" />
     <title>human-1</title>
+    <!-- FOUC 防止: React マウント前に localStorage のカラーモードを data-theme へ先付けする。
+         キー・規約は src/lib/theme.ts と一致させること。system は属性を付けず prefers-color-scheme に委譲。 -->
+    <script>
+      (() => {
+        try {
+          const m = localStorage.getItem('human-1-theme')
+          if (m === 'light' || m === 'dark') document.documentElement.setAttribute('data-theme', m)
+        } catch {}
+      })()
+    </script>
   </head>
   <body>
     <div id="app" data-testid="app-root"></div>

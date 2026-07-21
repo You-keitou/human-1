@@ -10,8 +10,17 @@ import type { AppStore } from './store'
 
 export type SendOutcome = {
   sent: boolean
-  kind: 'tools' | 'final' | 'none'
+  kind: 'tools' | 'final' | 'none' | 'blocked'
   warnings: string[]
+}
+
+// 「/」始まりの 1 行だけ(thinking も tool も無い)= スラッシュコマンドの打ち損ねが濃厚。
+// 例: 「/ex」をコマンドのつもりで打ち、そのまま final answer として送信して 0.5/10。
+export function isSlashMisfire(parsed: ParsedTurn): boolean {
+  if (parsed.thoughts.length || parsed.toolCalls.length) return false
+  const t = parsed.finalText.trim()
+  if (!t.startsWith('/')) return false
+  return !t.includes('\n')
 }
 
 // ParsedToolCall → ToolCallItem(方言はサーバー側で endpoint に射影されるため function_call で統一)。
@@ -24,7 +33,12 @@ export function toToolCallItems(parsed: ParsedTurn): ToolCallItem[] {
   }))
 }
 
-export function sendTurn(store: AppStore, requestId: string, parsed: ParsedTurn): SendOutcome {
+export function sendTurn(
+  store: AppStore,
+  requestId: string,
+  parsed: ParsedTurn,
+  opts?: { force?: boolean },
+): SendOutcome {
   const warnings = [...parsed.warnings]
   let finalText = parsed.finalText
   const hasTools = parsed.toolCalls.length > 0
@@ -38,6 +52,15 @@ export function sendTurn(store: AppStore, requestId: string, parsed: ParsedTurn)
 
   if (!parsed.thoughts.length && !hasTools && !finalText) {
     return { sent: false, kind: 'none', warnings }
+  }
+
+  // 誤送信ガード: 「/」始まり 1 行だけの final は送信を止める(force で強行)。
+  if (!opts?.force && isSlashMisfire(parsed)) {
+    warnings.push(
+      `「${parsed.finalText.trim()}」はスラッシュコマンドの打ち損ねの可能性があります。` +
+        'final として送るなら「本文として送信」を押すか、もう一度送信してください。',
+    )
+    return { sent: false, kind: 'blocked', warnings }
   }
 
   // reasoning は tool/final より前に配信する(サーバーは本文開始前の思考のみ意味を持つ)。

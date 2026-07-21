@@ -123,7 +123,6 @@ export async function primeToken(page: Page, token: string): Promise<void> {
   )
 }
 
-// ブラウザ内の全 WebSocket を捕捉し、テストから強制切断できるようにする。
 export async function captureSockets(page: Page): Promise<void> {
   await page.addInitScript(() => {
     const Orig = window.WebSocket
@@ -139,18 +138,86 @@ export async function captureSockets(page: Page): Promise<void> {
   })
 }
 
-// 捕捉済みの WebSocket をすべて close して再接続を誘発する。
-export async function dropSockets(page: Page): Promise<void> {
-  await page.evaluate(() => {
+// アプリの WS(/ws)を落として再接続を誘発する。vite プロキシ越しだと ws.close() の
+// クローズハンドシェイクが CLOSING で止まり onclose が発火しない(= 再接続しない)ため、
+// 合成 close イベントを dispatch してアプリの onclose ハンドラを確実に叩く。
+export async function closeAppSocket(page: Page): Promise<number> {
+  return page.evaluate(() => {
     const list = (window as unknown as { __wsList?: WebSocket[] }).__wsList ?? []
+    let n = 0
     for (const ws of list) {
-      try {
-        ws.close()
-      } catch {
-        // 既に閉じていれば無視
+      if (String(ws.url).includes('/ws') && ws.readyState <= 1) {
+        try {
+          ws.close()
+        } catch {
+          // 無視
+        }
+        ws.dispatchEvent(new CloseEvent('close'))
+        n++
       }
     }
+    return n
   })
+}
+
+// これまでに生成された WS 総数(再接続で増える)。captureSockets 前提。
+export function socketCount(page: Page): Promise<number> {
+  return page.evaluate(
+    () => (window as unknown as { __wsList?: WebSocket[] }).__wsList?.length ?? 0,
+  )
+}
+
+// 再接続(新規 WS 生成)を待つ。offline/connecting のテキスト窓は短いので、socket 生成の
+// 増加を頑健なシグナルにする。
+export async function waitForReconnect(
+  page: Page,
+  prev: number,
+  timeoutMs = 15_000,
+): Promise<void> {
+  const deadline = Date.now() + timeoutMs
+  while (Date.now() < deadline) {
+    if ((await socketCount(page)) > prev) return
+    await sleep(150)
+  }
+  throw new Error(`再接続(新規 WS)が ${timeoutMs}ms 以内に発生しませんでした`)
+}
+
+// エディタへ合成 keydown(Cmd+Enter)を送る。composing=true で IME 変換中を模す
+// (isComposing / keyCode 229)。ProseMirror の keydown リスナに直接届く。
+export async function dispatchCmdEnter(page: Page, opts: { composing: boolean }): Promise<void> {
+  await page.evaluate((composing) => {
+    const el = document.querySelector('.rich-editor-content') as HTMLElement | null
+    if (!el) throw new Error('.rich-editor-content が見つかりません')
+    el.focus()
+    const ev = new KeyboardEvent('keydown', {
+      key: 'Enter',
+      code: 'Enter',
+      keyCode: composing ? 229 : 13,
+      metaKey: true,
+      ctrlKey: true,
+      isComposing: composing,
+      bubbles: true,
+      cancelable: true,
+    })
+    el.dispatchEvent(ev)
+  }, opts.composing)
+}
+
+// 表示中の pending をすべて UI から回答して掃き出す(直列テスト間の DO 状態を汚さない)。
+// 既存下書き(スラッシュコマンド途中等)を消してから普通の本文を送るので、誤送信ガードを踏まない。
+export async function drainPending(page: Page): Promise<void> {
+  const editor = page.locator('.rich-editor-content')
+  for (let i = 0; i < 6; i++) {
+    const chips = page.locator('button[aria-pressed]')
+    if ((await chips.count()) === 0) return
+    await chips.first().click()
+    await editor.click()
+    await page.keyboard.press('ControlOrMeta+a')
+    await page.keyboard.press('Backspace')
+    await page.keyboard.insertText(`drain ${i}`)
+    await page.getByRole('button', { name: '送信', exact: true }).click()
+    await sleep(250)
+  }
 }
 
 // エディタ(tiptap contenteditable)へ Claude 方言の raw テキストを一括投入する。

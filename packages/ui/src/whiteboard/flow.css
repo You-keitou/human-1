@@ -1,0 +1,21 @@
+/* ライブ Whiteboard(React Flow)のテーマ追従オーバーライド。
+ * preview の Whiteboard は React Flow を使わない(静的 SVG)ため、これらの .react-flow__*
+ * 規則は preview / px ゲートに影響しない。 */
+
+/* エッジラベルのチップ背景/文字を既定の白から Style C トークンへ(dark 追従)。 */
+.react-flow__edge-textbg {
+  fill: var(--surface);
+}
+
+.react-flow__edge-text {
+  fill: var(--text-secondary);
+}
+
+/* 接続ハンドル/エッジのパスもトークンに寄せる。 */
+.react-flow__edge-path {
+  stroke: var(--text-muted);
+}
+
+.react-flow__connectionline .react-flow__connection-path {
+  stroke: var(--accent);
+}

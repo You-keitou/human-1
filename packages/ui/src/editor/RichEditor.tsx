@@ -11,6 +11,7 @@ import './editor.css'
 // PoC RichResponseInput.tsx を移植・進化。旧内蔵パーサは使わず shared の parseRawOutput
 // (並列複数 tool call 対応)へ委譲する。ThinkingBlock / ToolCallBlock(raw タグ入力 input rule・
 // スラッシュメニュー・tool chips)を提供し、Cmd+Enter で送信する。
+// IME(日本語変換)対応: composition 中の Enter / Cmd+Enter / スラッシュ発火をすべて抑止する。
 
 // <thinking> ブロック。タグの見た目は CSS ::before/::after で描く。
 const ThinkingBlock = Node.create({
@@ -68,6 +69,7 @@ const SlashMenu = Extension.create<{ getItems: (query: string) => SlashItem[] }>
   addProseMirrorPlugins() {
     let el: HTMLDivElement | null = null
     let items: SlashItem[] = []
+    let query = ''
     let selected = 0
     let command: ((item: SlashItem) => void) | null = null
 
@@ -78,23 +80,45 @@ const SlashMenu = Extension.create<{ getItems: (query: string) => SlashItem[] }>
     const renderList = (clientRect?: (() => DOMRect | null) | null): void => {
       if (!el) return
       el.innerHTML = ''
-      items.forEach((item, i) => {
-        const row = document.createElement('button')
-        row.type = 'button'
-        row.className = `slash-item${i === selected ? ' selected' : ''}`
-        const title = document.createElement('span')
-        title.className = 'slash-title'
-        title.textContent = item.title
-        const hint = document.createElement('span')
-        hint.className = 'slash-hint'
-        hint.textContent = item.hint
-        row.append(title, hint)
-        row.addEventListener('mousedown', (e) => {
-          e.preventDefault()
-          command?.(item)
+
+      // ヘッダ: いま打っているコマンド文字列を確認できるようにする。
+      const header = document.createElement('div')
+      header.className = 'slash-header'
+      const q = document.createElement('span')
+      q.className = 'slash-query'
+      q.textContent = query ? `/${query}` : '/'
+      const label = document.createElement('span')
+      label.className = 'slash-header-label'
+      label.textContent = 'ブロック挿入'
+      header.append(q, label)
+      el.appendChild(header)
+
+      if (items.length === 0) {
+        // マッチ 0 件でも黙って閉じない — 該当なしを明示する(「/ex」等の打ち損ね対策)。
+        const empty = document.createElement('div')
+        empty.className = 'slash-empty'
+        empty.textContent = '該当コマンドなし — Esc で閉じる'
+        el.appendChild(empty)
+      } else {
+        items.forEach((item, i) => {
+          const row = document.createElement('button')
+          row.type = 'button'
+          row.className = `slash-item${i === selected ? ' selected' : ''}`
+          const title = document.createElement('span')
+          title.className = 'slash-title'
+          title.textContent = item.title
+          const hint = document.createElement('span')
+          hint.className = 'slash-hint'
+          hint.textContent = item.hint
+          row.append(title, hint)
+          row.addEventListener('mousedown', (e) => {
+            e.preventDefault()
+            command?.(item)
+          })
+          el?.appendChild(row)
         })
-        el?.appendChild(row)
-      })
+      }
+
       const rect = clientRect?.()
       if (rect) {
         el.style.left = `${rect.left}px`
@@ -108,26 +132,37 @@ const SlashMenu = Extension.create<{ getItems: (query: string) => SlashItem[] }>
         editor: this.editor,
         char: '/',
         allowSpaces: false,
+        // IME 変換中(全角「/」・変換途中テキスト)はメニューを発火させない。
+        allow: () => !this.editor.view.composing,
         command: ({ editor, range, props }) => props.run(editor as Editor, range),
-        items: ({ query }) => this.options.getItems(query),
+        items: ({ query: q }) => this.options.getItems(q),
         render: () => ({
           onStart: (props) => {
             el = document.createElement('div')
             el.className = 'slash-menu'
             document.body.appendChild(el)
             items = props.items
+            query = props.query
             selected = 0
             command = (item) => props.command(item)
             renderList(props.clientRect)
           },
           onUpdate: (props) => {
             items = props.items
+            query = props.query
             selected = Math.min(selected, Math.max(0, items.length - 1))
             command = (item) => props.command(item)
             renderList(props.clientRect)
           },
           onKeyDown: ({ event }) => {
-            if (!el || items.length === 0) return false
+            if (!el) return false
+            // IME 変換確定の Enter でメニュー項目を選ばない/送信しない。
+            if (event.isComposing || event.keyCode === 229) return false
+            if (event.key === 'Escape') {
+              destroy()
+              return true
+            }
+            if (items.length === 0) return false
             if (event.key === 'ArrowDown') {
               selected = (selected + 1) % items.length
               renderList()
@@ -141,10 +176,6 @@ const SlashMenu = Extension.create<{ getItems: (query: string) => SlashItem[] }>
             if (event.key === 'Enter') {
               const item = items[selected]
               if (item) command?.(item)
-              return true
-            }
-            if (event.key === 'Escape') {
-              destroy()
               return true
             }
             return false
@@ -168,10 +199,35 @@ function parameterSkeleton(tool: ToolInfo): string {
   return keys.map((k) => `<parameter name="${k}"></parameter>`).join('\n')
 }
 
+// スラッシュメニューの候補(エイリアス + 曖昧一致対応)。
+type SlashDef = { title: string; hint: string; aliases: string[]; run: SlashItem['run'] }
+
+// q が s の部分列(飛ばし読み一致)か。
+function isSubsequence(q: string, s: string): boolean {
+  let i = 0
+  for (const ch of s) {
+    if (i < q.length && ch === q[i]) i += 1
+  }
+  return i === q.length
+}
+
+// 一致スコア(小さいほど良い)。null は不一致。prefix < includes < alias < 部分列。
+function matchScore(query: string, def: SlashDef): number | null {
+  if (!query) return 0
+  const q = query.toLowerCase()
+  const t = def.title.toLowerCase()
+  if (t.startsWith(q)) return 0
+  if (t.includes(q)) return 1
+  if (def.aliases.some((a) => a.toLowerCase().includes(q))) return 2
+  if (isSubsequence(q, t)) return 3
+  return null
+}
+
 export type RichEditorHandle = {
   insert: (text: string) => void
   clear: () => void
   send: () => void
+  focus: () => void
 }
 
 type Props = {
@@ -189,10 +245,11 @@ export function RichEditor({ tools, disabled, onSend, onReady }: Props): ReactEl
   const getItems = useMemo(
     () =>
       (query: string): SlashItem[] => {
-        const base: SlashItem[] = [
+        const defs: SlashDef[] = [
           {
             title: 'thinking',
             hint: '<thinking> 思考ブロック',
+            aliases: ['think', 'reason', 'reasoning', '思考', '考え', 'し'],
             run: (editor, range) => {
               editor
                 .chain()
@@ -202,10 +259,20 @@ export function RichEditor({ tools, disabled, onSend, onReady }: Props): ReactEl
                 .run()
             },
           },
+          {
+            title: 'final',
+            hint: 'タグ外の本文(最終回答)を書く',
+            aliases: ['answer', 'ans', 'output', '回答', '本文', '最終'],
+            run: (editor, range) => {
+              // final はタグ外テキスト。メニュー文字を消してそのまま入力を続けさせる。
+              editor.chain().focus().deleteRange(range).run()
+            },
+          },
         ]
-        const toolItems: SlashItem[] = toolsRef.current.map((t) => ({
+        const toolDefs: SlashDef[] = toolsRef.current.map((t) => ({
           title: t.name,
           hint: (t.description ?? 'tool call').slice(0, 48),
+          aliases: ['tool', 'call', 'ツール', t.name.replace(/[_-]/g, '')],
           run: (editor, range) => {
             editor
               .chain()
@@ -219,8 +286,12 @@ export function RichEditor({ tools, disabled, onSend, onReady }: Props): ReactEl
               .run()
           },
         }))
-        const q = query.toLowerCase()
-        return [...base, ...toolItems].filter((i) => i.title.toLowerCase().includes(q)).slice(0, 10)
+        return [...defs, ...toolDefs]
+          .map((def) => ({ def, score: matchScore(query, def) }))
+          .filter((x): x is { def: SlashDef; score: number } => x.score !== null)
+          .sort((a, b) => a.score - b.score)
+          .slice(0, 10)
+          .map(({ def }) => ({ title: def.title, hint: def.hint, run: def.run }))
       },
     [],
   )
@@ -241,12 +312,14 @@ export function RichEditor({ tools, disabled, onSend, onReady }: Props): ReactEl
       SlashMenu.configure({ getItems }),
       Placeholder.configure({
         placeholder:
-          'LLM として出力を書く… 「/」でブロック挿入、<thinking> を生で打っても OK。並列 tool は invoke ブロックを複数。',
+          'LLM として出力を書く… タグ外テキスト = final(最終回答)。「/」でブロック挿入(thinking / tool / final)、<thinking> を生で打っても OK。⌘↵ で送信。',
       }),
     ],
     editorProps: {
       attributes: { class: 'rich-editor-content', 'aria-label': 'LLM 出力エディタ' },
       handleKeyDown: (_view, event) => {
+        // IME 変換中の Cmd/Ctrl+Enter は送信しない(変換確定の Enter を送信と誤認しない)。
+        if (event.isComposing || event.keyCode === 229) return false
         if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
           sendRef.current()
           return true
@@ -312,6 +385,7 @@ export function RichEditor({ tools, disabled, onSend, onReady }: Props): ReactEl
       },
       clear: () => editor.commands.clearContent(),
       send: () => sendRef.current(),
+      focus: () => editor.commands.focus('end'),
     })
   }, [editor, onReady])
 

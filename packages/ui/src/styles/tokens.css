@@ -46,31 +46,38 @@
   color-scheme: light;
 }
 
+/*
+ * dark 値。ユーザーフィードバック「dark はかなり見づらい」を受け、Atelier Warm の
+ * 暖色・低彩度を保ったまま明度を引き上げてコントラストを改善(docs/design-spec §1 の
+ * 旧値から更新)。主要ペアはすべて WCAG AA 4.5:1 以上、機能色も canvas/soft/card 上で
+ * 4.5:1 以上を確保。判断根拠(旧→新+比)は改修レポートの変更表を参照。
+ * [data-theme="dark"] と prefers-color-scheme のブロックは常に同値を保つこと。
+ */
 :root[data-theme="dark"] {
   --bg: #1e1a15;
-  --surface: #262119;
-  --surface2: #2f2921;
-  --surface3: #3a332a;
-  --border: #3b342a;
-  --border-strong: #4c4437;
-  --text-primary: #f0eae0;
-  --text-secondary: #c6bcac;
-  --text-muted: #94897a;
-  --accent: #c29a5b;
-  --accent-strong: #d3af77;
-  --accent-soft: #33291a;
-  --on-accent: #241c0f;
-  --thinking: #b98ba9;
-  --thinking-soft: #322631;
-  --tool: #96ae88;
-  --tool-soft: #2a3024;
-  --xml: #7fa7ac;
-  --xml-soft: #253135;
-  --curve: #7fa7ac;
-  --memo: #d6b380;
-  --memo-soft: #362e1e;
-  --warn: #d08a6a;
-  --warn-soft: #3a2a20;
+  --surface: #2a251d;
+  --surface2: #332d24;
+  --surface3: #403930;
+  --border: #4a4234;
+  --border-strong: #5f5647;
+  --text-primary: #f2ece3;
+  --text-secondary: #cfc5b5;
+  --text-muted: #b0a494;
+  --accent: #cca767;
+  --accent-strong: #dcb883;
+  --accent-soft: #3a2e1c;
+  --on-accent: #221a0d;
+  --thinking: #cfa2c0;
+  --thinking-soft: #382a36;
+  --tool: #a9c29a;
+  --tool-soft: #2f3629;
+  --xml: #95bcc1;
+  --xml-soft: #29363a;
+  --curve: #95bcc1;
+  --memo: #ddbc89;
+  --memo-soft: #3b3222;
+  --warn: #dd977c;
+  --warn-soft: #3f2d22;
 
   color-scheme: dark;
 }
@@ -78,29 +85,29 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #1e1a15;
-    --surface: #262119;
-    --surface2: #2f2921;
-    --surface3: #3a332a;
-    --border: #3b342a;
-    --border-strong: #4c4437;
-    --text-primary: #f0eae0;
-    --text-secondary: #c6bcac;
-    --text-muted: #94897a;
-    --accent: #c29a5b;
-    --accent-strong: #d3af77;
-    --accent-soft: #33291a;
-    --on-accent: #241c0f;
-    --thinking: #b98ba9;
-    --thinking-soft: #322631;
-    --tool: #96ae88;
-    --tool-soft: #2a3024;
-    --xml: #7fa7ac;
-    --xml-soft: #253135;
-    --curve: #7fa7ac;
-    --memo: #d6b380;
-    --memo-soft: #362e1e;
-    --warn: #d08a6a;
-    --warn-soft: #3a2a20;
+    --surface: #2a251d;
+    --surface2: #332d24;
+    --surface3: #403930;
+    --border: #4a4234;
+    --border-strong: #5f5647;
+    --text-primary: #f2ece3;
+    --text-secondary: #cfc5b5;
+    --text-muted: #b0a494;
+    --accent: #cca767;
+    --accent-strong: #dcb883;
+    --accent-soft: #3a2e1c;
+    --on-accent: #221a0d;
+    --thinking: #cfa2c0;
+    --thinking-soft: #382a36;
+    --tool: #a9c29a;
+    --tool-soft: #2f3629;
+    --xml: #95bcc1;
+    --xml-soft: #29363a;
+    --curve: #95bcc1;
+    --memo: #ddbc89;
+    --memo-soft: #3b3222;
+    --warn: #dd977c;
+    --warn-soft: #3f2d22;
 
     color-scheme: dark;
   }
