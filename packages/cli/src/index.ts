@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 // hllm — human-1 の CLI(login / train / free / theater)。
 // トレーナー AI = claude -p、殻(codex / claude)経由で人間 LLM に出題する。
-// free はトレーナー・採点なしの自由入力対話 REPL。
+// free は採点なしの自由対話モード(AI 対話役が自由にお題を出して人間と継続対話)。
 // 依存は最小限(引数パースは手書き)。ランタイムは bun。
 
 import { resolveConfig } from './config'
@@ -76,7 +76,7 @@ const HELP = `hllm — human-1 訓練 CLI
   hllm login   [--server URL] [--token TOKEN] [--skip-ping]
   hllm train   [ドメイン] [--shell codex|claude] [--epochs N] [--trainer-model M]
                [--profile NAME] [--cwd DIR] [--keep-workdir] [--timeout MS] [--dry-run] [--tui]
-  hllm free    [初回プロンプト] [--shell codex|claude] [--cwd DIR] [--keep-workdir] [--timeout MS]
+  hllm free    [テーマ] [--shell codex|claude] [--cwd DIR] [--keep-workdir] [--timeout MS]
   hllm theater
   hllm help | --version
 
@@ -182,7 +182,7 @@ async function main(): Promise<number> {
       return await runFree({
         config,
         shell: shellFlag,
-        initialPrompt: positionals[0],
+        theme: positionals[0],
         cwd: str(flags, 'cwd'),
         keepWorkdir: flags.get('keep-workdir') === true,
         timeoutMs: Number.isFinite(timeout) && timeout > 0 ? timeout : 45 * 60 * 1000,
