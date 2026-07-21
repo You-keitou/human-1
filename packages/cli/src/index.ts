@@ -1,9 +1,11 @@
 #!/usr/bin/env bun
-// hllm — human-1 の CLI(login / train / theater)。
+// hllm — human-1 の CLI(login / train / free / theater)。
 // トレーナー AI = claude -p、殻(codex / claude)経由で人間 LLM に出題する。
+// free はトレーナー・採点なしの自由入力対話 REPL。
 // 依存は最小限(引数パースは手書き)。ランタイムは bun。
 
 import { resolveConfig } from './config'
+import { runFree } from './free'
 import { error, info } from './log'
 import { runLogin } from './login'
 import { isShellKind } from './shell'
@@ -74,6 +76,7 @@ const HELP = `hllm — human-1 訓練 CLI
   hllm login   [--server URL] [--token TOKEN] [--skip-ping]
   hllm train   [ドメイン] [--shell codex|claude] [--epochs N] [--trainer-model M]
                [--profile NAME] [--cwd DIR] [--keep-workdir] [--timeout MS] [--dry-run] [--tui]
+  hllm free    [初回プロンプト] [--shell codex|claude] [--cwd DIR] [--keep-workdir] [--timeout MS]
   hllm theater
   hllm help | --version
 
@@ -159,6 +162,30 @@ async function main(): Promise<number> {
         rolloutTimeoutMs: Number.isFinite(timeout) && timeout > 0 ? timeout : 45 * 60 * 1000,
         dryRun: flags.get('dry-run') === true,
         tui: flags.get('tui') === true,
+      })
+    }
+
+    case 'free': {
+      const config = await resolveConfig({ server: flagServer, token: flagToken })
+      if (!config) {
+        error(
+          'サーバー/トークンが未設定です。`hllm login` を実行するか --server/--token を指定してください。',
+        )
+        return 1
+      }
+      const shellFlag = str(flags, 'shell') ?? 'claude'
+      if (!isShellKind(shellFlag)) {
+        error(`--shell は codex か claude を指定してください(指定: ${shellFlag})`)
+        return 1
+      }
+      const timeout = Number(str(flags, 'timeout') ?? 45 * 60 * 1000)
+      return await runFree({
+        config,
+        shell: shellFlag,
+        initialPrompt: positionals[0],
+        cwd: str(flags, 'cwd'),
+        keepWorkdir: flags.get('keep-workdir') === true,
+        timeoutMs: Number.isFinite(timeout) && timeout > 0 ? timeout : 45 * 60 * 1000,
       })
     }
 
