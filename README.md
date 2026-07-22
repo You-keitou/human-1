@@ -49,7 +49,7 @@ bun run deploy   # ui build → packages/server/public → wrangler deploy
 ### 2. CLI
 
 ```sh
-npm install -g hllm
+npm install -g @yangjingtao/hllm   # `hllm` コマンドが入る
 
 hllm login --server https://<your>.workers.dev --token <TOKEN>
 hllm train "システム設計" --shell claude --epochs 3   # トレーナー AI が出題・採点

@@ -1,4 +1,4 @@
-# hllm
+# @yangjingtao/hllm
 
 CLI for [human-1](https://github.com/You-keitou/human-1) — an OpenAI/Anthropic API-compatible "LLM" powered by YOU, with an AI trainer that post-trains the human.
 
@@ -7,7 +7,7 @@ CLI for [human-1](https://github.com/You-keitou/human-1) — an OpenAI/Anthropic
 ## Install
 
 ```sh
-npm install -g hllm
+npm install -g @yangjingtao/hllm   # installs the `hllm` command
 ```
 
 Requires Node.js >= 22 on macOS / Linux. The optional `node-pty` dependency enables TUI passthrough: `hllm free` falls back to headless mode without it, while `hllm train --tui` requires it (omit `--tui` for headless training).

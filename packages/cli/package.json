@@ -1,5 +1,5 @@
 {
-  "name": "hllm",
+  "name": "@yangjingtao/hllm",
   "version": "0.1.0",
   "type": "module",
   "description": "An OpenAI/Anthropic-compatible LLM server powered by a human — CLI trainer harness that drives a local agent (codex / Claude Code) to quiz a human answering as an LLM from the browser.",
@@ -26,7 +26,7 @@
     "training"
   ],
   "bin": {
-    "hllm": "./bin/hllm"
+    "hllm": "bin/hllm"
   },
   "files": [
     "dist",
