@@ -84,6 +84,8 @@
 - [x] M3: ui(px 一致 6 画面+機能配線。e2e 12 本+px ゲート。**第 2 段は codex 使用量上限のため独立 QA のみで確定 — 7/25 以降に codex 遡及レビュー要**)
 - [x] M4: cli(`hllm` login / train / theater。テスト 44 件=フェイク殻+実サーバー E2E)
 - [x] M5: deploy + 実機 E2E(codex / claude 両殻 + 実トレーナー + **実人間のブラウザ回答**まで完走。2026-07-21)
+- [ ] M6: Whiteboard 拡充(シーケンス図・状態遷移図・フローチャート図形・グループ枠 + 作図 UX。詳細は `ROADMAP.md`)
+- [ ] M7: 出題者ペルソナ(`--persona`、UI Personas ページ=コマンド発行所、ペルソナ別学習曲線。詳細は `ROADMAP.md`)
 
 ## 検証の作法
 

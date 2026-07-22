@@ -92,6 +92,10 @@ bun run verify:pixels # UI と Pencil モックの px 一致ゲート
 
 パッケージ管理・テストは bun、CLI の実行ランタイムのみ Node(bun の pty 制約のため)。詳細は `docs/` と `CLAUDE.md` を参照。
 
+## ロードマップ
+
+Whiteboard の図種拡充(シーケンス図・状態遷移図)や出題者ペルソナ(意地悪な出題者など)を予定しています。詳細は [ROADMAP.md](ROADMAP.md) を参照。
+
 ## ライセンス
 
 MIT(`poc/humanllm` はフォーク元 [Syuparn/humanllm](https://github.com/Syuparn/humanllm) の MIT ライセンス表記を保持しています)
