@@ -8,7 +8,7 @@
 ☁️ Cloudflare Workers + Durable Object
    /v1/responses (OpenAI互換・codex用) + /v1/messages (Anthropic互換・Claude Code用)
    WebSocket(全イベント配信: request / thought / tool_called / answered)
-   DO ストレージ: 訓練 run・rollout・スコアの永続化、UI 静的配信
+   DO ストレージ: 訓練 run・rollout・スコアの永続化(UI 静的配信は Workers Assets)
    認証: 単一シークレットトークン(Bearer / UI は localStorage)
 
 💻 ローカル: hllm CLI(トレーナー AI = claude -p、殻 = codex / claude を TUI 透過)

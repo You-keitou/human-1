@@ -21,7 +21,7 @@
 
 ## codex 殻の癖(0.144.6 時点)
 
-- プロファイルは `~/.codex/<name>.config.toml` 別ファイル方式。認証キーは **`env_key`**(旧 `bearer_token_env_var` は未認識で 401)。`--strict-config` が設定フィールド検証に有用。シェルツール名は `exec_command`({cmd})
+- プロファイルは `~/.codex/<name>.config.toml` 別ファイル方式。認証キーは **`env_key`**(旧 `bearer_token_env_var` は未認識で 401)。codex 側の背景知識: シェルツール名は `exec_command`({cmd})、設定フィールドの手動デバッグには `--strict-config` が有用(いずれも CLI 実装は未使用)
 - `model_supports_reasoning_summaries = true` でも reasoning summaries が無効(`reasoning summaries: none`)。**制約として受容** — thinking はサーバー/UI には流れる。codex 更新のたび再検証(ROADMAP backlog)
 - 人間は遅い: `stream_idle_timeout_ms` を延長する
 
