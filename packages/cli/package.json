@@ -1,17 +1,48 @@
 {
-  "name": "@human-1/cli",
+  "name": "hllm",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
+  "description": "An OpenAI/Anthropic-compatible LLM server powered by a human — CLI trainer harness that drives a local agent (codex / Claude Code) to quiz a human answering as an LLM from the browser.",
+  "license": "MIT",
+  "author": "You-keitou",
+  "homepage": "https://github.com/You-keitou/human-1#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/You-keitou/human-1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/You-keitou/human-1/issues"
+  },
+  "keywords": [
+    "llm",
+    "human-in-the-loop",
+    "cli",
+    "openai-compatible",
+    "anthropic-compatible",
+    "codex",
+    "claude-code",
+    "agent",
+    "rlhf",
+    "training"
+  ],
   "bin": {
     "hllm": "./bin/hllm"
   },
-  "scripts": {
-    "typecheck": "tsc -p tsconfig.json"
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "engines": {
+    "node": ">=22"
   },
-  "dependencies": {
-    "@human-1/shared": "workspace:*",
-    "tsx": "^4.23.1"
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "build": "bun build src/index.ts --target=node --format=esm --external node-pty --outfile dist/index.js",
+    "prepack": "bun run build"
   },
   "optionalDependencies": {
     "node-pty": "^1.1.0"

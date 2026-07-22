@@ -11,18 +11,15 @@
         "@types/pngjs": "^6.0.5",
         "pixelmatch": "^7.2.0",
         "pngjs": "^7.0.0",
+        "tsx": "^4.23.1",
         "typescript": "7.0.2",
       },
     },
     "packages/cli": {
-      "name": "@human-1/cli",
+      "name": "hllm",
       "version": "0.1.0",
       "bin": {
         "hllm": "./bin/hllm",
-      },
-      "dependencies": {
-        "@human-1/shared": "workspace:*",
-        "tsx": "^4.23.1",
       },
       "optionalDependencies": {
         "node-pty": "^1.1.0",
@@ -211,8 +208,6 @@
     "@fontsource-variable/inter": ["@fontsource-variable/inter@5.3.0", "", {}, "sha512-OupL48va4JNofb97w6NYeF9S7W/kHNKM0Er8Dem5nqi4jeOLrVJDoE8tZEpnMJmtkvNbB1EIPPwHcdkF6b1oUA=="],
 
     "@fontsource-variable/jetbrains-mono": ["@fontsource-variable/jetbrains-mono@5.3.0", "", {}, "sha512-F32xpS2NsGYoQi2ADSkKTgpJj7ozajsGgDJ8woTnqjmIB+dxDIqImjl4pXZVEExu8UFZ2ndhmX18EBS/hdz3Lw=="],
-
-    "@human-1/cli": ["@human-1/cli@workspace:packages/cli"],
 
     "@human-1/server": ["@human-1/server@workspace:packages/server"],
 
@@ -523,6 +518,8 @@
     "fsevents": ["fsevents@2.3.3", "", { "os": "darwin" }, "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw=="],
 
     "gensync": ["gensync@1.0.0-beta.2", "", {}, "sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg=="],
+
+    "hllm": ["hllm@workspace:packages/cli"],
 
     "js-tokens": ["js-tokens@4.0.0", "", {}, "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="],
 
