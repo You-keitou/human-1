@@ -37,17 +37,30 @@ export function Runs({ data = runsFixture }: { data?: RunsFixture }): ReactEleme
 
 // 本体(ヘッダーを除く)。preview(/preview/runs)は上の Runs が静的 Header を付けて
 // 従来と同一ツリーを描く(px 不変)。live(/runs)は LiveRuns が LiveHeader + 中央寄せで包む。
-export function RunsBody({ data = runsFixture }: { data?: RunsFixture }): ReactElement {
+// onSelectRun は live のみ渡す(preview は非クリック=従来どおり)。
+export function RunsBody({
+  data = runsFixture,
+  onSelectRun,
+}: {
+  data?: RunsFixture
+  onSelectRun?: (id: string) => void
+}): ReactElement {
   const { list, detail } = data
   return (
     <Frame dir="row" grow w="fill" gap={20} pad={20} align="start">
-      <RunsList list={list} />
+      <RunsList list={list} onSelectRun={onSelectRun} />
       <RunDetail detail={detail} />
     </Frame>
   )
 }
 
-function RunsList({ list }: { list: RunListItem[] }): ReactElement {
+function RunsList({
+  list,
+  onSelectRun,
+}: {
+  list: RunListItem[]
+  onSelectRun?: (id: string) => void
+}): ReactElement {
   return (
     <Frame
       dir="col"
@@ -78,55 +91,87 @@ function RunsList({ list }: { list: RunListItem[] }): ReactElement {
         </Frame>
       </Frame>
       <Frame dir="col" w="fill" grow gap={3} pad={[12, 10]} align="start">
-        {list.map((run, i) => (
-          <RunRow key={run.title} run={run} last={i === list.length - 1} />
-        ))}
+        {list.map((run, i) => {
+          const id = run.id
+          return (
+            <RunRow
+              key={id ?? run.title}
+              run={run}
+              last={i === list.length - 1}
+              onSelect={onSelectRun && id !== undefined ? () => onSelectRun(id) : undefined}
+            />
+          )
+        })}
       </Frame>
     </Frame>
   )
 }
 
-function RunRow({ run, last }: { run: RunListItem; last: boolean }): ReactElement {
+function RunRow({
+  run,
+  last,
+  onSelect,
+}: {
+  run: RunListItem
+  last: boolean
+  onSelect?: () => void
+}): ReactElement {
   const barFill = run.selected ? 'var(--accent)' : 'var(--border-strong)'
   const avgColor = run.selected ? 'var(--xml)' : 'var(--text-secondary)'
+  const row = (
+    <Frame
+      dir="row"
+      w="fill"
+      gap={12}
+      pad={[13, 14]}
+      align="center"
+      radius={6}
+      fill={run.selected ? 'var(--accent-soft)' : undefined}
+      borderSides={run.selected ? { left: 2 } : undefined}
+      borderColor="var(--accent)"
+    >
+      <Frame dir="col" grow gap={5} align="start">
+        <Frame dir="row" gap={8} align="center">
+          <Box w={7} h={7} fill={DOT[run.dot]} radius={999} />
+          <Text size={14} weight={600} nowrap>
+            {run.title}
+          </Text>
+        </Frame>
+        <Text size={11} family="mono" color="var(--text-muted)" nowrap>
+          {run.meta}
+        </Text>
+      </Frame>
+      <Frame dir="row" gap={3} h={26} align="end">
+        {run.bars.map((bh, i) => (
+          <Box key={i} w={6} h={bh} fill={barFill} radius={2} />
+        ))}
+      </Frame>
+      <Frame dir="col" gap={1} align="end">
+        <Text size={17} family="display" weight={600} color={avgColor} nowrap>
+          {run.avg}
+        </Text>
+        <Text size={9} family="mono" color="var(--text-muted)" ls={1} nowrap>
+          avg
+        </Text>
+      </Frame>
+    </Frame>
+  )
+  // live ではネイティブ button で包んでクリック選択(キーボード操作も button が担保)。
+  // preview は onSelect なし=従来どおり非クリックで px 不変。
   return (
     <>
-      <Frame
-        dir="row"
-        w="fill"
-        gap={12}
-        pad={[13, 14]}
-        align="center"
-        radius={6}
-        fill={run.selected ? 'var(--accent-soft)' : undefined}
-        borderSides={run.selected ? { left: 2 } : undefined}
-        borderColor="var(--accent)"
-      >
-        <Frame dir="col" grow gap={5} align="start">
-          <Frame dir="row" gap={8} align="center">
-            <Box w={7} h={7} fill={DOT[run.dot]} radius={999} />
-            <Text size={14} weight={600} nowrap>
-              {run.title}
-            </Text>
-          </Frame>
-          <Text size={11} family="mono" color="var(--text-muted)" nowrap>
-            {run.meta}
-          </Text>
-        </Frame>
-        <Frame dir="row" gap={3} h={26} align="end">
-          {run.bars.map((bh, i) => (
-            <Box key={i} w={6} h={bh} fill={barFill} radius={2} />
-          ))}
-        </Frame>
-        <Frame dir="col" gap={1} align="end">
-          <Text size={17} family="display" weight={600} color={avgColor} nowrap>
-            {run.avg}
-          </Text>
-          <Text size={9} family="mono" color="var(--text-muted)" ls={1} nowrap>
-            avg
-          </Text>
-        </Frame>
-      </Frame>
+      {onSelect ? (
+        <button
+          type="button"
+          onClick={onSelect}
+          aria-pressed={run.selected === true}
+          className="run-row-button"
+        >
+          {row}
+        </button>
+      ) : (
+        row
+      )}
       {!last && <Box w="fill" h={1} fill="var(--border)" />}
     </>
   )

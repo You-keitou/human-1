@@ -2,6 +2,8 @@
 // run / rollout / score データに置き換わる。形は据え置きで data source だけ差し替える想定。
 
 export type RunListItem = {
+  /** live データ由来の run ID。静的 fixture には無い(クリック選択は live のみ)。 */
+  id?: string
   title: string
   meta: string
   avg: string

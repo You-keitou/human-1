@@ -51,7 +51,6 @@ function DesktopHeader({ active, status, epoch, avg }: LiveHeaderProps): ReactEl
       <Frame dir="row" gap={18} align="center">
         <NavLink href="/" label="Workspace" active={active === 'workspace'} />
         <NavLink href="/runs" label="Runs" active={active === 'runs'} />
-        <NavLink href="/whiteboard" label="Whiteboard" active={false} />
       </Frame>
 
       <Spacer />

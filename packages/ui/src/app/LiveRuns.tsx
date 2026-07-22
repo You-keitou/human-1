@@ -13,6 +13,7 @@ import { CenteredBody, WideCenteredBody } from './liveLayout'
 export function LiveRuns({ token }: { token: string }): ReactElement {
   const [runs, setRuns] = useState<TrainingRun[] | null>(null)
   const [details, setDetails] = useState<Map<string, RunDetailData>>(new Map())
+  const [selectedId, setSelectedId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -22,6 +23,8 @@ export function LiveRuns({ token }: { token: string }): ReactElement {
         const { runs: list } = await fetchRuns(token)
         if (cancelled) return
         setRuns(list)
+        // 初期選択は先頭(最新)run。ユーザーのクリック選択は上書きしない。
+        setSelectedId((cur) => cur ?? list[0]?.id ?? null)
         const entries = await Promise.all(
           list.map(async (r) => {
             const d = await fetchRun(r.id, token)
@@ -49,12 +52,12 @@ export function LiveRuns({ token }: { token: string }): ReactElement {
   if (message !== null) {
     body = <CenteredBody>{<Centered text={message} />}</CenteredBody>
   } else {
-    const data = buildRunsView(runs as TrainingRun[], details, runs?.[0]?.id ?? null)
+    const data = buildRunsView(runs as TrainingRun[], details, selectedId)
     avg = data.header.avg
     // Runs は desktop 専用。狭い画面ではページを横スクロールさせず本体だけ内部スクロール。
     body = (
       <WideCenteredBody>
-        <RunsBody data={data} />
+        <RunsBody data={data} onSelectRun={setSelectedId} />
       </WideCenteredBody>
     )
   }

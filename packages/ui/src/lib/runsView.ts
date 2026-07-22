@@ -43,6 +43,7 @@ export function buildRunsView(
     const dot: 'accent' | 'tool' | 'warn' =
       run.id === selectedRunId ? 'accent' : a < 5 ? 'warn' : 'tool'
     return {
+      id: run.id,
       title: run.title,
       meta: `${run.rolloutIds.length} rollouts · ${relTime(run.createdAt, now)}`,
       avg: vals.length ? a.toFixed(1) : '—',
